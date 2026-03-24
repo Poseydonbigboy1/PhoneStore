@@ -1,0 +1,85 @@
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# .NET Core / .NET 10
+project.lock.json
+project.fragment.lock.json
+artifacts/
+*.nupkg
+*.snupkg
+
+# ASP.NET Core
+ScaffoldingReadMe.txt
+appsettings.*.json          # если не хочешь коммитить environment-specific настройки
+appsettings.Development.json
+appsettings.Staging.json
+appsettings.Production.json
+
+# Environment variables
+.env
+.env.*
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider / ReSharper
+.idea/
+*.DotSettings.user
+_ReSharper*/
+*.[Rr]e[Ss]harper
+
+# Visual Studio Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Test results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+
+# Coverage
+CodeCoverage/
+coverage/
+*.coverage
+*.cobertura.xml
+
+# Other
+~$*
+*~
+*.binlog
+*.log
+
+# NuGet
+packages/
+*.nuget.cache
+*.nuget.gpack
+
+# Entity Framework migrations (если нужно игнорировать только временные)
+# /Migrations/*  ← раскомментируй, если хочешь коммитить только структуру, а не все миграции
+
+# Docker (если используешь)
+.docker/
+.dockerignore
+
+# MacOS / Linux
+.DS_Store
+*.DS_Store
