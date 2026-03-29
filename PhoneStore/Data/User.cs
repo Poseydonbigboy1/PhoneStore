@@ -12,6 +12,8 @@ namespace PhoneStore.Data
         [Required]
         public String Password { get; set; }
         public ERole Roles { get; set; }
+
+        public ICollection<Order> Orders { get; set; } = new List<Order>();
     }
 
     public enum ERole
