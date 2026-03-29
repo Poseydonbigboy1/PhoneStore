@@ -19,7 +19,17 @@ namespace PhoneStore.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().HasData(SeedData.CreateUsers());
+            var users = SeedData.CreateUsers();
+            var components = SeedData.CreateComponents();
+            var products = SeedData.CreateProducts();
+            var skus = SeedData.CreateSkus(products);
+            var productComponents = SeedData.CreateProductComponents(products, skus, components);
+
+            modelBuilder.Entity<User>().HasData(users);
+            modelBuilder.Entity<Component>().HasData(components);
+            modelBuilder.Entity<Product>().HasData(products);
+            modelBuilder.Entity<Sku>().HasData(skus);
+            modelBuilder.Entity<ProductComponent>().HasData(productComponents);
 
             modelBuilder.Entity<Component>()
                 .Property(e => e.DataType)
