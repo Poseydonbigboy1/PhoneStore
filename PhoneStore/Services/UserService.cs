@@ -5,25 +5,29 @@ namespace PhoneStore.Services
 {
     public class UserService
     {
-        public User? GetById(Guid id) 
+
+        private readonly ApplicationContext _db;
+
+        public UserService(ApplicationContext db)
         {
-            using (ApplicationContext db = new ApplicationContext()) 
-            {
-                return db.Users
+            _db = db;
+        }
+        public User? GetById(Guid id)
+        {
+            return _db.Users
                     .FirstOrDefault(u => u.Id == id);
-            }
+
         }
 
-        public List<User> GetDataByFilter(UserFilter filter) 
+        public List<User> GetDataByFilter(UserFilter filter)
         {
-            using (ApplicationContext db = new ApplicationContext())
-            {
-                return db.Users
-                    .Where(user => filter.Login != null ? user.Login == filter.Login : true)
-                    .Skip(filter.Skip)
-                    .Take(filter.Take)
-                    .ToList();
-            }
+
+            return _db.Users
+                .Where(user => filter.Login != null ? user.Login == filter.Login : true)
+                .Skip(filter.Skip)
+                .Take(filter.Take)
+                .ToList();
+
         }
     }
 }

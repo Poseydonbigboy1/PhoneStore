@@ -9,78 +9,76 @@ namespace PhoneStore.Services
     {
         private readonly PasswordHasher<User> _hasher = new();
         private readonly IConfiguration _config;
-        public AuthorizeService(IConfiguration config) 
+        private readonly ApplicationContext _db;
+
+        public AuthorizeService(IConfiguration config, ApplicationContext db)
         {
             _config = config;
+            _db = db;
         }
 
         public ResultObject<string> Login(LoginModel model)
         {
             try
             {
-                using (var db = new ApplicationContext())
+                var user = _db.Users
+                         .FirstOrDefault(f => f.Login == model.Login);
+
+                if (user != null)
                 {
-                    var user  = db.Users
-                        .FirstOrDefault(f => f.Login == model.Login);
-
-                    if (user != null)
-                    { 
-                        var isPasswordValid = _hasher.VerifyHashedPassword(user,user.Password, model.Password);
-                        if (isPasswordValid == PasswordVerificationResult.Success)
-                        {
-                            var signingKey = _config.GetSection("Settings").GetValue<string>("SigningKey");
-                            var token = JwtService.GenerateToken(user.Login, user.Roles.ToString(), signingKey);                            
-
-                            return new ResultObject<string>() { IsSuccess = true, Data = token};
-                        } else
-                        {
-                            return new ResultObject<string>() { IsSuccess = false, Message = "Не верный пароль" };
-                        }
-                    } else
+                    var isPasswordValid = _hasher.VerifyHashedPassword(user, user.Password, model.Password);
+                    if (isPasswordValid == PasswordVerificationResult.Success)
                     {
-                        return new ResultObject<string>() { IsSuccess = false, Message = "Не верный логин" };
+                        var signingKey = _config.GetSection("Settings").GetValue<string>("SigningKey");
+                        var token = JwtService.GenerateToken(user.Login, user.Roles.ToString(), signingKey);
+
+                        return new ResultObject<string>() { IsSuccess = true, Data = token };
+                    }
+                    else
+                    {
+                        return new ResultObject<string>() { IsSuccess = false, Message = "Не верный пароль" };
                     }
                 }
+                else
+                {
+                    return new ResultObject<string>() { IsSuccess = false, Message = "Не верный логин" };
+                }
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 return new ResultObject<string>() { IsSuccess = false, Message = ex.Message };
             }
         }
 
-        public void Registration(RegisterModel model) { 
+        public void Registration(RegisterModel model)
+        {
             try
             {
-                using (var db = new ApplicationContext())
+                var user = new User()
                 {
-                    var user = new User()
-                    {
-                        Login = model.Login,
-                        Name = model.Name,
-                        Roles = ERole.CUSTOMER,
-                    };
+                    Login = model.Login,
+                    Name = model.Name,
+                    Roles = ERole.CUSTOMER,
+                };
 
-                    user.Password = _hasher.HashPassword(user, model.Password);
+                user.Password = _hasher.HashPassword(user, model.Password);
 
-                    db.Users.Add(user);
-                    db.SaveChanges();
-                }
+                _db.Users.Add(user);
+                _db.SaveChanges();
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 throw new Exception("Ошибка регистрации");
             }
         }
 
         public string GetHash(LoginModel model)
         {
-            using (var db = new ApplicationContext())
-            {
-                var user = db.Users
-                       .FirstOrDefault(f => f.Login == model.Login);
+            var user = _db.Users
+                        .FirstOrDefault(f => f.Login == model.Login);
 
-                return _hasher.HashPassword(user, model.Password);
-            }
-                
+            return _hasher.HashPassword(user, model.Password);
+
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace PhoneStore.Data.Seeds
 {
-    public static class SeedData
+    public static partial class SeedData
     {
         public static List<User> CreateUsers() 
         {
