@@ -4,6 +4,7 @@ namespace PhoneStore.Data.Seeds
 {
     public static partial class SeedData
     {
+        // Добавляет дефолтных пользователей в БД
         public static List<User> CreateUsers() 
         {
             var passwordHasher = new PasswordHasher<User>();

@@ -2,6 +2,7 @@ namespace PhoneStore.Data.Seeds;
 
 public static partial class SeedData
 {
+    // Доабвялет пару заказов в БД
     public static List<Order> CreateOrders(List<User> users, List<Sku> skus)
     {
         var orders = new List<Order>();
