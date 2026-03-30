@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
 using PhoneStore.Services;
 using System.Text;
+using PhoneStore.Data;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +20,11 @@ if (signingKey == null)
 {
     throw new Exception("В конфиге не указан SigningKey");
 }
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+builder.Services.AddDbContext<ApplicationContext>(options =>
+    options.UseNpgsql(connectionString));
 
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<AuthorizeService>();
