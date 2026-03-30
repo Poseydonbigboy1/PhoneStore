@@ -24,10 +24,18 @@ if (signingKey == null)
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddDbContext<ApplicationContext>(options =>
-    options.UseNpgsql(connectionString));
+    options.UseNpgsql(connectionString, npgsqlOptions =>
+    {
+        npgsqlOptions.EnableRetryOnFailure(
+            maxRetryCount: 5,
+            maxRetryDelay: TimeSpan.FromSeconds(5),
+            errorCodesToAdd: null);
+    })
+);
 
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<AuthorizeService>();
+builder.Services.AddScoped<ProductService>();
 
 builder.Services.AddAuthentication(options =>
 {

@@ -9,10 +9,10 @@ namespace PhoneStore.Models
     public class PoductViewModel
     {
         public string Title { get; set; }
-        public List<string> Images { get; set; } = [];
+        public List<string> Images { get; set; } = new List<string>();
         public double Price { get; set; }
         public double Discount { get; set; }
-        public List<ComponentViewModel> Components { get; set; } = [];
+        public List<ComponentViewModel> Components { get; set; } = new List<ComponentViewModel>();
     }
 
     public class ComponentViewModel

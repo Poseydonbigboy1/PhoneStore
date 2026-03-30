@@ -9,7 +9,7 @@ namespace PhoneStore.Models.Filters
     {
         public int Skip { get; set; } = 0;
         public int Take { get; set; } = 20;
-        public List<ProductFilterValue> FilterValues { get; set; } = [];
+        public List<ProductFilterValue> FilterValues { get; set; } = new List<ProductFilterValue>();
     }
 
     public class ProductFilterValue

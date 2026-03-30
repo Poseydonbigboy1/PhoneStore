@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
 using PhoneStore.Data.Seeds;
 
 namespace PhoneStore.Data
@@ -60,7 +61,7 @@ namespace PhoneStore.Data
                 .HasConversion<string>();
 
             modelBuilder.Entity<ProductComponent>()
-                .Property(e => e.Value)
+                .Property(e => e.ValueJson)
                 .HasColumnType("jsonb");
         }
 
