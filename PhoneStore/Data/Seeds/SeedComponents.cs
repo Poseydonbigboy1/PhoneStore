@@ -82,6 +82,18 @@ namespace PhoneStore.Data.Seeds
                     Title = "NFC",
                     Description = "Наличие чипа для бесконтактной оплаты",
                     DataType = EDataType.BOOLEAN
+                },
+                new Component()
+                {
+                    Title = "Модель",
+                    Description = "Модель устройства`",
+                    DataType = EDataType.STRING
+                },
+                new Component()
+                {
+                    Title = "Assset",
+                    Description = "Фото, Видео, 3D модель устройства",
+                    DataType = EDataType.STRING
                 }
             };
         }

@@ -19,6 +19,7 @@ namespace PhoneStore.Data
         public Component? Component { get; set; }
         [Required]
         public string ValueJson { get; set; } = "null";
+        public bool Filtering { get; set; } = true;
 
         [NotMapped]
         public object? Value
