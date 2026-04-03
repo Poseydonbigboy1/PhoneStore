@@ -17,6 +17,30 @@ namespace PhoneStore.Services
             _db = db;
         }
 
+        public IEnumerable<object> GetFilters()
+        {
+            var componentsFromDb = _db.Components
+                .Include(c => c.ProductComponents)
+                .ToList();
+
+            var filters = componentsFromDb.Select(c => new
+                {
+                    Id = c.Id,
+                    Title = c.Title,
+                    DataType = c.DataType,
+                    Values = c.ProductComponents
+                            .Select(pc => pc.Value)
+                            .Where(v => v != null)
+                            .GroupBy(v => v.ToString())
+                            .Select(g => g.First())
+                            .ToList()
+                })
+                .Where(c => c.Values.Any())
+                .ToList();
+
+            return filters;
+        }
+
 
         public IEnumerable<PoductViewModel> GetProductsByFilter(ProductFilter filter)
         {
@@ -24,7 +48,7 @@ namespace PhoneStore.Services
                 .Include(i => i.Component)
                 .Include(i => i.Sku)
                     .ThenInclude(i => i.Product);
-            
+
             var skusFiltered = new HashSet<Guid>();
             if (filter.FilterValues != null && filter.FilterValues.Any())
             {
@@ -87,7 +111,7 @@ namespace PhoneStore.Services
             if (string.IsNullOrWhiteSpace(value))
                 return true;
 
-            var actual = pc.Value?.Value?.ToString() ?? string.Empty;
+            var actual = pc.Value?.ToString() ?? string.Empty;
             if (string.IsNullOrEmpty(actual))
                 return false;
 

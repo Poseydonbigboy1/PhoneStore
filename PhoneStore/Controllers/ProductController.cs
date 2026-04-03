@@ -21,6 +21,20 @@ namespace PhoneStore.Controllers
             _productService = productService;
         }
 
+        [HttpGet("filters")]
+        public ActionResult<ResultObject<IEnumerable<object>>> GetFilters()
+        {
+            try
+            {
+                var filters = _productService.GetFilters();
+                return ResultObject<IEnumerable<object>>.Success(filters);
+            }
+            catch (Exception ex)
+            {
+                return ResultObject<IEnumerable<object>>.Error(ex);
+            }
+        }
+
         [HttpPost("filter")]
         public ActionResult<ResultObject<IEnumerable<PoductViewModel>>> GetByFilter([FromBody] ProductFilter filter)
         {

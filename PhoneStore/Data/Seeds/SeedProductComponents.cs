@@ -27,7 +27,7 @@ namespace PhoneStore.Data.Seeds
                         SkuId = skuId,
                         ComponentId = componentId,
                         // Предполагается, что у вас есть модель-обертка для значения
-                        Value = new ProductComponentValue { Value = value }
+                        Value =  value
                     });
                 }
             }

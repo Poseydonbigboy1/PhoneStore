@@ -18,19 +18,16 @@ namespace PhoneStore.Data
         public Sku? Sku { get; set; }
         public Component? Component { get; set; }
         [Required]
-        public string ValueJson { get; set; } = JsonSerializer.Serialize(new ProductComponentValue());
+        public string ValueJson { get; set; } = "null";
 
         [NotMapped]
-        public ProductComponentValue Value
+        public object? Value
         {
-            get => JsonSerializer.Deserialize<ProductComponentValue>(ValueJson) ?? new ProductComponentValue();
+            get
+            {
+                return JsonSerializer.Deserialize<object>(ValueJson);
+            }
             set => ValueJson = JsonSerializer.Serialize(value);
         }
-    }
-
-    public class ProductComponentValue
-    {
-        public object? Value { get; set; }
-        public double Price { get; set; } = 0;
     }
 }

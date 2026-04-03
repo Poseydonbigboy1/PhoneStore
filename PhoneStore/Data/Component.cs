@@ -16,6 +16,7 @@ namespace PhoneStore.Data
         public EDataType DataType { get; set; }
         // Если понадобится делать ограничения для типов jsonb
         // public DataTypeMeta DataTypeMeta { get; set; }
+        public ICollection<ProductComponent> ProductComponents { get; set; } = new List<ProductComponent>();
     }
 
     public enum EDataType
