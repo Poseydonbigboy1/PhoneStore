@@ -7,94 +7,42 @@ namespace PhoneStore.Data.Seeds
 {
     public static partial class SeedData
     {
-        public static List<Component> CreateComponents()
+        // Метод теперь зависит от категорий
+        public static List<Component> CreateComponents(List<ComponentCategory> categories)
         {
-            return new List<Component>()
+            var mainCat = categories.First(c => c.Title == "Основные").Id;
+            var screenCat = categories.First(c => c.Title == "Экран").Id;
+            var memoryCat = categories.First(c => c.Title == "Память и процессор").Id;
+            var cameraCat = categories.First(c => c.Title == "Камера").Id;
+            var connectivityCat = categories.First(c => c.Title == "Связь").Id;
+            var powerCat = categories.First(c => c.Title == "Питание").Id;
+
+            return new List<Component>
             {
-                new Component()
-                {
-                    Title = "Цвет",
-                    Description = "Цвет корпуса устройства",
-                    DataType = EDataType.STRING
-                },
-                new Component()
-                {
-                    Title = "ОЗУ",
-                    Description = "Объем оперативной памяти (ГБ)",
-                    DataType = EDataType.INT
-                },
-                new Component()
-                {
-                    Title = "Встроенная память",
-                    Description = "Объем накопителя данных (ГБ/ТБ)",
-                    DataType = EDataType.INT
-                },
-                new Component()
-                {
-                    Title = "Процессор",
-                    Description = "Модель и частота центрального процессора",
-                    DataType = EDataType.STRING
-                },
-                new Component()
-                {
-                    Title = "Диагональ экрана",
-                    Description = "Размер дисплея в дюймах",
-                    DataType = EDataType.DOUBLE
-                },
-                new Component()
-                {
-                    Title = "Тип матрицы",
-                    Description = "Технология изготовления экрана (OLED, AMOLED, IPS)",
-                    DataType = EDataType.STRING
-                },
-                new Component()
-                {
-                    Title = "Емкость аккумулятора",
-                    Description = "Объем батареи в мАч",
-                    DataType = EDataType.INT
-                },
-                new Component()
-                {
-                    Title = "Основная камера",
-                    Description = "Разрешение модулей тыловой камеры (Мп)",
-                    DataType = EDataType.INT
-                },
-                new Component()
-                {
-                    Title = "Фронтальная камера",
-                    Description = "Разрешение селфи-камеры (Мп)",
-                    DataType = EDataType.INT
-                },
-                new Component()
-                {
-                    Title = "Операционная система",
-                    Description = "Версия установленной ОС (iOS, Android)",
-                    DataType = EDataType.STRING
-                },
-                new Component()
-                {
-                    Title = "Поддержка 5G",
-                    Description = "Наличие возможности работы в сетях пятого поколения",
-                    DataType = EDataType.BOOLEAN
-                },
-                new Component()
-                {
-                    Title = "NFC",
-                    Description = "Наличие чипа для бесконтактной оплаты",
-                    DataType = EDataType.BOOLEAN
-                },
-                new Component()
-                {
-                    Title = "Модель",
-                    Description = "Модель устройства`",
-                    DataType = EDataType.STRING
-                },
-                new Component()
-                {
-                    Title = "Assset",
-                    Description = "Фото, Видео, 3D модель устройства",
-                    DataType = EDataType.STRING
-                }
+                // Основные
+                new Component { Id = Guid.NewGuid(), Title = "Цвет", DataType = EDataType.STRING, ComponentCategoryId = mainCat },
+                new Component { Id = Guid.NewGuid(), Title = "Операционная система", DataType = EDataType.STRING, ComponentCategoryId = mainCat },
+
+                // Экран
+                new Component { Id = Guid.NewGuid(), Title = "Диагональ экрана", DataType = EDataType.DOUBLE, ComponentCategoryId = screenCat },
+                new Component { Id = Guid.NewGuid(), Title = "Тип матрицы", DataType = EDataType.STRING, ComponentCategoryId = screenCat },
+                new Component { Id = Guid.NewGuid(), Title = "Разрешение экрана", DataType = EDataType.STRING, ComponentCategoryId = screenCat }, // Новый
+                new Component { Id = Guid.NewGuid(), Title = "Частота обновления экрана", DataType = EDataType.DOUBLE, ComponentCategoryId = screenCat }, // Новый
+
+                // Память и процессор
+                new Component { Id = Guid.NewGuid(), Title = "ОЗУ", DataType = EDataType.DOUBLE, ComponentCategoryId = memoryCat },
+                new Component { Id = Guid.NewGuid(), Title = "Встроенная память", DataType = EDataType.DOUBLE, ComponentCategoryId = memoryCat },
+                new Component { Id = Guid.NewGuid(), Title = "Процессор", DataType = EDataType.STRING, ComponentCategoryId = memoryCat },
+
+                // Камера
+                new Component { Id = Guid.NewGuid(), Title = "Основная камера", DataType = EDataType.DOUBLE, ComponentCategoryId = cameraCat },
+                new Component { Id = Guid.NewGuid(), Title = "Фронтальная камера", DataType = EDataType.DOUBLE, ComponentCategoryId = cameraCat },
+                // Связь
+                new Component { Id = Guid.NewGuid(), Title = "NFC", DataType = EDataType.BOOLEAN, ComponentCategoryId = connectivityCat },
+                new Component { Id = Guid.NewGuid(), Title = "Поддержка 5G", DataType = EDataType.BOOLEAN, ComponentCategoryId = connectivityCat },
+
+                // Питание
+                new Component { Id = Guid.NewGuid(), Title = "Емкость аккумулятора", DataType = EDataType.DOUBLE, ComponentCategoryId = powerCat }
             };
         }
     }

@@ -13,6 +13,8 @@ namespace PhoneStore.Data
         public DbSet<ProductComponent> ProductComponents { get; set; } = null!;
         public DbSet<Order> Orders { get; set; } = null!;
         public DbSet<OrderItem> OrderItems { get; set; } = null!;
+        public DbSet<Brand> Brands { get; set; } = null!;
+        public DbSet<ComponentCategory> ComponentCategories { get; set; } = null!;
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
         : base(options)
@@ -23,23 +25,34 @@ namespace PhoneStore.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             var users = SeedData.CreateUsers();
-            var components = SeedData.CreateComponents();
-            var products = SeedData.CreateProducts();
+            var brands = SeedData.CreateBrands();
+            var categories = SeedComponentCategories.CreateComponentCategories();
+            var products = SeedData.CreateProducts(brands);
+            var components = SeedData.CreateComponents(categories);
             var skus = SeedData.CreateSkus(products);
             var productComponents = SeedData.CreateProductComponents(products, skus, components);
-            var orders = SeedData.CreateOrders(users, skus);
+            var (orders, orderItems) = SeedData.CreateOrders(users, skus);
 
             modelBuilder.Entity<User>().HasData(users);
-            modelBuilder.Entity<Component>().HasData(components);
+            modelBuilder.Entity<Brand>().HasData(brands);
+            modelBuilder.Entity<ComponentCategory>().HasData(categories);
             modelBuilder.Entity<Product>().HasData(products);
+            modelBuilder.Entity<Component>().HasData(components);
             modelBuilder.Entity<Sku>().HasData(skus);
             modelBuilder.Entity<ProductComponent>().HasData(productComponents);
-
-            var orderItems = orders.SelectMany(o => o.OrderItems).ToList();
-            orders.ForEach(o => o.OrderItems = new List<OrderItem>());
-            
             modelBuilder.Entity<Order>().HasData(orders);
             modelBuilder.Entity<OrderItem>().HasData(orderItems);
+
+            // Настройка связей
+            modelBuilder.Entity<Product>()
+                .HasOne(p => p.Brand)
+                .WithMany(b => b.Products)
+                .HasForeignKey(p => p.BrandId);
+
+            modelBuilder.Entity<Component>()
+                .HasOne(c => c.ComponentCategory)
+                .WithMany(cc => cc.Components)
+                .HasForeignKey(c => c.ComponentCategoryId);
 
             modelBuilder.Entity<Order>()
                 .HasOne(o => o.User)

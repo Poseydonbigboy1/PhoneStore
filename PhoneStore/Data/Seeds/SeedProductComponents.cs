@@ -81,6 +81,55 @@ namespace PhoneStore.Data.Seeds
                 AddComponentToSku(sku.Id, "Диагональ экрана", 6.8);
             }
 
+            // --- Общие характеристики для iPhone 15 Pro ---
+            var iphoneProduct = products.First(p => p.Title == "iPhone 15 Pro");
+            iphoneSkus = skus.Where(s => s.ProductId == iphoneProduct.Id).ToList();
+            
+            // Добавляем общие характеристики, которые одинаковы для всех вариаций iPhone 15 Pro
+            foreach (var sku in iphoneSkus)
+            {
+                productComponents.AddRange(new List<ProductComponent>
+                {
+                    new ProductComponent { ComponentId = components.First(c => c.Title == "Процессор").Id, SkuId = sku.Id, Value = "A17 Pro" },
+                    new ProductComponent { ComponentId = components.First(c => c.Title == "Диагональ экрана").Id, SkuId = sku.Id, Value = 6.1 },
+                    new ProductComponent { ComponentId = components.First(c => c.Title == "Тип матрицы").Id, SkuId = sku.Id, Value = "Super Retina XDR (OLED)" },
+                    new ProductComponent { ComponentId = components.First(c => c.Title == "Разрешение экрана").Id, SkuId = sku.Id, Value = "2556x1179" },
+                    new ProductComponent { ComponentId = components.First(c => c.Title == "Частота обновления экрана").Id, SkuId = sku.Id, Value = 120 },
+                    new ProductComponent { ComponentId = components.First(c => c.Title == "Основная камера").Id, SkuId = sku.Id, Value = 48 },
+                    new ProductComponent { ComponentId = components.First(c => c.Title == "Фронтальная камера").Id, SkuId = sku.Id, Value = 12 },
+                    new ProductComponent { ComponentId = components.First(c => c.Title == "Емкость аккумулятора").Id, SkuId = sku.Id, Value = 3274 },
+                    new ProductComponent { ComponentId = components.First(c => c.Title == "NFC").Id, SkuId = sku.Id, Value = true },
+                    new ProductComponent { ComponentId = components.First(c => c.Title == "Поддержка 5G").Id, SkuId = sku.Id, Value = true },
+                    new ProductComponent { ComponentId = components.First(c => c.Title == "Операционная система").Id, SkuId = sku.Id, Value = "iOS 17" }
+                });
+            }
+
+            // --- Уникальные характеристики для каждой вариации iPhone (память, цвет, ОЗУ) ---
+            // ... (существующий код для уникальных характеристик iPhone)
+
+            // --- Общие характеристики для Samsung Galaxy S25 Ultra ---
+            var samsungProduct = products.First(p => p.Title == "Samsung Galaxy S25 Ultra");
+            samsungSkus = skus.Where(s => s.ProductId == samsungProduct.Id).ToList();
+            
+            // Добавляем общие характеристики для всех вариаций Samsung
+            foreach (var sku in samsungSkus)
+            {
+                productComponents.AddRange(new List<ProductComponent>
+                {
+                    new ProductComponent { ComponentId = components.First(c => c.Title == "Процессор").Id, SkuId = sku.Id, Value = "Snapdragon 8 Gen 3 for Galaxy" },
+                    new ProductComponent { ComponentId = components.First(c => c.Title == "Диагональ экрана").Id, SkuId = sku.Id, Value = 6.8 },
+                    new ProductComponent { ComponentId = components.First(c => c.Title == "Тип матрицы").Id, SkuId = sku.Id, Value = "Dynamic AMOLED 2X" },
+                    new ProductComponent { ComponentId = components.First(c => c.Title == "Разрешение экрана").Id, SkuId = sku.Id, Value = "3120x1440" },
+                    new ProductComponent { ComponentId = components.First(c => c.Title == "Частота обновления экрана").Id, SkuId = sku.Id, Value = 120 },
+                    new ProductComponent { ComponentId = components.First(c => c.Title == "Основная камера").Id, SkuId = sku.Id, Value = 200 },
+                    new ProductComponent { ComponentId = components.First(c => c.Title == "Фронтальная камера").Id, SkuId = sku.Id, Value = 12 },
+                    new ProductComponent { ComponentId = components.First(c => c.Title == "Емкость аккумулятора").Id, SkuId = sku.Id, Value = 5000 },
+                    new ProductComponent { ComponentId = components.First(c => c.Title == "NFC").Id, SkuId = sku.Id, Value = true },
+                    new ProductComponent { ComponentId = components.First(c => c.Title == "Поддержка 5G").Id, SkuId = sku.Id, Value = true },
+                    new ProductComponent { ComponentId = components.First(c => c.Title == "Операционная система").Id, SkuId = sku.Id, Value = "Android 14" }
+                });
+            }
+
             return productComponents;
         }
     }

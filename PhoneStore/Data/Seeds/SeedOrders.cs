@@ -3,9 +3,10 @@ namespace PhoneStore.Data.Seeds;
 public static partial class SeedData
 {
     // Доабвялет пару заказов в БД
-    public static List<Order> CreateOrders(List<User> users, List<Sku> skus)
+    public static (List<Order> orders, List<OrderItem> orderItems) CreateOrders(List<User> users, List<Sku> skus)
     {
         var orders = new List<Order>();
+        var orderItems = new List<OrderItem>();
         var random = new Random();
 
         // Создаем заказы для первого пользователя
@@ -19,7 +20,6 @@ public static partial class SeedData
             OrderDate = DateTime.UtcNow.AddDays(-10),
             Status = EOrderStatus.Delivered,
             ShippingAddress = "123 Main St, Anytown, USA",
-            OrderItems = new List<OrderItem>()
         };
 
         foreach (var sku in user1Skus)
@@ -33,9 +33,9 @@ public static partial class SeedData
                 Quantity = quantity,
                 Price = (decimal)sku.Price // Фиксируем цену на момент покупки
             };
-            order1.OrderItems.Add(orderItem);
+            orderItems.Add(orderItem);
         }
-        order1.TotalAmount = order1.OrderItems.Sum(oi => oi.Price * oi.Quantity);
+        order1.TotalAmount = orderItems.Where(oi => oi.OrderId == order1.Id).Sum(oi => oi.Price * oi.Quantity);
         orders.Add(order1);
 
         // Создаем заказы для второго пользователя
@@ -49,7 +49,6 @@ public static partial class SeedData
             OrderDate = DateTime.UtcNow.AddDays(-2),
             Status = EOrderStatus.Shipped,
             ShippingAddress = "456 Oak Ave, Someplace, USA",
-            OrderItems = new List<OrderItem>()
         };
         
         var skuForOrder2 = user2Skus.First();
@@ -62,10 +61,10 @@ public static partial class SeedData
             Quantity = quantity2,
             Price = (decimal)skuForOrder2.Price
         };
-        order2.OrderItems.Add(orderItem2);
-        order2.TotalAmount = order2.OrderItems.Sum(oi => oi.Price * oi.Quantity);
+        orderItems.Add(orderItem2);
+        order2.TotalAmount = orderItems.Where(oi => oi.OrderId == order2.Id).Sum(oi => oi.Price * oi.Quantity);
         orders.Add(order2);
 
-        return orders;
+        return (orders, orderItems);
     }
 }

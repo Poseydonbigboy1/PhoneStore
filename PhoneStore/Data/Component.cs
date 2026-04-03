@@ -17,6 +17,9 @@ namespace PhoneStore.Data
         public ECategoryType CategoryType { get; set; }
         // Если понадобится делать ограничения для типов jsonb
         // public DataTypeMeta DataTypeMeta { get; set; }
+        public Guid ComponentCategoryId { get; set; }
+        public ComponentCategory ComponentCategory { get; set; } = null!;
+        
         public ICollection<ProductComponent> ProductComponents
         { get; set; } = new List<ProductComponent>();
     }
