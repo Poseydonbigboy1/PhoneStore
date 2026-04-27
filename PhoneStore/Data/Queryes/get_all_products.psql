@@ -1,0 +1,28 @@
+-- Просмотр всех товаров с их атрибутами
+SELECT 
+    p."Id" AS "ProductId",
+    p."Title" AS "ProductName",
+    b."Title" AS "Brand",
+    s."Id" AS "SkuId",
+    s."Price",
+    s."Amount",
+    string_agg(
+        concat(cc."Title", ' -> ', c."Title", ': ', pc."ValueJson"), 
+        '; ' -- Разделитель между разными атрибутами
+    ) AS "AllAttributes"
+FROM "Products" p
+LEFT JOIN "Brands" b ON p."BrandId" = b."Id"
+JOIN "Skus" s ON p."Id" = s."ProductId"
+LEFT JOIN "ProductComponents" pc ON s."Id" = pc."SkuId"
+LEFT JOIN "Components" c ON pc."ComponentId" = c."Id"
+LEFT JOIN "ComponentCategories" cc ON c."ComponentCategoryId" = cc."Id"
+GROUP BY 
+    p."Id", 
+    p."Title", 
+    b."Title", 
+    s."Id", 
+    s."Price", 
+    s."Amount"
+ORDER BY 
+    p."Title", 
+    s."Price";
