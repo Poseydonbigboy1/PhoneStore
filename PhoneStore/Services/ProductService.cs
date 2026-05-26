@@ -70,7 +70,7 @@ namespace PhoneStore.Services
         }
 
 
-        public IEnumerable<PoductViewModel> GetProductsByFilter(ProductFilter filter)
+        public ProductsResult GetProductsByFilter(ProductFilter filter)
         {
             var baseQuery = _db.ProductComponents
                 .Include(i => i.Component)
@@ -126,6 +126,7 @@ namespace PhoneStore.Services
                 .GroupBy(pc => pc.SkuId)
                 .Select(g => new
                 {
+                    SkuId = g.Key,
                     Product = new PoductViewModel
                     {
                         Title = g.First().Sku.Product.Title,
@@ -139,7 +140,10 @@ namespace PhoneStore.Services
                         }).ToList()
                     },
                     Popularity = popularityBySku.TryGetValue(g.Key, out var value) ? value : 0
-                });
+                })
+                .ToList();
+
+            var totalCount = productsWithPopularity.Count;
 
             productsWithPopularity = filter.SortBy switch
             {
@@ -160,7 +164,11 @@ namespace PhoneStore.Services
                 .Select(x => x.Product)
                 .ToList();
 
-            return products;
+            return new ProductsResult
+            {
+                Count = totalCount,
+                Products = products
+            };
         }
 
         private static bool IsComponentValueMatch(ProductComponent pc, string? value, string mode)

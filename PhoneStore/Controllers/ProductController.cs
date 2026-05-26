@@ -36,16 +36,16 @@ namespace PhoneStore.Controllers
         }
 
         [HttpPost("filter")]
-        public ActionResult<ResultObject<IEnumerable<PoductViewModel>>> GetByFilter([FromBody] ProductFilter filter)
+        public ActionResult<ResultObject<Models.ProductsResult>> GetByFilter([FromBody] ProductFilter filter)
         {
             try
             {
-                var products = _productService.GetProductsByFilter(filter);
-                return ResultObject<IEnumerable<PoductViewModel>>.Success(products);
+                var result = _productService.GetProductsByFilter(filter);
+                return ResultObject<Models.ProductsResult>.Success(result);
             }
             catch (Exception ex)
             {
-                return ResultObject<IEnumerable<PoductViewModel>>.Error(ex);
+                return ResultObject<Models.ProductsResult>.Error(ex);
             }
         }
 
@@ -75,12 +75,12 @@ namespace PhoneStore.Controllers
                     }
                 };
 
-                var products = _productService.GetProductsByFilter(filter);
-                return ResultObject<IEnumerable<PoductViewModel>>.Success(products);
+                var result = _productService.GetProductsByFilter(filter);
+                return ResultObject<Models.ProductsResult>.Success(result);
             }
             catch (Exception ex)
             {
-                return ResultObject<IEnumerable<PoductViewModel>>.Error(ex);
+                return ResultObject<Models.ProductsResult>.Error(ex);
             }
         }
         
