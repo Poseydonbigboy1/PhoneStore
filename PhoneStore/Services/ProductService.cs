@@ -51,19 +51,19 @@ namespace PhoneStore.Services
 
             var filters = _db.Components
                 .Join(
-                    _db.ProductComponents,      // С чем объединяем
-                    c => c.Id,                      // Внешний ключ в Components
-                    pc => pc.ComponentId,           // Ключ в ProductComponents
-                    (c, pc) => new { c, pc }        // Результат объединения
+                    _db.ProductComponents,
+                    c => c.Id,
+                    pc => pc.ComponentId,
+                    (c, pc) => new { c, pc }
                 )
-                .Where(joined => joined.pc.Filtering == true) // Фильтрация
+                .Where(joined => joined.pc.Filtering == true)
                 .Select(joined => new
                 {
                     group_title = joined.c.Title,
                     data_type = joined.c.DataType,
                     filter_value = joined.pc.ValueJson
                 })
-                .Distinct()                         // Аналог вашего GROUP BY для устранения дублей
+                .Distinct()
                 .OrderBy(x => x.group_title)
                 .ToList();
             return [.. filterBrands, .. filterPrice, .. filters];
