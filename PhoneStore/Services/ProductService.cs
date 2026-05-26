@@ -19,26 +19,54 @@ namespace PhoneStore.Services
 
         public IEnumerable<object> GetFilters()
         {
-            var componentsFromDb = _db.Components
-                .Include(c => c.ProductComponents)
-                .ToList();
 
-            var filters = componentsFromDb.Select(c => new
+            var filterBrands = _db.Products
+                .Where(p => p.Brand != null)
+                .Select(p => new
                 {
-                    Id = c.Id,
-                    Title = c.Title,
-                    DataType = c.DataType,
-                    Values = c.ProductComponents
-                            .Select(pc => pc.Value)
-                            .Where(v => v != null)
-                            .GroupBy(v => v.ToString())
-                            .Select(g => g.First())
-                            .ToList()
+                    group_title = "Брэнд",
+                    data_type = 0,
+                    filter_value = p.Brand.Title
                 })
-                .Where(c => c.Values.Any())
+                .Distinct()
                 .ToList();
 
-            return filters;
+            var minPrice = _db.Skus.Min(s => (decimal?)s.Price) ?? 0;
+            var maxPrice = _db.Skus.Max(s => (decimal?)s.Price) ?? 0;
+
+            var filterPrice = new List<object>{
+                new
+                {
+                    group_title = "Цена",
+                    data_type = 1,
+                    filter_value = minPrice
+                },
+                new
+                {
+                    group_title = "Цена",
+                    data_type = 1,
+                    filter_value = maxPrice
+                }
+            };
+
+            var filters = _db.Components
+                .Join(
+                    _db.ProductComponents,      // С чем объединяем
+                    c => c.Id,                      // Внешний ключ в Components
+                    pc => pc.ComponentId,           // Ключ в ProductComponents
+                    (c, pc) => new { c, pc }        // Результат объединения
+                )
+                .Where(joined => joined.pc.Filtering == true) // Фильтрация
+                .Select(joined => new
+                {
+                    group_title = joined.c.Title,
+                    data_type = joined.c.DataType,
+                    filter_value = joined.pc.ValueJson
+                })
+                .Distinct()                         // Аналог вашего GROUP BY для устранения дублей
+                .OrderBy(x => x.group_title)
+                .ToList();
+            return [.. filterBrands, .. filterPrice, .. filters];
         }
 
 
