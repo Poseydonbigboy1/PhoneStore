@@ -112,23 +112,52 @@ namespace PhoneStore.Services
                 filteredQuery = filteredQuery.Where(pc => skusFiltered.Contains(pc.SkuId));
             }
 
-            var products = filteredQuery
+            var popularityBySku = _db.OrderItems
+                .GroupBy(oi => oi.SkuId)
+                .Select(g => new
+                {
+                    SkuId = g.Key,
+                    TotalQuantity = g.Sum(oi => oi.Quantity)
+                })
+                .ToDictionary(x => x.SkuId, x => x.TotalQuantity);
+
+            var productsWithPopularity = filteredQuery
                 .AsEnumerable()
                 .GroupBy(pc => pc.SkuId)
-                .Select(g => new PoductViewModel
+                .Select(g => new
                 {
-                    Title = g.First().Sku.Product.Title,
-                    Price = g.First().Sku.Price,
-                    Discount = g.First().Sku.Discount,
-                    Components = g.Select(pc => new ComponentViewModel
+                    Product = new PoductViewModel
                     {
-                        Title = pc.Component.Title,
-                        Description = pc.Component.Description,
-                        DataType = pc.Component.DataType
-                    }).ToList()
-                })
+                        Title = g.First().Sku.Product.Title,
+                        Price = g.First().Sku.Price,
+                        Discount = g.First().Sku.Discount,
+                        Components = g.Select(pc => new ComponentViewModel
+                        {
+                            Title = pc.Component.Title,
+                            Description = pc.Component.Description,
+                            DataType = pc.Component.DataType
+                        }).ToList()
+                    },
+                    Popularity = popularityBySku.TryGetValue(g.Key, out var value) ? value : 0
+                });
+
+            productsWithPopularity = filter.SortBy switch
+            {
+                ProductSortBy.Price when filter.SortDirection == SortDirection.Descending =>
+                    productsWithPopularity.OrderByDescending(x => x.Product.Price),
+                ProductSortBy.Price =>
+                    productsWithPopularity.OrderBy(x => x.Product.Price),
+                ProductSortBy.Popularity when filter.SortDirection == SortDirection.Descending =>
+                    productsWithPopularity.OrderByDescending(x => x.Popularity),
+                ProductSortBy.Popularity =>
+                    productsWithPopularity.OrderBy(x => x.Popularity),
+                _ => productsWithPopularity.OrderBy(x => x.Product.Title),
+            };
+
+            var products = productsWithPopularity
                 .Skip(filter.Skip)
                 .Take(filter.Take)
+                .Select(x => x.Product)
                 .ToList();
 
             return products;
