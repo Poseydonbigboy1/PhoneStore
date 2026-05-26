@@ -16,9 +16,9 @@ namespace PhoneStore.Models.Filters
 
     public class ProductFilterValue
     {
-        public string ComponentTitle { get; set; }
-        public string Value { get; set; }
-        public string MatchMode { get; set; }
+        public string? ComponentTitle { get; set; }
+        public string? Value { get; set; }
+        public string? MatchMode { get; set; }
     }
 
     public enum ProductSortBy

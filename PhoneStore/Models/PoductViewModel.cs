@@ -8,7 +8,7 @@ namespace PhoneStore.Models
 {
     public class PoductViewModel
     {
-        public string Title { get; set; }
+        public string Title { get; set; } = string.Empty;
         public List<string> Images { get; set; } = new List<string>();
         public double Price { get; set; }
         public double Discount { get; set; }
@@ -17,8 +17,8 @@ namespace PhoneStore.Models
 
     public class ComponentViewModel
     {
-        public string Title { get; set; }
-        public string Description { get; set; }
+        public string Title { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
         public EDataType DataType { get; set; }
     }
 }

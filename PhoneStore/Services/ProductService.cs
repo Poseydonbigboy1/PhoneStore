@@ -7,6 +7,8 @@ using PhoneStore.Data;
 using PhoneStore.Models;
 using PhoneStore.Models.Filters;
 
+#nullable disable
+
 namespace PhoneStore.Services
 {
     public class ProductService
@@ -66,7 +68,11 @@ namespace PhoneStore.Services
                 .Distinct()
                 .OrderBy(x => x.group_title)
                 .ToList();
-            return [.. filterBrands, .. filterPrice, .. filters];
+                var combined = new List<object>();
+                combined.AddRange(filterBrands.Cast<object>());
+                combined.AddRange(filterPrice);
+                combined.AddRange(filters.Cast<object>());
+                return combined;
         }
 
 
@@ -75,19 +81,19 @@ namespace PhoneStore.Services
             var baseQuery = _db.ProductComponents
                 .Include(i => i.Component)
                 .Include(i => i.Sku)
-                    .ThenInclude(i => i.Product);
+                    .ThenInclude(i => i.Product!);
 
             var skusFiltered = new HashSet<Guid>();
             if (filter.FilterValues != null && filter.FilterValues.Any())
             {
                 foreach (var f in filter.FilterValues.Where(x => !string.IsNullOrWhiteSpace(x.ComponentTitle)))
                 {
-                    var componentTitle = f.ComponentTitle.Trim();
+                    var componentTitle = f.ComponentTitle!.Trim();
                     var value = f.Value?.Trim();
                     var mode = (f.MatchMode ?? "equals").ToLowerInvariant();
 
-                    var partialSkuIds = baseQuery
-                        .Where(pc => pc.Component.Title == componentTitle)
+                        var partialSkuIds = baseQuery
+                        .Where(pc => pc.Component!.Title == componentTitle)
                         .AsEnumerable()
                         .Where(pc => IsComponentValueMatch(pc, value, mode))
                         .Select(pc => pc.SkuId)
@@ -129,21 +135,20 @@ namespace PhoneStore.Services
                     SkuId = g.Key,
                     Product = new PoductViewModel
                     {
-                        Title = g.First().Sku.Product.Title,
-                        Price = g.First().Sku.Price,
-                        Discount = g.First().Sku.Discount,
+                        Title = g.First().Sku!.Product!.Title,
+                        Price = g.First().Sku!.Price,
+                        Discount = g.First().Sku!.Discount,
                         Components = g.Select(pc => new ComponentViewModel
                         {
-                            Title = pc.Component.Title,
-                            Description = pc.Component.Description,
+                            Title = pc.Component!.Title,
+                            Description = pc.Component!.Description,
                             DataType = pc.Component.DataType
                         }).ToList()
                     },
                     Popularity = popularityBySku.TryGetValue(g.Key, out var value) ? value : 0
-                })
-                .ToList();
+                });
 
-            var totalCount = productsWithPopularity.Count;
+            var totalCount = productsWithPopularity.Count();
 
             productsWithPopularity = filter.SortBy switch
             {
@@ -171,7 +176,7 @@ namespace PhoneStore.Services
             };
         }
 
-        private static bool IsComponentValueMatch(ProductComponent pc, string? value, string mode)
+        private static bool IsComponentValueMatch(ProductComponent pc, string value, string mode)
         {
             if (string.IsNullOrWhiteSpace(value))
                 return true;

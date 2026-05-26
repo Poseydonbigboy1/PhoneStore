@@ -50,7 +50,7 @@ namespace PhoneStore.Controllers
         }
 
         [HttpGet("filter-test")]
-        public ActionResult<ResultObject<IEnumerable<PoductViewModel>>> GetTestFilter()
+        public ActionResult<ResultObject<Models.ProductsResult>> GetTestFilter()
         {
             try
             {
