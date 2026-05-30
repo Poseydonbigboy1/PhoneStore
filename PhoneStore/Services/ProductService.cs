@@ -92,13 +92,30 @@ namespace PhoneStore.Services
                     var value = f.Value?.Trim();
                     var mode = (f.MatchMode ?? "equals").ToLowerInvariant();
 
-                        var partialSkuIds = baseQuery
-                        .Where(pc => pc.Component!.Title == componentTitle)
-                        .AsEnumerable()
-                        .Where(pc => IsComponentValueMatch(pc, value, mode))
-                        .Select(pc => pc.SkuId)
-                        .Distinct()
-                        .ToList();
+                    List<Guid> partialSkuIds;
+
+                    if (string.Equals(componentTitle, "брэнд", StringComparison.OrdinalIgnoreCase) ||
+                        string.Equals(componentTitle, "brand", StringComparison.OrdinalIgnoreCase))
+                    {
+                        partialSkuIds = _db.Skus
+                            .Include(s => s.Product)
+                                .ThenInclude(p => p.Brand)
+                            .AsEnumerable()
+                            .Where(s => s.Product != null && s.Product.Brand != null && IsStringMatch(s.Product.Brand.Title, value, mode))
+                            .Select(s => s.Id)
+                            .Distinct()
+                            .ToList();
+                    }
+                    else
+                    {
+                        partialSkuIds = baseQuery
+                            .Where(pc => pc.Component!.Title == componentTitle)
+                            .AsEnumerable()
+                            .Where(pc => IsComponentValueMatch(pc, value, mode))
+                            .Select(pc => pc.SkuId)
+                            .Distinct()
+                            .ToList();
+                    }
 
                     if (!skusFiltered.Any())
                     {
@@ -190,6 +207,24 @@ namespace PhoneStore.Services
                 "contains" => actual.Contains(value, StringComparison.OrdinalIgnoreCase),
                 "startsWith" => actual.StartsWith(value, StringComparison.OrdinalIgnoreCase),
                 "endsWith" => actual.EndsWith(value, StringComparison.OrdinalIgnoreCase),
+                _ => string.Equals(actual, value, StringComparison.OrdinalIgnoreCase),
+            };
+        }
+
+        private static bool IsStringMatch(string actual, string value, string mode)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                return true;
+
+            actual = actual ?? string.Empty;
+            if (string.IsNullOrEmpty(actual))
+                return false;
+
+            return mode switch
+            {
+                "contains" => actual.Contains(value, StringComparison.OrdinalIgnoreCase),
+                "startswith" => actual.StartsWith(value, StringComparison.OrdinalIgnoreCase),
+                "endswith" => actual.EndsWith(value, StringComparison.OrdinalIgnoreCase),
                 _ => string.Equals(actual, value, StringComparison.OrdinalIgnoreCase),
             };
         }
