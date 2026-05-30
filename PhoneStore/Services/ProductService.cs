@@ -201,9 +201,17 @@ namespace PhoneStore.Services
             }
 
             IQueryable<ProductComponent> filteredQuery = baseQuery;
-            if (skusFiltered.Any())
+            if (filter.FilterValues != null && filter.FilterValues.Any())
             {
-                filteredQuery = filteredQuery.Where(pc => skusFiltered.Contains(pc.SkuId));
+                if (skusFiltered.Any())
+                {
+                    filteredQuery = filteredQuery.Where(pc => skusFiltered.Contains(pc.SkuId));
+                }
+                else
+                {
+                    // Если были фильтры, но результат пуст (AND логика вернула пусто), вернём пустой результат
+                    filteredQuery = filteredQuery.Where(pc => false);
+                }
             }
 
             var popularityBySku = _db.OrderItems
