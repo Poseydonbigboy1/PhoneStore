@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Globalization;
 using Microsoft.EntityFrameworkCore;
 using PhoneStore.Data;
 using PhoneStore.Models;
@@ -86,45 +87,115 @@ namespace PhoneStore.Services
             var skusFiltered = new HashSet<Guid>();
             if (filter.FilterValues != null && filter.FilterValues.Any())
             {
-                foreach (var f in filter.FilterValues.Where(x => !string.IsNullOrWhiteSpace(x.ComponentTitle)))
+                var groups = filter.FilterValues
+                    .Where(x => !string.IsNullOrWhiteSpace(x.ComponentTitle))
+                    .GroupBy(x => x.ComponentTitle!.Trim(), StringComparer.OrdinalIgnoreCase);
+
+                foreach (var group in groups)
                 {
-                    var componentTitle = f.ComponentTitle!.Trim();
-                    var value = f.Value?.Trim();
-                    var mode = (f.MatchMode ?? "equals").ToLowerInvariant();
+                    var componentTitle = group.Key;
 
-                    List<Guid> partialSkuIds;
+                    List<Guid> groupSkuIds = new List<Guid>();
 
-                    if (string.Equals(componentTitle, "брэнд", StringComparison.OrdinalIgnoreCase) ||
-                        string.Equals(componentTitle, "brand", StringComparison.OrdinalIgnoreCase))
+                    if (string.Equals(componentTitle, "цена", StringComparison.OrdinalIgnoreCase) ||
+                        string.Equals(componentTitle, "price", StringComparison.OrdinalIgnoreCase))
                     {
-                        partialSkuIds = _db.Skus
-                            .Include(s => s.Product)
-                                .ThenInclude(p => p.Brand)
-                            .AsEnumerable()
-                            .Where(s => s.Product != null && s.Product.Brand != null && IsStringMatch(s.Product.Brand.Title, value, mode))
-                            .Select(s => s.Id)
-                            .Distinct()
-                            .ToList();
+                        double? min = null;
+                        double? max = null;
+
+                        foreach (var f in group)
+                        {
+                            var mode = (f.MatchMode ?? "equals").ToLowerInvariant();
+                            var val = f.Value?.Trim();
+                            if (string.IsNullOrWhiteSpace(val))
+                                continue;
+
+                            if (mode == "between")
+                            {
+                                var parts = val.Split('-', StringSplitOptions.RemoveEmptyEntries);
+                                if (parts.Length == 2 && double.TryParse(parts[0], NumberStyles.Any, CultureInfo.InvariantCulture, out var a) && double.TryParse(parts[1], NumberStyles.Any, CultureInfo.InvariantCulture, out var b))
+                                {
+                                    var lo = Math.Min(a, b);
+                                    var hi = Math.Max(a, b);
+                                    min = min.HasValue ? Math.Max(min.Value, lo) : lo;
+                                    max = max.HasValue ? Math.Min(max.Value, hi) : hi;
+                                }
+                            }
+                            else if (mode == "gte")
+                            {
+                                if (double.TryParse(val, NumberStyles.Any, CultureInfo.InvariantCulture, out var v))
+                                    min = min.HasValue ? Math.Max(min.Value, v) : v;
+                            }
+                            else if (mode == "lte")
+                            {
+                                if (double.TryParse(val, NumberStyles.Any, CultureInfo.InvariantCulture, out var v))
+                                    max = max.HasValue ? Math.Min(max.Value, v) : v;
+                            }
+                            else if (mode == "equals")
+                            {
+                                if (double.TryParse(val, NumberStyles.Any, CultureInfo.InvariantCulture, out var v))
+                                {
+                                    min = min.HasValue ? Math.Max(min.Value, v) : v;
+                                    max = max.HasValue ? Math.Min(max.Value, v) : v;
+                                }
+                            }
+                        }
+
+                        var skuQuery = _db.Skus.Include(s => s.Product).ThenInclude(p => p.Brand).AsQueryable();
+                        if (min.HasValue)
+                            skuQuery = skuQuery.Where(s => s.Price >= min.Value);
+                        if (max.HasValue)
+                            skuQuery = skuQuery.Where(s => s.Price <= max.Value);
+
+                        groupSkuIds = skuQuery.Select(s => s.Id).Distinct().ToList();
+                    }
+                    else if (string.Equals(componentTitle, "брэнд", StringComparison.OrdinalIgnoreCase) ||
+                             string.Equals(componentTitle, "brand", StringComparison.OrdinalIgnoreCase))
+                    {
+                        var union = new HashSet<Guid>();
+                        foreach (var f in group)
+                        {
+                            var mode = (f.MatchMode ?? "equals").ToLowerInvariant();
+                            var val = f.Value?.Trim();
+                            var matched = _db.Skus
+                                .Include(s => s.Product)
+                                    .ThenInclude(p => p.Brand)
+                                .AsEnumerable()
+                                .Where(s => s.Product != null && s.Product.Brand != null && IsStringMatch(s.Product.Brand.Title, val, mode))
+                                .Select(s => s.Id)
+                                .Distinct()
+                                .ToList();
+                            foreach (var id in matched) union.Add(id);
+                        }
+                        groupSkuIds = union.ToList();
                     }
                     else
                     {
-                        partialSkuIds = baseQuery
-                            .Where(pc => pc.Component!.Title == componentTitle)
-                            .AsEnumerable()
-                            .Where(pc => IsComponentValueMatch(pc, value, mode))
-                            .Select(pc => pc.SkuId)
-                            .Distinct()
-                            .ToList();
+                        var union = new HashSet<Guid>();
+                        foreach (var f in group)
+                        {
+                            var mode = (f.MatchMode ?? "equals").ToLowerInvariant();
+                            var val = f.Value?.Trim();
+                            var matched = baseQuery
+                                .Where(pc => pc.Component!.Title == componentTitle)
+                                .AsEnumerable()
+                                .Where(pc => IsComponentValueMatch(pc, val, mode))
+                                .Select(pc => pc.SkuId)
+                                .Distinct()
+                                .ToList();
+                            foreach (var id in matched) union.Add(id);
+                        }
+                        groupSkuIds = union.ToList();
                     }
 
                     if (!skusFiltered.Any())
                     {
-                        foreach (var id in partialSkuIds)
+                        foreach (var id in groupSkuIds)
                             skusFiltered.Add(id);
                     }
                     else
                     {
-                        skusFiltered.IntersectWith(partialSkuIds);
+                        skusFiltered.IntersectWith(groupSkuIds);
                     }
                 }
             }
