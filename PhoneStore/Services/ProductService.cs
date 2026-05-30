@@ -231,6 +231,7 @@ namespace PhoneStore.Services
                     SkuId = g.Key,
                     Product = new PoductViewModel
                     {
+                        ProductId = g.First().Sku!.Product!.Id,
                         Title = g.First().Sku!.Product!.Title,
                         Price = g.First().Sku!.Price,
                         Discount = g.First().Sku!.Discount,
@@ -290,6 +291,24 @@ namespace PhoneStore.Services
             };
         }
 
+        private static string GetComponentValueAsString(ProductComponent pc)
+        {
+            if (pc.Value == null)
+                return string.Empty;
+
+            return pc.Value switch
+            {
+                string s => s,
+                bool b => b.ToString(),
+                double d => d.ToString(CultureInfo.InvariantCulture),
+                float f => f.ToString(CultureInfo.InvariantCulture),
+                int i => i.ToString(CultureInfo.InvariantCulture),
+                long l => l.ToString(CultureInfo.InvariantCulture),
+                decimal m => m.ToString(CultureInfo.InvariantCulture),
+                _ => pc.Value.ToString() ?? string.Empty,
+            };
+        }
+
         private static bool IsStringMatch(string actual, string value, string mode)
         {
             if (string.IsNullOrWhiteSpace(value))
@@ -305,6 +324,90 @@ namespace PhoneStore.Services
                 "startswith" => actual.StartsWith(value, StringComparison.OrdinalIgnoreCase),
                 "endswith" => actual.EndsWith(value, StringComparison.OrdinalIgnoreCase),
                 _ => string.Equals(actual, value, StringComparison.OrdinalIgnoreCase),
+            };
+        }
+
+        /// <summary>Получить полную информацию о конкретном товаре (для карточки товара)</summary>
+        public ProductCardViewModel? GetProductById(Guid productId)
+        {
+            var product = _db.Products
+                .Include(p => p.Brand)
+                .Include(p => p.Skus)
+                .FirstOrDefault(p => p.Id == productId);
+
+            if (product == null)
+                return null;
+
+            // Загружаем все компоненты для товара
+            var skuIds = product.Skus.Select(s => s.Id).ToList();
+            var allProductComponents = _db.ProductComponents
+                .Include(pc => pc.Component)
+                .Where(pc => skuIds.Contains(pc.SkuId))
+                .ToList();
+
+            // Определяем общие компоненты (присутствуют во всех SKU)
+            var commonComponentIds = allProductComponents
+                .GroupBy(pc => pc.ComponentId)
+                .Where(g => g.Select(pc => pc.SkuId).Distinct().Count() == product.Skus.Count)
+                .Select(g => g.Key)
+                .ToHashSet();
+
+            var commonComponents = allProductComponents
+                .Where(pc => commonComponentIds.Contains(pc.ComponentId))
+                .GroupBy(pc => pc.ComponentId)
+                .Select(g => g.First())
+                .Select(pc => new ComponentViewModel
+                {
+                    Title = pc.Component!.Title,
+                    Description = pc.Component.Description,
+                    DataType = pc.Component.DataType,
+                    Value = GetComponentValueAsString(pc)
+                })
+                .ToList();
+
+            // Строим SKU с их специфичными компонентами
+            var skuModels = product.Skus.Select(s =>
+            {
+                var skuComponents = allProductComponents
+                    .Where(pc => pc.SkuId == s.Id && !commonComponentIds.Contains(pc.ComponentId))
+                    .Select(pc => new ComponentViewModel
+                    {
+                        Title = pc.Component!.Title,
+                        Description = pc.Component.Description,
+                        DataType = pc.Component.DataType,
+                        Value = GetComponentValueAsString(pc)
+                    })
+                    .ToList();
+
+                return new SkuCardViewModel
+                {
+                    SkuId = s.Id,
+                    Price = s.Price,
+                    Discount = s.Discount,
+                    Amount = s.Amount,
+                    SkuSpecificComponents = skuComponents
+                };
+            }).ToList();
+
+            var mainSku = skuModels
+                .OrderByDescending(s => s.Amount > 0)
+                .ThenBy(s => s.Price)
+                .FirstOrDefault() ?? new SkuCardViewModel();
+
+            var additionalSkus = skuModels
+                .Where(s => s.SkuId != mainSku.SkuId)
+                .ToList();
+
+            return new ProductCardViewModel
+            {
+                ProductId = product.Id,
+                Title = product.Title,
+                Description = product.Description,
+                BrandTitle = product.Brand?.Title ?? string.Empty,
+                Images = new List<string>(), // Пока пусто, можно добавить URL-ы изображений позже
+                MainSku = mainSku,
+                AdditionalSkus = additionalSkus,
+                CommonComponents = commonComponents
             };
         }
     }

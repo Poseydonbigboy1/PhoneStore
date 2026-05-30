@@ -83,6 +83,23 @@ namespace PhoneStore.Controllers
                 return ResultObject<Models.ProductsResult>.Error(ex);
             }
         }
+
+        [HttpGet("{id}")]
+        public ActionResult<ResultObject<Models.ProductCardViewModel>> GetById([FromRoute] Guid id)
+        {
+            try
+            {
+                var product = _productService.GetProductById(id);
+                if (product == null)
+                    return ResultObject<Models.ProductCardViewModel>.Error("Товар не найден");
+
+                return ResultObject<Models.ProductCardViewModel>.Success(product);
+            }
+            catch (Exception ex)
+            {
+                return ResultObject<Models.ProductCardViewModel>.Error(ex);
+            }
+        }
         
     }
 }

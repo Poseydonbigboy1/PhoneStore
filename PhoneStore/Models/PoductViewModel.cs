@@ -8,6 +8,7 @@ namespace PhoneStore.Models
 {
     public class PoductViewModel
     {
+        public Guid ProductId { get; set; }
         public string Title { get; set; } = string.Empty;
         public List<string> Images { get; set; } = new List<string>();
         public double Price { get; set; }
@@ -20,5 +21,6 @@ namespace PhoneStore.Models
         public string Title { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public EDataType DataType { get; set; }
+        public string Value { get; set; } = string.Empty;
     }
 }
