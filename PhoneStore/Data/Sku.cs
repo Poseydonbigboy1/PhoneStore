@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PhoneStore.Data
 {
-    public class Sku
+    public class Sku : IEntity
     {
         [Key]
         public Guid Id { get; set; } = Guid.NewGuid();

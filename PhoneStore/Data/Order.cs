@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PhoneStore.Data;
 
-public class Order
+public class Order : IEntity
 {
     public Guid Id { get; set; } = Guid.NewGuid();
     

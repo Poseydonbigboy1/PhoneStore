@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PhoneStore.Data
 {
-    public class ProductComponent
+    public class ProductComponent : IEntity
     {
         [Key]
         public Guid Id { get; set; } = Guid.NewGuid();
