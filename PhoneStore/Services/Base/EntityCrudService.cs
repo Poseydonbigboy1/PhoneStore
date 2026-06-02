@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using PhoneStore.Data;
 using PhoneStore.Models.Filters.Base;
 
 namespace PhoneStore.Services.Base
 {
     public abstract class EntityCrudService<TEntity, TFilter>
-        where TEntity : class
+        where TEntity : class, IEntity
         where TFilter : FilterBase, new()
     {
         protected readonly ApplicationContext _db;
@@ -17,24 +18,18 @@ namespace PhoneStore.Services.Base
             _db = db;
         }
 
-        protected abstract IQueryable<TEntity> DbSet { get; }
-        protected abstract TEntity? FindById(Guid id);
-        protected abstract void AttachNewEntity(TEntity entity);
-        protected abstract void RemoveEntity(TEntity entity);
-        protected abstract void CopyUpdatedValues(TEntity existing, TEntity updated);
-        protected abstract bool IsNew(TEntity entity);
-        protected abstract void InitializeEntityId(TEntity entity);
-        protected abstract Guid GetEntityId(TEntity entity);
+        protected virtual DbSet<TEntity> Entities => _db.Set<TEntity>();
+
         protected abstract IQueryable<TEntity> ApplyEntityFilter(IQueryable<TEntity> query, TFilter filter);
 
         public TEntity? GetById(Guid id)
         {
-            return FindById(id);
+            return Entities.Find(id);
         }
 
         public IEnumerable<TEntity> GetAll()
         {
-            return DbSet.ToList();
+            return Entities.ToList();
         }
 
         public List<TEntity> GetDataByFilter(TFilter filter)
@@ -44,7 +39,7 @@ namespace PhoneStore.Services.Base
                 filter = new TFilter();
             }
 
-            return ApplyEntityFilter(DbSet, filter)
+            return ApplyEntityFilter(Entities, filter)
                 .Skip(filter.Skip)
                 .Take(filter.Take)
                 .ToList();
@@ -57,12 +52,12 @@ namespace PhoneStore.Services.Base
                 throw new ArgumentNullException(nameof(entity));
             }
 
-            if (IsNew(entity))
+            if (entity.Id == Guid.Empty)
             {
-                InitializeEntityId(entity);
+                entity.Id = Guid.NewGuid();
             }
 
-            AttachNewEntity(entity);
+            Entities.Add(entity);
             _db.SaveChanges();
             return entity;
         }
@@ -74,26 +69,26 @@ namespace PhoneStore.Services.Base
                 throw new ArgumentNullException(nameof(entity));
             }
 
-            var existing = FindById(GetEntityId(entity));
+            var existing = Entities.Find(entity.Id);
             if (existing == null)
             {
                 return null;
             }
 
-            CopyUpdatedValues(existing, entity);
+            _db.Entry(existing).CurrentValues.SetValues(entity);
             _db.SaveChanges();
             return existing;
         }
 
         public bool Delete(Guid id)
         {
-            var existing = FindById(id);
+            var existing = Entities.Find(id);
             if (existing == null)
             {
                 return false;
             }
 
-            RemoveEntity(existing);
+            Entities.Remove(existing);
             _db.SaveChanges();
             return true;
         }

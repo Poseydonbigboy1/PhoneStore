@@ -15,43 +15,6 @@ namespace PhoneStore.Services
         {
         }
 
-        protected override IQueryable<Brand> DbSet => _db.Brands;
-
-        protected override Brand? FindById(Guid id)
-        {
-            return _db.Brands.FirstOrDefault(b => b.Id == id);
-        }
-
-        protected override void AttachNewEntity(Brand entity)
-        {
-            _db.Brands.Add(entity);
-        }
-
-        protected override void RemoveEntity(Brand entity)
-        {
-            _db.Brands.Remove(entity);
-        }
-
-        protected override void CopyUpdatedValues(Brand existing, Brand updated)
-        {
-            existing.Title = updated.Title;
-        }
-
-        protected override bool IsNew(Brand entity)
-        {
-            return entity.Id == Guid.Empty;
-        }
-
-        protected override void InitializeEntityId(Brand entity)
-        {
-            entity.Id = Guid.NewGuid();
-        }
-
-        protected override Guid GetEntityId(Brand entity)
-        {
-            return entity.Id;
-        }
-
         protected override IQueryable<Brand> ApplyEntityFilter(IQueryable<Brand> query, BrandFilter filter)
         {
             if (!string.IsNullOrWhiteSpace(filter.Id?.Value))

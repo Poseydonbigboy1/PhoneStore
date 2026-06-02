@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace PhoneStore.Data
 {
-    public class ComponentCategory
+    public class ComponentCategory : IEntity
     {
         public Guid Id { get; set; } = Guid.NewGuid();
         public string Title { get; set; } = string.Empty;

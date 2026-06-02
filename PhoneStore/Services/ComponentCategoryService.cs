@@ -15,43 +15,6 @@ namespace PhoneStore.Services
         {
         }
 
-        protected override IQueryable<ComponentCategory> DbSet => _db.ComponentCategories;
-
-        protected override ComponentCategory? FindById(Guid id)
-        {
-            return _db.ComponentCategories.FirstOrDefault(c => c.Id == id);
-        }
-
-        protected override void AttachNewEntity(ComponentCategory entity)
-        {
-            _db.ComponentCategories.Add(entity);
-        }
-
-        protected override void RemoveEntity(ComponentCategory entity)
-        {
-            _db.ComponentCategories.Remove(entity);
-        }
-
-        protected override void CopyUpdatedValues(ComponentCategory existing, ComponentCategory updated)
-        {
-            existing.Title = updated.Title;
-        }
-
-        protected override bool IsNew(ComponentCategory entity)
-        {
-            return entity.Id == Guid.Empty;
-        }
-
-        protected override void InitializeEntityId(ComponentCategory entity)
-        {
-            entity.Id = Guid.NewGuid();
-        }
-
-        protected override Guid GetEntityId(ComponentCategory entity)
-        {
-            return entity.Id;
-        }
-
         protected override IQueryable<ComponentCategory> ApplyEntityFilter(IQueryable<ComponentCategory> query, ComponentCategoryFilter filter)
         {
             if (!string.IsNullOrWhiteSpace(filter.Id?.Value))
