@@ -1,40 +1,59 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using PhoneStore.Data;
 using PhoneStore.Models;
 using PhoneStore.Models.Filters;
+using PhoneStore.Services.Base;
 
 namespace PhoneStore.Services
 {
-    public class BrandService
+    public class BrandService : EntityCrudService<Brand, BrandFilter>
     {
-        private readonly ApplicationContext _db;
-
         public BrandService(ApplicationContext db)
+            : base(db)
         {
-            _db = db;
         }
 
-        public Brand? GetById(Guid id)
+        protected override IQueryable<Brand> DbSet => _db.Brands;
+
+        protected override Brand? FindById(Guid id)
         {
             return _db.Brands.FirstOrDefault(b => b.Id == id);
         }
 
-        public IEnumerable<Brand> GetAllBrands()
+        protected override void AttachNewEntity(Brand entity)
         {
-            return _db.Brands.ToList();
+            _db.Brands.Add(entity);
         }
 
-        public List<Brand> GetDataByFilter(BrandFilter filter)
+        protected override void RemoveEntity(Brand entity)
         {
-            if (filter == null)
-            {
-                filter = new BrandFilter();
-            }
+            _db.Brands.Remove(entity);
+        }
 
-            var query = _db.Brands.AsQueryable();
+        protected override void CopyUpdatedValues(Brand existing, Brand updated)
+        {
+            existing.Title = updated.Title;
+        }
 
+        protected override bool IsNew(Brand entity)
+        {
+            return entity.Id == Guid.Empty;
+        }
+
+        protected override void InitializeEntityId(Brand entity)
+        {
+            entity.Id = Guid.NewGuid();
+        }
+
+        protected override Guid GetEntityId(Brand entity)
+        {
+            return entity.Id;
+        }
+
+        protected override IQueryable<Brand> ApplyEntityFilter(IQueryable<Brand> query, BrandFilter filter)
+        {
             if (!string.IsNullOrWhiteSpace(filter.Id?.Value))
             {
                 var idValue = filter.Id.Value.Trim();
@@ -95,58 +114,27 @@ namespace PhoneStore.Services
                 query = query.OrderBy(b => b.Title);
             }
 
-            return query
-                .Skip(filter.Skip)
-                .Take(filter.Take)
-                .ToList();
+            return query;
+        }
+
+        public IEnumerable<Brand> GetAllBrands()
+        {
+            return GetAll();
         }
 
         public Brand CreateBrand(Brand brand)
         {
-            if (brand == null)
-            {
-                throw new ArgumentNullException(nameof(brand));
-            }
-
-            if (brand.Id == Guid.Empty)
-            {
-                brand.Id = Guid.NewGuid();
-            }
-
-            _db.Brands.Add(brand);
-            _db.SaveChanges();
-            return brand;
+            return Create(brand);
         }
 
         public Brand? UpdateBrand(Brand brand)
         {
-            if (brand == null)
-            {
-                throw new ArgumentNullException(nameof(brand));
-            }
-
-            var existing = _db.Brands.FirstOrDefault(b => b.Id == brand.Id);
-            if (existing == null)
-            {
-                return null;
-            }
-
-            existing.Title = brand.Title;
-            _db.SaveChanges();
-            return existing;
+            return Update(brand);
         }
 
         public bool DeleteBrand(Guid id)
         {
-            var existing = _db.Brands.FirstOrDefault(b => b.Id == id);
-            if (existing == null)
-            {
-                return false;
-            }
-
-            _db.Brands.Remove(existing);
-            _db.SaveChanges();
-            return true;
+            return Delete(id);
         }
     }
 }

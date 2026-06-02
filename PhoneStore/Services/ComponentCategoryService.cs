@@ -2,38 +2,58 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using PhoneStore.Data;
+using PhoneStore.Models;
 using PhoneStore.Models.Filters;
+using PhoneStore.Services.Base;
 
 namespace PhoneStore.Services
 {
-    public class ComponentCategoryService
+    public class ComponentCategoryService : EntityCrudService<ComponentCategory, ComponentCategoryFilter>
     {
-        private readonly ApplicationContext _db;
-
         public ComponentCategoryService(ApplicationContext db)
+            : base(db)
         {
-            _db = db;
         }
 
-        public ComponentCategory? GetById(Guid id)
+        protected override IQueryable<ComponentCategory> DbSet => _db.ComponentCategories;
+
+        protected override ComponentCategory? FindById(Guid id)
         {
             return _db.ComponentCategories.FirstOrDefault(c => c.Id == id);
         }
 
-        public IEnumerable<ComponentCategory> GetAllCategories()
+        protected override void AttachNewEntity(ComponentCategory entity)
         {
-            return _db.ComponentCategories.ToList();
+            _db.ComponentCategories.Add(entity);
         }
 
-        public List<ComponentCategory> GetDataByFilter(ComponentCategoryFilter filter)
+        protected override void RemoveEntity(ComponentCategory entity)
         {
-            if (filter == null)
-            {
-                filter = new ComponentCategoryFilter();
-            }
+            _db.ComponentCategories.Remove(entity);
+        }
 
-            var query = _db.ComponentCategories.AsQueryable();
+        protected override void CopyUpdatedValues(ComponentCategory existing, ComponentCategory updated)
+        {
+            existing.Title = updated.Title;
+        }
 
+        protected override bool IsNew(ComponentCategory entity)
+        {
+            return entity.Id == Guid.Empty;
+        }
+
+        protected override void InitializeEntityId(ComponentCategory entity)
+        {
+            entity.Id = Guid.NewGuid();
+        }
+
+        protected override Guid GetEntityId(ComponentCategory entity)
+        {
+            return entity.Id;
+        }
+
+        protected override IQueryable<ComponentCategory> ApplyEntityFilter(IQueryable<ComponentCategory> query, ComponentCategoryFilter filter)
+        {
             if (!string.IsNullOrWhiteSpace(filter.Id?.Value))
             {
                 var idValue = filter.Id.Value.Trim();
@@ -94,58 +114,27 @@ namespace PhoneStore.Services
                 query = query.OrderBy(c => c.Title);
             }
 
-            return query
-                .Skip(filter.Skip)
-                .Take(filter.Take)
-                .ToList();
+            return query;
+        }
+
+        public IEnumerable<ComponentCategory> GetAllCategories()
+        {
+            return GetAll();
         }
 
         public ComponentCategory CreateCategory(ComponentCategory category)
         {
-            if (category == null)
-            {
-                throw new ArgumentNullException(nameof(category));
-            }
-
-            if (category.Id == Guid.Empty)
-            {
-                category.Id = Guid.NewGuid();
-            }
-
-            _db.ComponentCategories.Add(category);
-            _db.SaveChanges();
-            return category;
+            return Create(category);
         }
 
         public ComponentCategory? UpdateCategory(ComponentCategory category)
         {
-            if (category == null)
-            {
-                throw new ArgumentNullException(nameof(category));
-            }
-
-            var existing = _db.ComponentCategories.FirstOrDefault(c => c.Id == category.Id);
-            if (existing == null)
-            {
-                return null;
-            }
-
-            existing.Title = category.Title;
-            _db.SaveChanges();
-            return existing;
+            return Update(category);
         }
 
         public bool DeleteCategory(Guid id)
         {
-            var existing = _db.ComponentCategories.FirstOrDefault(c => c.Id == id);
-            if (existing == null)
-            {
-                return false;
-            }
-
-            _db.ComponentCategories.Remove(existing);
-            _db.SaveChanges();
-            return true;
+            return Delete(id);
         }
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using PhoneStore.Models.Filters;
 
 namespace PhoneStore.Models.Filters.Base
 {
@@ -12,11 +13,4 @@ namespace PhoneStore.Models.Filters.Base
         public string? SortBy { get; set; } = null;
         public SortDirection SortDirection { get; set; } = SortDirection.Ascending;
     }
-
-    public enum ESortDirection
-    {
-        Ascending = 0,
-        Descending = 1
-    }
-
 }
