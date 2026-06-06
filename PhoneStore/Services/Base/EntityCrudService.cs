@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using PhoneStore.Data;
+using PhoneStore.Models;
 using PhoneStore.Models.Filters.Base;
 
 namespace PhoneStore.Services.Base
@@ -32,17 +33,21 @@ namespace PhoneStore.Services.Base
             return Entities.ToList();
         }
 
-        public List<TEntity> GetDataByFilter(TFilter filter)
+        public FilterResult<TEntity> GetDataByFilter(TFilter filter)
         {
             if (filter == null)
             {
                 filter = new TFilter();
             }
 
-            return ApplyEntityFilter(Entities, filter)
+            var query = ApplyEntityFilter(Entities, filter);
+            var total = query.Count();
+            var items = query
                 .Skip(filter.Skip)
                 .Take(filter.Take)
                 .ToList();
+
+            return new FilterResult<TEntity> { Items = items, Total = total };
         }
 
         public TEntity Create(TEntity entity)

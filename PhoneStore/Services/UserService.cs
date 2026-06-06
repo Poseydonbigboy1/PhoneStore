@@ -1,4 +1,5 @@
 ﻿using PhoneStore.Data;
+using PhoneStore.Models;
 using PhoneStore.Models.Filters;
 
 namespace PhoneStore.Services
@@ -19,15 +20,18 @@ namespace PhoneStore.Services
 
         }
 
-        public List<User> GetDataByFilter(UserFilter filter)
+        public FilterResult<User> GetDataByFilter(UserFilter filter)
         {
-
-            return _db.Users
-                .Where(user => filter.Login != null ? user.Login == filter.Login : true)
+            var query = _db.Users
+                .Where(user => filter.Login != null ? user.Login == filter.Login : true);
+            
+            var total = query.Count();
+            var items = query
                 .Skip(filter.Skip)
                 .Take(filter.Take)
                 .ToList();
 
+            return new FilterResult<User> { Items = items, Total = total };
         }
     }
 }

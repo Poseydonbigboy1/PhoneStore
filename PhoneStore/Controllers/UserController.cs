@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using PhoneStore.Data;
+using PhoneStore.Helpers;
+using PhoneStore.Models;
 using PhoneStore.Models.Filters;
 using PhoneStore.Services;
 
@@ -20,9 +23,17 @@ namespace PhoneStore.Controllers
 
         // GET: api/<UserController>1
         [HttpPost]
-        public IEnumerable<User> Post([FromBody] UserFilter filter)
+        public ActionResult<ResultObject<FilterResult<User>>> Post([FromBody] UserFilter filter)
         {
-            return _userService.GetDataByFilter(filter);
+            try
+            {
+                var data = _userService.GetDataByFilter(filter);
+                return new ResultObject<FilterResult<User>> { IsSuccess = true, Data = data };
+            }
+            catch (Exception ex)
+            {
+                return new ResultObject<FilterResult<User>> { IsSuccess = false, Message = ex.Message };
+            }
         }
 
         // GET api/<UserController>/5
