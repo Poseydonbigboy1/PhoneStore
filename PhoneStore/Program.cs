@@ -35,7 +35,7 @@ builder.Services.AddDbContext<ApplicationContext>(options =>
 
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<AuthorizeService>();
-builder.Services.AddScoped<ProductService>();
+builder.Services.AddScoped<CatalogService>();
 builder.Services.AddScoped<BrandService>();
 builder.Services.AddScoped<ComponentService>();
 builder.Services.AddScoped<ComponentCategoryService>();

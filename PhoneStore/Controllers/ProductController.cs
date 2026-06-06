@@ -12,13 +12,13 @@ namespace PhoneStore.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ProductController : ControllerBase
+    public class CatalogController : ControllerBase
     {
-        private readonly ProductService _productService;
+        private readonly CatalogService _catalogService;
 
-        public ProductController(ProductService productService)
+        public CatalogController(CatalogService catalogService)
         {
-            _productService = productService;
+            _catalogService = catalogService;
         }
 
         [HttpGet("filters")]
@@ -26,7 +26,7 @@ namespace PhoneStore.Controllers
         {
             try
             {
-                var filters = _productService.GetFilters();
+                var filters = _catalogService.GetFilters();
                 return ResultObject<IEnumerable<object>>.Success(filters);
             }
             catch (Exception ex)
@@ -36,37 +36,37 @@ namespace PhoneStore.Controllers
         }
 
         [HttpPost("filter")]
-        public ActionResult<ResultObject<Models.ProductsResult>> GetByFilter([FromBody] ProductFilter filter)
+        public ActionResult<ResultObject<Models.CatalogResult>> GetByFilter([FromBody] CatalogFilter filter)
         {
             try
             {
-                var result = _productService.GetProductsByFilter(filter);
-                return ResultObject<Models.ProductsResult>.Success(result);
+                var result = _catalogService.GetProductsByFilter(filter);
+                return ResultObject<Models.CatalogResult>.Success(result);
             }
             catch (Exception ex)
             {
-                return ResultObject<Models.ProductsResult>.Error(ex);
+                return ResultObject<Models.CatalogResult>.Error(ex);
             }
         }
 
         [HttpGet("filter-test")]
-        public ActionResult<ResultObject<Models.ProductsResult>> GetTestFilter()
+        public ActionResult<ResultObject<Models.CatalogResult>> GetTestFilter()
         {
             try
             {
-                var filter = new ProductFilter
+                var filter = new CatalogFilter
                 {
                     Skip = 0,
                     Take = 20,
-                    FilterValues = new List<ProductFilterValue>
+                    FilterValues = new List<CatalogFilterValue>
                     {
-                        new ProductFilterValue
+                        new CatalogFilterValue
                         {
                             ComponentTitle = "ОЗУ",
                             Value = "8",
                             MatchMode = "equals"
                         },
-                        new ProductFilterValue
+                        new CatalogFilterValue
                         {
                             ComponentTitle = "Цвет",
                             Value = "Natural Titanium",
@@ -75,12 +75,12 @@ namespace PhoneStore.Controllers
                     }
                 };
 
-                var result = _productService.GetProductsByFilter(filter);
-                return ResultObject<Models.ProductsResult>.Success(result);
+                var result = _catalogService.GetProductsByFilter(filter);
+                return ResultObject<Models.CatalogResult>.Success(result);
             }
             catch (Exception ex)
             {
-                return ResultObject<Models.ProductsResult>.Error(ex);
+                return ResultObject<Models.CatalogResult>.Error(ex);
             }
         }
 
@@ -89,7 +89,7 @@ namespace PhoneStore.Controllers
         {
             try
             {
-                var product = _productService.GetProductById(id);
+                var product = _catalogService.GetProductById(id);
                 if (product == null)
                     return ResultObject<Models.ProductCardViewModel>.Error("Товар не найден");
 
@@ -100,6 +100,6 @@ namespace PhoneStore.Controllers
                 return ResultObject<Models.ProductCardViewModel>.Error(ex);
             }
         }
-        
+
     }
 }

@@ -5,23 +5,23 @@ using System.Threading.Tasks;
 
 namespace PhoneStore.Models.Filters
 {
-    public class ProductFilter
+    public class CatalogFilter
     {
         public int Skip { get; set; } = 0;
         public int Take { get; set; } = 20;
-        public ProductSortBy SortBy { get; set; } = ProductSortBy.None;
+        public CatalogSortBy SortBy { get; set; } = CatalogSortBy.None;
         public SortDirection SortDirection { get; set; } = SortDirection.Ascending;
-        public List<ProductFilterValue> FilterValues { get; set; } = new List<ProductFilterValue>();
+        public List<CatalogFilterValue> FilterValues { get; set; } = new List<CatalogFilterValue>();
     }
 
-    public class ProductFilterValue
+    public class CatalogFilterValue
     {
         public string? ComponentTitle { get; set; }
         public string? Value { get; set; }
         public string? MatchMode { get; set; }
     }
 
-    public enum ProductSortBy
+    public enum CatalogSortBy
     {
         None = 0,
         Price = 1,

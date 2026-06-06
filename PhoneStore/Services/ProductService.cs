@@ -12,10 +12,10 @@ using PhoneStore.Models.Filters;
 
 namespace PhoneStore.Services
 {
-    public class ProductService
+    public class CatalogService
     {
         private readonly ApplicationContext _db;
-        public ProductService(ApplicationContext db)
+        public CatalogService(ApplicationContext db)
         {
             _db = db;
         }
@@ -77,7 +77,7 @@ namespace PhoneStore.Services
         }
 
 
-        public ProductsResult GetProductsByFilter(ProductFilter filter)
+        public CatalogResult GetProductsByFilter(CatalogFilter filter)
         {
             var baseQuery = _db.ProductComponents
                 .Include(i => i.Component)
@@ -249,13 +249,13 @@ namespace PhoneStore.Services
 
             productsWithPopularity = filter.SortBy switch
             {
-                ProductSortBy.Price when filter.SortDirection == SortDirection.Descending =>
+                CatalogSortBy.Price when filter.SortDirection == SortDirection.Descending =>
                     productsWithPopularity.OrderByDescending(x => x.Product.Price),
-                ProductSortBy.Price =>
+                CatalogSortBy.Price =>
                     productsWithPopularity.OrderBy(x => x.Product.Price),
-                ProductSortBy.Popularity when filter.SortDirection == SortDirection.Descending =>
+                CatalogSortBy.Popularity when filter.SortDirection == SortDirection.Descending =>
                     productsWithPopularity.OrderByDescending(x => x.Popularity),
-                ProductSortBy.Popularity =>
+                CatalogSortBy.Popularity =>
                     productsWithPopularity.OrderBy(x => x.Popularity),
                 _ => productsWithPopularity.OrderBy(x => x.Product.Title),
             };
@@ -266,7 +266,7 @@ namespace PhoneStore.Services
                 .Select(x => x.Product)
                 .ToList();
 
-            return new ProductsResult
+            return new CatalogResult
             {
                 Count = totalCount,
                 Products = products
