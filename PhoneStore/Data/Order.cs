@@ -8,7 +8,7 @@ public class Order : IEntity
     
     // Внешний ключ для пользователя
     public Guid UserId { get; set; }
-    public User User { get; set; } = null!;
+    public User? User { get; set; }
     
     public DateTime OrderDate { get; set; } = DateTime.UtcNow;
     

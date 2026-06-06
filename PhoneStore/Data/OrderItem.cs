@@ -8,11 +8,11 @@ public class OrderItem : IEntity
     
     // Внешний ключ для заказа
     public Guid OrderId { get; set; }
-    public Order Order { get; set; } = null!;
+    public Order? Order { get; set; }
     
     // Внешний ключ для купленного товара (вариации)
     public Guid SkuId { get; set; }
-    public Sku Sku { get; set; } = null!;
+    public Sku? Sku { get; set; }
     
     public int Quantity { get; set; }
     

@@ -14,7 +14,7 @@ namespace PhoneStore.Data
         public String Title { get; set; } = String.Empty;
         public String Description { get; set; } = String.Empty;
         public Guid BrandId { get; set; }
-        public Brand Brand { get; set; } = null!;
+        public Brand? Brand { get; set; }
 
         public ICollection<Sku> Skus { get; set; } = new List<Sku>();
     }
