@@ -30,7 +30,7 @@ namespace PhoneStore.Services
                     if (isPasswordValid == PasswordVerificationResult.Success)
                     {
                         var signingKey = _config.GetSection("Settings").GetValue<string>("SigningKey");
-                        var token = JwtService.GenerateToken(user.Login, user.Roles.ToString(), signingKey);
+                        var token = JwtService.GenerateToken(user.Login, user.Roles.ToString(), signingKey, user.Id.ToString());
 
                         return new ResultObject<string>() { IsSuccess = true, Data = token };
                     }

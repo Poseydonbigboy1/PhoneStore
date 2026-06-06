@@ -24,13 +24,15 @@ if (signingKey == null)
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddDbContext<ApplicationContext>(options =>
-    options.UseNpgsql(connectionString, npgsqlOptions =>
-    {
-        npgsqlOptions.EnableRetryOnFailure(
-            maxRetryCount: 5,
-            maxRetryDelay: TimeSpan.FromSeconds(5),
-            errorCodesToAdd: null);
-    })
+    options
+        .UseNpgsql(connectionString, npgsqlOptions =>
+        {
+            npgsqlOptions.EnableRetryOnFailure(
+                maxRetryCount: 5,
+                maxRetryDelay: TimeSpan.FromSeconds(5),
+                errorCodesToAdd: null);
+        })
+        .ConfigureWarnings(w => w.Ignore(Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.PendingModelChangesWarning))
 );
 
 builder.Services.AddScoped<UserService>();
@@ -44,6 +46,9 @@ builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<ProductComponentService>();
 builder.Services.AddScoped<OrderService>();
 builder.Services.AddScoped<OrderItemService>();
+builder.Services.AddScoped<CartService>();
+builder.Services.AddScoped<CheckoutService>();
+builder.Services.AddScoped<OrderManagerService>();
 
 builder.Services.AddAuthentication(options =>
 {

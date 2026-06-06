@@ -21,4 +21,7 @@ public class Order : IEntity
     
     // Список товаров в этом заказе
     public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
+
+    // Детали доставки
+    public Delivery? Delivery { get; set; }
 }

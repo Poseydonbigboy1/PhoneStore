@@ -15,6 +15,8 @@ namespace PhoneStore.Data
         public DbSet<OrderItem> OrderItems { get; set; } = null!;
         public DbSet<Brand> Brands { get; set; } = null!;
         public DbSet<ComponentCategory> ComponentCategories { get; set; } = null!;
+        public DbSet<Cart> Carts { get; set; } = null!;
+        public DbSet<Delivery> Deliveries { get; set; } = null!;
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
         : base(options)
@@ -68,6 +70,27 @@ namespace PhoneStore.Data
                 .HasOne(oi => oi.Sku)
                 .WithMany() 
                 .HasForeignKey(oi => oi.SkuId);
+
+            // Cart
+            modelBuilder.Entity<Cart>()
+                .HasOne(c => c.User)
+                .WithMany()
+                .HasForeignKey(c => c.UserId);
+
+            modelBuilder.Entity<Cart>()
+                .HasOne(c => c.Sku)
+                .WithMany()
+                .HasForeignKey(c => c.SkuId);
+
+            modelBuilder.Entity<Cart>()
+                .HasIndex(c => new { c.UserId, c.SkuId })
+                .IsUnique();
+
+            // Delivery (1:1 Order)
+            modelBuilder.Entity<Delivery>()
+                .HasOne(d => d.Order)
+                .WithOne(o => o.Delivery)
+                .HasForeignKey<Delivery>(d => d.OrderId);
 
             modelBuilder.Entity<Component>()
                 .Property(e => e.DataType)

@@ -232,6 +232,7 @@ namespace PhoneStore.Services
                     Product = new PoductViewModel
                     {
                         ProductId = g.First().Sku!.Product!.Id,
+                        SkuId = g.Key,
                         Title = g.First().Sku!.Product!.Title,
                         Price = g.First().Sku!.Price,
                         Discount = g.First().Sku!.Discount,

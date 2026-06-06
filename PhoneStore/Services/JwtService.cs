@@ -8,13 +8,15 @@ namespace PhoneStore.Services
     public static class JwtService
     {
 
-        public static string GenerateToken(string username, string role, string key)
+        public static string GenerateToken(string username, string role, string key, string? userId = null)
         {
-            var claims = new[]
+            var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, username),
                 new Claim("role", role)
             };
+            if (userId != null)
+                claims.Add(new Claim(ClaimTypes.NameIdentifier, userId));
 
             var k = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
             var creds = new SigningCredentials(k, SecurityAlgorithms.HmacSha256);
