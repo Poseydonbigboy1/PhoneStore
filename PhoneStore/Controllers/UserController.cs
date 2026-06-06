@@ -1,12 +1,11 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using PhoneStore.Data;
 using PhoneStore.Helpers;
 using PhoneStore.Models;
 using PhoneStore.Models.Filters;
 using PhoneStore.Services;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace PhoneStore.Controllers
 {
@@ -21,44 +20,90 @@ namespace PhoneStore.Controllers
             _userService = userService;
         }
 
-        // GET: api/<UserController>1
-        [HttpPost]
-        public ActionResult<ResultObject<FilterResult<User>>> Post([FromBody] UserFilter filter)
+        [HttpGet]
+        public ActionResult<ResultObject<IEnumerable<User>>> GetAll()
+        {
+            try
+            {
+                var data = _userService.GetAllUsers();
+                return ResultObject<IEnumerable<User>>.Success(data);
+            }
+            catch (Exception ex)
+            {
+                return ResultObject<IEnumerable<User>>.Error(ex);
+            }
+        }
+
+        [HttpPost("filter")]
+        public ActionResult<ResultObject<FilterResult<User>>> GetByFilter([FromBody] UserFilter filter)
         {
             try
             {
                 var data = _userService.GetDataByFilter(filter);
-                return new ResultObject<FilterResult<User>> { IsSuccess = true, Data = data };
+                return ResultObject<FilterResult<User>>.Success(data);
             }
             catch (Exception ex)
             {
-                return new ResultObject<FilterResult<User>> { IsSuccess = false, Message = ex.Message };
+                return ResultObject<FilterResult<User>>.Error(ex);
             }
         }
 
-        // GET api/<UserController>/5
-        //[HttpGet("{id}")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
+        [HttpGet("{id}")]
+        public ActionResult<ResultObject<User>> GetById([FromRoute] Guid id)
+        {
+            try
+            {
+                var item = _userService.GetById(id);
+                if (item == null) return ResultObject<User>.Error("User not found");
+                return ResultObject<User>.Success(item);
+            }
+            catch (Exception ex)
+            {
+                return ResultObject<User>.Error(ex);
+            }
+        }
 
-        // POST api/<UserController>
-        //[HttpPost]
-        //public void Post([FromBody] string value)
-        //{
-        //}
+        [HttpPost]
+        public ActionResult<ResultObject<User>> Create([FromBody] User user)
+        {
+            try
+            {
+                var created = _userService.CreateUser(user);
+                return ResultObject<User>.Success(created);
+            }
+            catch (Exception ex)
+            {
+                return ResultObject<User>.Error(ex);
+            }
+        }
 
-        // PUT api/<UserController>/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
+        [HttpPut]
+        public ActionResult<ResultObject<User>> Update([FromBody] User user)
+        {
+            try
+            {
+                var updated = _userService.UpdateUser(user);
+                if (updated == null) return ResultObject<User>.Error("User not found");
+                return ResultObject<User>.Success(updated);
+            }
+            catch (Exception ex)
+            {
+                return ResultObject<User>.Error(ex);
+            }
+        }
 
-        // DELETE api/<UserController>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+        [HttpDelete("{id}")]
+        public ActionResult<ResultObject<bool>> Delete([FromRoute] Guid id)
+        {
+            try
+            {
+                var ok = _userService.DeleteUser(id);
+                return ResultObject<bool>.Success(ok);
+            }
+            catch (Exception ex)
+            {
+                return ResultObject<bool>.Error(ex);
+            }
+        }
     }
 }

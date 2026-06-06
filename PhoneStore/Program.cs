@@ -40,6 +40,10 @@ builder.Services.AddScoped<BrandService>();
 builder.Services.AddScoped<ComponentService>();
 builder.Services.AddScoped<ComponentCategoryService>();
 builder.Services.AddScoped<SkuService>();
+builder.Services.AddScoped<ProductService>();
+builder.Services.AddScoped<ProductComponentService>();
+builder.Services.AddScoped<OrderService>();
+builder.Services.AddScoped<OrderItemService>();
 
 builder.Services.AddAuthentication(options =>
 {

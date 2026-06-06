@@ -1,36 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using PhoneStore.Models.Filters.Base;
 
 namespace PhoneStore.Models.Filters
 {
-    public class CatalogFilter
+    public class ProductFilter : FilterBase
     {
-        public int Skip { get; set; } = 0;
-        public int Take { get; set; } = 20;
-        public CatalogSortBy SortBy { get; set; } = CatalogSortBy.None;
-        public SortDirection SortDirection { get; set; } = SortDirection.Ascending;
-        public List<CatalogFilterValue> FilterValues { get; set; } = new List<CatalogFilterValue>();
-    }
-
-    public class CatalogFilterValue
-    {
-        public string? ComponentTitle { get; set; }
-        public string? Value { get; set; }
-        public string? MatchMode { get; set; }
-    }
-
-    public enum CatalogSortBy
-    {
-        None = 0,
-        Price = 1,
-        Popularity = 2
-    }
-
-    public enum SortDirection
-    {
-        Ascending = 0,
-        Descending = 1
+        public FilterItem Id { get; set; } = new FilterItem();
+        public FilterItem Title { get; set; } = new FilterItem();
+        public FilterItem BrandId { get; set; } = new FilterItem();
     }
 }

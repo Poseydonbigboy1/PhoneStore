@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using PhoneStore.Helpers;
 using PhoneStore.Models;
+using PhoneStore.Models.Filters;
 using PhoneStore.Data;
 using PhoneStore.Services;
 
@@ -30,6 +31,20 @@ namespace PhoneStore.Controllers
             catch (Exception ex)
             {
                 return ResultObject<IEnumerable<Component>>.Error(ex);
+            }
+        }
+
+        [HttpPost("filter")]
+        public ActionResult<ResultObject<FilterResult<Component>>> GetByFilter([FromBody] ComponentFilter filter)
+        {
+            try
+            {
+                var data = _componentService.GetDataByFilter(filter);
+                return ResultObject<FilterResult<Component>>.Success(data);
+            }
+            catch (Exception ex)
+            {
+                return ResultObject<FilterResult<Component>>.Error(ex);
             }
         }
 

@@ -1,9 +1,12 @@
-﻿namespace PhoneStore.Models.Filters
+using PhoneStore.Models.Filters.Base;
+
+namespace PhoneStore.Models.Filters
 {
-    public class UserFilter
+    public class UserFilter : FilterBase
     {
-        public string? Login { get; set; } = null;
-        public int Skip { get; set; } = 0;
-        public int Take { get; set; } = 10;
+        public FilterItem Id { get; set; } = new FilterItem();
+        public FilterItem Login { get; set; } = new FilterItem();
+        public FilterItem Name { get; set; } = new FilterItem();
+        public FilterItem Roles { get; set; } = new FilterItem();
     }
 }
