@@ -37,22 +37,23 @@ public class CheckoutService
             total += finalPrice * item.Quantity;
         }
 
-        await using var tx = await _db.Database.BeginTransactionAsync();
-        try
+        var strategy = _db.Database.CreateExecutionStrategy();
+
+        var orderId = await strategy.ExecuteAsync(async () =>
         {
-            // Создаём заказ
+            await using var tx = await _db.Database.BeginTransactionAsync();
+
             var order = new Order
             {
-                UserId      = userId,
-                OrderDate   = DateTime.UtcNow,
-                Status      = EOrderStatus.Pending,
-                TotalAmount = total,
+                UserId          = userId,
+                OrderDate       = DateTime.UtcNow,
+                Status          = EOrderStatus.Pending,
+                TotalAmount     = total,
                 ShippingAddress = request.Delivery.Address ?? string.Empty,
             };
             _db.Orders.Add(order);
             await _db.SaveChangesAsync();
 
-            // Создаём позиции и списываем остатки
             foreach (var item in cartItems)
             {
                 var sku = item.Sku!;
@@ -69,7 +70,6 @@ public class CheckoutService
                 sku.Amount -= item.Quantity;
             }
 
-            // Создаём доставку
             _db.Deliveries.Add(new Delivery
             {
                 OrderId       = order.Id,
@@ -80,19 +80,15 @@ public class CheckoutService
                 Comment       = request.Delivery.Comment,
             });
 
-            // Очищаем корзину
             _db.Carts.RemoveRange(cartItems);
 
             await _db.SaveChangesAsync();
             await tx.CommitAsync();
 
             return order.Id;
-        }
-        catch
-        {
-            await tx.RollbackAsync();
-            throw;
-        }
+        });
+
+        return orderId;
     }
 
     public async Task<List<OrderSummaryViewModel>> GetMyOrdersAsync(Guid userId)
