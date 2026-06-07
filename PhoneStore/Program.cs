@@ -51,6 +51,7 @@ builder.Services.AddScoped<SkuManagementService>();
 builder.Services.AddScoped<CheckoutService>();
 builder.Services.AddScoped<OrderManagerService>();
 builder.Services.AddScoped<DashboardService>();
+builder.Services.AddScoped<AnalyticsService>();
 
 builder.Services.AddAuthentication(options =>
 {

@@ -115,5 +115,47 @@ namespace PhoneStore.Controllers
                 return ResultObject<List<Models.PoductViewModel>>.Error(ex);
             }
         }
+
+        [HttpGet("popular")]
+        public ActionResult<ResultObject<List<Models.PoductViewModel>>> GetPopular([FromQuery] int take = 10)
+        {
+            try
+            {
+                var result = _catalogService.GetPopular(take);
+                return ResultObject<List<Models.PoductViewModel>>.Success(result);
+            }
+            catch (Exception ex)
+            {
+                return ResultObject<List<Models.PoductViewModel>>.Error(ex);
+            }
+        }
+
+        [HttpGet("discounted")]
+        public ActionResult<ResultObject<List<Models.PoductViewModel>>> GetDiscounted([FromQuery] int take = 10)
+        {
+            try
+            {
+                var result = _catalogService.GetDiscounted(take);
+                return ResultObject<List<Models.PoductViewModel>>.Success(result);
+            }
+            catch (Exception ex)
+            {
+                return ResultObject<List<Models.PoductViewModel>>.Error(ex);
+            }
+        }
+
+        [HttpPost("batch")]
+        public ActionResult<ResultObject<List<Models.PoductViewModel>>> GetBatch([FromBody] List<Guid> skuIds)
+        {
+            try
+            {
+                var result = _catalogService.GetBatch(skuIds);
+                return ResultObject<List<Models.PoductViewModel>>.Success(result);
+            }
+            catch (Exception ex)
+            {
+                return ResultObject<List<Models.PoductViewModel>>.Error(ex);
+            }
+        }
     }
 }

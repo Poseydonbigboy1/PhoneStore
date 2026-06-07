@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using PhoneStore.Data;
 using PhoneStore.Helpers;
 using PhoneStore.Models;
@@ -24,6 +26,45 @@ namespace PhoneStore.Controllers
         {
             _authorizeService = authorizeService;
             _db = db;
+        }
+
+        [HttpPost("register")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Register([FromBody] RegisterModel model)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(model.Login))
+                    return BadRequest(ResultObject<string>.Error("Логин не может быть пустым"));
+                if (string.IsNullOrWhiteSpace(model.Password) || model.Password.Length < 6)
+                    return BadRequest(ResultObject<string>.Error("Пароль должен содержать минимум 6 символов"));
+                if (await _db.Users.AnyAsync(u => u.Login == model.Login))
+                    return BadRequest(ResultObject<string>.Error("Пользователь с таким логином уже существует"));
+
+                _authorizeService.Registration(model);
+
+                // Auto-login: generate token
+                var newUser = await _db.Users.FirstAsync(u => u.Login == model.Login);
+                var signingKey = HttpContext.RequestServices
+                    .GetRequiredService<IConfiguration>()
+                    .GetSection("Settings").GetValue<string>("SigningKey");
+                var token = PhoneStore.Services.JwtService.GenerateToken(
+                    newUser.Login, newUser.Roles.ToString(), signingKey!, newUser.Id.ToString());
+
+                var cookieOptions = new CookieOptions
+                {
+                    HttpOnly = true,
+                    SameSite = SameSiteMode.Strict,
+                    Expires = DateTime.UtcNow.AddMinutes(60 * 24 * 30)
+                };
+                Response.Cookies.Append("access_token", token, cookieOptions);
+
+                return Ok(ResultObject<string>.Success(token));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ResultObject<string>.Error(ex.Message));
+            }
         }
 
         [HttpPost("login")]

@@ -439,6 +439,86 @@ namespace PhoneStore.Services
             };
         }
 
+        /// <summary>Топ товаров по количеству продаж</summary>
+        public List<PoductViewModel> GetPopular(int take = 10)
+        {
+            var topSkuIds = _db.OrderItems
+                .GroupBy(oi => oi.SkuId)
+                .Select(g => new { SkuId = g.Key, Count = g.Sum(x => x.Quantity) })
+                .OrderByDescending(x => x.Count)
+                .Take(take)
+                .Select(x => x.SkuId)
+                .ToList();
+
+            if (!topSkuIds.Any())
+            {
+                // If no orders, just return newest SKUs
+                return _db.Skus
+                    .Include(s => s.Product).ThenInclude(p => p!.Brand)
+                    .Include(s => s.ProductComponents).ThenInclude(pc => pc.Component)
+                    .Where(s => s.Amount > 0)
+                    .OrderByDescending(s => s.Id)
+                    .Take(take)
+                    .ToList()
+                    .Select(s => MapToViewModel(s))
+                    .ToList();
+            }
+
+            return _db.Skus
+                .Include(s => s.Product).ThenInclude(p => p!.Brand)
+                .Include(s => s.ProductComponents).ThenInclude(pc => pc.Component)
+                .Where(s => topSkuIds.Contains(s.Id))
+                .ToList()
+                .OrderBy(s => topSkuIds.IndexOf(s.Id))
+                .Select(s => MapToViewModel(s))
+                .ToList();
+        }
+
+        /// <summary>Товары со скидкой, сортировка по размеру скидки</summary>
+        public List<PoductViewModel> GetDiscounted(int take = 10)
+        {
+            return _db.Skus
+                .Include(s => s.Product).ThenInclude(p => p!.Brand)
+                .Include(s => s.ProductComponents).ThenInclude(pc => pc.Component)
+                .Where(s => s.Discount > 0 && s.Amount > 0)
+                .OrderByDescending(s => s.Discount)
+                .Take(take)
+                .ToList()
+                .Select(s => MapToViewModel(s))
+                .ToList();
+        }
+
+        /// <summary>Загрузить несколько SKU по массиву Id</summary>
+        public List<PoductViewModel> GetBatch(List<Guid> skuIds)
+        {
+            return _db.Skus
+                .Include(s => s.Product).ThenInclude(p => p!.Brand)
+                .Include(s => s.ProductComponents).ThenInclude(pc => pc.Component)
+                .Where(s => skuIds.Contains(s.Id))
+                .ToList()
+                .Select(s => MapToViewModel(s))
+                .ToList();
+        }
+
+        private PoductViewModel MapToViewModel(Data.Sku s)
+        {
+            var imageUrl = s.ProductComponents
+                .FirstOrDefault(pc => pc.Component?.DataType == EDataType.IMAGE)
+                ?.Value?.ToString();
+
+            return new PoductViewModel
+            {
+                SkuId      = s.Id,
+                ProductId  = s.Product!.Id,
+                Title      = s.Product.Title,
+                BrandTitle = s.Product.Brand?.Title ?? string.Empty,
+                Price      = s.Price,
+                Discount   = s.Discount,
+                Amount     = (int)s.Amount,
+                ImageUrl   = imageUrl,
+            };
+        }
+
         /// <summary>Похожие товары — из того же бренда, исключая текущий SKU</summary>
         public List<PoductViewModel> GetSimilar(Guid skuId, int take = 6)
         {
@@ -456,24 +536,7 @@ namespace PhoneStore.Services
                 .Take(take)
                 .ToList();
 
-            return similar.Select(s =>
-            {
-                var imageUrl = s.ProductComponents
-                    .FirstOrDefault(pc => pc.Component?.DataType == EDataType.IMAGE)
-                    ?.Value?.ToString();
-
-                return new PoductViewModel
-                {
-                    SkuId      = s.Id,
-                    ProductId  = s.Product!.Id,
-                    Title      = s.Product.Title,
-                    BrandTitle = s.Product.Brand?.Title ?? string.Empty,
-                    Price      = s.Price,
-                    Discount   = s.Discount,
-                    Amount     = (int)s.Amount,
-                    ImageUrl   = imageUrl,
-                };
-            }).ToList();
+            return similar.Select(s => MapToViewModel(s)).ToList();
         }
     }
 }

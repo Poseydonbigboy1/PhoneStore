@@ -12,10 +12,11 @@ public class DashboardService
 
     public async Task<DashboardViewModel> GetDashboardAsync()
     {
-        var now = DateTime.UtcNow;
-        var today = now.Date;
-        var week = today.AddDays(-7);
-        var month = today.AddDays(-30);
+        var now   = DateTime.UtcNow;
+        // .Date снимает Kind — явно указываем Utc, иначе Npgsql бросит исключение
+        var today = DateTime.SpecifyKind(now.Date, DateTimeKind.Utc);
+        var week  = DateTime.SpecifyKind(now.Date.AddDays(-7),  DateTimeKind.Utc);
+        var month = DateTime.SpecifyKind(now.Date.AddDays(-30), DateTimeKind.Utc);
 
         // Заказы по статусам
         var ordersByStatus = await _db.Orders
