@@ -29,7 +29,8 @@ namespace PhoneStore.Data
         STRING,
         INT,
         DOUBLE,
-        BOOLEAN
+        BOOLEAN,
+        IMAGE
     }
 
     public enum ECategoryType

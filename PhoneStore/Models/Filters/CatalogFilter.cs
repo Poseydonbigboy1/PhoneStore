@@ -11,6 +11,7 @@ namespace PhoneStore.Models.Filters
         public int Take { get; set; } = 20;
         public CatalogSortBy SortBy { get; set; } = CatalogSortBy.None;
         public SortDirection SortDirection { get; set; } = SortDirection.Ascending;
+        public string? Search { get; set; }
         public List<CatalogFilterValue> FilterValues { get; set; } = new List<CatalogFilterValue>();
     }
 

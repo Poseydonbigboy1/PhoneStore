@@ -59,7 +59,7 @@ namespace PhoneStore.Services
                     pc => pc.ComponentId,
                     (c, pc) => new { c, pc }
                 )
-                .Where(joined => joined.pc.Filtering == true)
+                .Where(joined => joined.pc.Filtering == true && joined.c.DataType != EDataType.IMAGE)
                 .Select(joined => new
                 {
                     group_title = joined.c.Title,
@@ -79,10 +79,17 @@ namespace PhoneStore.Services
 
         public CatalogResult GetProductsByFilter(CatalogFilter filter)
         {
-            var baseQuery = _db.ProductComponents
+            IQueryable<ProductComponent> baseQuery = _db.ProductComponents
                 .Include(i => i.Component)
                 .Include(i => i.Sku)
                     .ThenInclude(i => i.Product!);
+
+            // Текстовый поиск по названию товара
+            if (!string.IsNullOrWhiteSpace(filter.Search))
+            {
+                var search = filter.Search.Trim().ToLower();
+                baseQuery = baseQuery.Where(pc => pc.Sku!.Product!.Title.ToLower().Contains(search));
+            }
 
             var skusFiltered = new HashSet<Guid>();
             if (filter.FilterValues != null && filter.FilterValues.Any())
@@ -236,12 +243,17 @@ namespace PhoneStore.Services
                         Title = g.First().Sku!.Product!.Title,
                         Price = g.First().Sku!.Price,
                         Discount = g.First().Sku!.Discount,
-                        Components = g.Select(pc => new ComponentViewModel
-                        {
-                            Title = pc.Component!.Title,
-                            Description = pc.Component!.Description,
-                            DataType = pc.Component.DataType
-                        }).ToList()
+                        Images = g.Where(pc => pc.Component!.DataType == EDataType.IMAGE)
+                                  .Select(pc => pc.Value?.ToString() ?? string.Empty)
+                                  .Where(s => !string.IsNullOrEmpty(s))
+                                  .ToList(),
+                        Components = g.Where(pc => pc.Component!.DataType != EDataType.IMAGE)
+                                      .Select(pc => new ComponentViewModel
+                                      {
+                                          Title = pc.Component!.Title,
+                                          Description = pc.Component!.Description,
+                                          DataType = pc.Component.DataType
+                                      }).ToList()
                     },
                     Popularity = popularityBySku.TryGetValue(g.Key, out var value) ? value : 0
                 });
@@ -346,11 +358,26 @@ namespace PhoneStore.Services
                 .Where(pc => skuIds.Contains(pc.SkuId))
                 .ToList();
 
-            // Определяем общие компоненты (присутствуют во всех SKU)
+            // Изображения — IMAGE-компоненты (берём из первого SKU, они одинаковы для продукта)
+            var images = allProductComponents
+                .Where(pc => pc.Component!.DataType == EDataType.IMAGE)
+                .Select(pc => pc.Value?.ToString() ?? string.Empty)
+                .Where(s => !string.IsNullOrEmpty(s))
+                .Distinct()
+                .ToList();
+
+            // Определяем общие компоненты (присутствуют во всех SKU), исключая IMAGE
             var commonComponentIds = allProductComponents
+                .Where(pc => pc.Component!.DataType != EDataType.IMAGE)
                 .GroupBy(pc => pc.ComponentId)
                 .Where(g => g.Select(pc => pc.SkuId).Distinct().Count() == product.Skus.Count)
                 .Select(g => g.Key)
+                .ToHashSet();
+
+            // Все IMAGE-компонент ID, чтобы исключать их из SKU-специфичных тоже
+            var imageComponentIds = allProductComponents
+                .Where(pc => pc.Component!.DataType == EDataType.IMAGE)
+                .Select(pc => pc.ComponentId)
                 .ToHashSet();
 
             var commonComponents = allProductComponents
@@ -370,7 +397,7 @@ namespace PhoneStore.Services
             var skuModels = product.Skus.Select(s =>
             {
                 var skuComponents = allProductComponents
-                    .Where(pc => pc.SkuId == s.Id && !commonComponentIds.Contains(pc.ComponentId))
+                    .Where(pc => pc.SkuId == s.Id && !commonComponentIds.Contains(pc.ComponentId) && !imageComponentIds.Contains(pc.ComponentId))
                     .Select(pc => new ComponentViewModel
                     {
                         Title = pc.Component!.Title,
@@ -405,7 +432,7 @@ namespace PhoneStore.Services
                 Title = product.Title,
                 Description = product.Description,
                 BrandTitle = product.Brand?.Title ?? string.Empty,
-                Images = new List<string>(), // Пока пусто, можно добавить URL-ы изображений позже
+                Images = images,
                 MainSku = mainSku,
                 AdditionalSkus = additionalSkus,
                 CommonComponents = commonComponents

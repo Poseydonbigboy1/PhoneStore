@@ -101,6 +101,11 @@ app.UseSwaggerUI(options =>
 
 app.UseCors("AngularDevPolicy");
 
+// Раздача загруженных файлов
+var uploadsPath = Path.Combine(app.Environment.WebRootPath ?? Path.Combine(Directory.GetCurrentDirectory(), "wwwroot"), "uploads");
+Directory.CreateDirectory(uploadsPath);
+app.UseStaticFiles();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
