@@ -101,5 +101,19 @@ namespace PhoneStore.Controllers
             }
         }
 
+        [HttpGet("similar/{skuId}")]
+        public ActionResult<ResultObject<List<Models.PoductViewModel>>> GetSimilar(
+            [FromRoute] Guid skuId, [FromQuery] int take = 6)
+        {
+            try
+            {
+                var result = _catalogService.GetSimilar(skuId, take);
+                return ResultObject<List<Models.PoductViewModel>>.Success(result);
+            }
+            catch (Exception ex)
+            {
+                return ResultObject<List<Models.PoductViewModel>>.Error(ex);
+            }
+        }
     }
 }

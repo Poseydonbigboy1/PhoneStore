@@ -50,6 +50,7 @@ builder.Services.AddScoped<CartService>();
 builder.Services.AddScoped<SkuManagementService>();
 builder.Services.AddScoped<CheckoutService>();
 builder.Services.AddScoped<OrderManagerService>();
+builder.Services.AddScoped<DashboardService>();
 
 builder.Services.AddAuthentication(options =>
 {

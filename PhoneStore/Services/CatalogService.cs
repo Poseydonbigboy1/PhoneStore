@@ -438,5 +438,42 @@ namespace PhoneStore.Services
                 CommonComponents = commonComponents
             };
         }
+
+        /// <summary>Похожие товары — из того же бренда, исключая текущий SKU</summary>
+        public List<PoductViewModel> GetSimilar(Guid skuId, int take = 6)
+        {
+            var sku = _db.Skus.Include(s => s.Product).ThenInclude(p => p!.Brand)
+                .FirstOrDefault(s => s.Id == skuId);
+            if (sku?.Product?.Brand is null) return new();
+
+            var brandId = sku.Product.BrandId;
+
+            var similar = _db.Skus
+                .Include(s => s.Product).ThenInclude(p => p!.Brand)
+                .Include(s => s.ProductComponents).ThenInclude(pc => pc.Component)
+                .Where(s => s.Id != skuId && s.Product!.BrandId == brandId)
+                .OrderBy(s => s.Product!.Title)
+                .Take(take)
+                .ToList();
+
+            return similar.Select(s =>
+            {
+                var imageUrl = s.ProductComponents
+                    .FirstOrDefault(pc => pc.Component?.DataType == EDataType.IMAGE)
+                    ?.Value?.ToString();
+
+                return new PoductViewModel
+                {
+                    SkuId      = s.Id,
+                    ProductId  = s.Product!.Id,
+                    Title      = s.Product.Title,
+                    BrandTitle = s.Product.Brand?.Title ?? string.Empty,
+                    Price      = s.Price,
+                    Discount   = s.Discount,
+                    Amount     = (int)s.Amount,
+                    ImageUrl   = imageUrl,
+                };
+            }).ToList();
+        }
     }
 }

@@ -17,6 +17,8 @@ namespace PhoneStore.Data
         public DbSet<ComponentCategory> ComponentCategories { get; set; } = null!;
         public DbSet<Cart> Carts { get; set; } = null!;
         public DbSet<Delivery> Deliveries { get; set; } = null!;
+        public DbSet<UserAddress> UserAddresses { get; set; } = null!;
+        public DbSet<Wishlist> Wishlists { get; set; } = null!;
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
         : base(options)
@@ -96,6 +98,27 @@ namespace PhoneStore.Data
                 .HasOne(d => d.Order)
                 .WithOne(o => o.Delivery)
                 .HasForeignKey<Delivery>(d => d.OrderId);
+
+            // UserAddress
+            modelBuilder.Entity<UserAddress>()
+                .HasOne(a => a.User)
+                .WithMany()
+                .HasForeignKey(a => a.UserId);
+
+            // Wishlist
+            modelBuilder.Entity<Wishlist>()
+                .HasOne(w => w.User)
+                .WithMany()
+                .HasForeignKey(w => w.UserId);
+
+            modelBuilder.Entity<Wishlist>()
+                .HasOne(w => w.Sku)
+                .WithMany()
+                .HasForeignKey(w => w.SkuId);
+
+            modelBuilder.Entity<Wishlist>()
+                .HasIndex(w => new { w.UserId, w.SkuId })
+                .IsUnique();
 
             modelBuilder.Entity<Component>()
                 .Property(e => e.DataType)

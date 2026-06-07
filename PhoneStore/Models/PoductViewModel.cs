@@ -11,9 +11,12 @@ namespace PhoneStore.Models
         public Guid ProductId { get; set; }
         public Guid SkuId { get; set; }
         public string Title { get; set; } = string.Empty;
+        public string BrandTitle { get; set; } = string.Empty;
         public List<string> Images { get; set; } = new List<string>();
+        public string? ImageUrl { get; set; }
         public double Price { get; set; }
         public double Discount { get; set; }
+        public int Amount { get; set; }
         public List<ComponentViewModel> Components { get; set; } = new List<ComponentViewModel>();
     }
 
