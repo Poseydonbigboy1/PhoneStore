@@ -108,6 +108,36 @@ public class CheckoutService
             .ToListAsync();
     }
 
+    public async Task<List<OrderSummaryViewModel>> GetAllOrdersAsync()
+    {
+        return await _db.Orders
+            .Include(o => o.User)
+            .Include(o => o.Delivery)
+            .OrderByDescending(o => o.OrderDate)
+            .Select(o => new OrderSummaryViewModel
+            {
+                Id           = o.Id,
+                OrderDate    = o.OrderDate,
+                Status       = o.Status,
+                TotalAmount  = o.TotalAmount,
+                ItemCount    = o.OrderItems.Count,
+                DeliveryType = o.Delivery != null ? o.Delivery.Type : (EDeliveryType?)null,
+            })
+            .ToListAsync();
+    }
+
+    public async Task<OrderDetailViewModel?> GetOrderDetailAsync(Guid orderId)
+    {
+        var order = await _db.Orders
+            .Include(o => o.Delivery)
+            .Include(o => o.OrderItems).ThenInclude(oi => oi.Sku).ThenInclude(s => s!.Product)
+            .FirstOrDefaultAsync(o => o.Id == orderId);
+
+        if (order is null) return null;
+
+        return MapToDetail(order);
+    }
+
     public async Task<OrderDetailViewModel?> GetMyOrderDetailAsync(Guid userId, Guid orderId)
     {
         var order = await _db.Orders
@@ -115,30 +145,30 @@ public class CheckoutService
             .Include(o => o.OrderItems).ThenInclude(oi => oi.Sku).ThenInclude(s => s!.Product)
             .FirstOrDefaultAsync(o => o.Id == orderId && o.UserId == userId);
 
-        if (order is null) return null;
-
-        return new OrderDetailViewModel
-        {
-            Id          = order.Id,
-            OrderDate   = order.OrderDate,
-            Status      = order.Status,
-            TotalAmount = order.TotalAmount,
-            Delivery    = order.Delivery is null ? null : new DeliveryDetailViewModel
-            {
-                Type          = order.Delivery.Type,
-                RecipientName = order.Delivery.RecipientName,
-                Phone         = order.Delivery.Phone,
-                Address       = order.Delivery.Address,
-                Comment       = order.Delivery.Comment,
-            },
-            Items = order.OrderItems.Select(oi => new OrderItemDetailViewModel
-            {
-                SkuId        = oi.SkuId,
-                ProductTitle = oi.Sku?.Product?.Title ?? string.Empty,
-                Quantity     = oi.Quantity,
-                Price        = oi.Price,
-                LineTotal    = oi.Price * oi.Quantity,
-            }).ToList(),
-        };
+        return order is null ? null : MapToDetail(order);
     }
+
+    private static OrderDetailViewModel MapToDetail(Order order) => new()
+    {
+        Id          = order.Id,
+        OrderDate   = order.OrderDate,
+        Status      = order.Status,
+        TotalAmount = order.TotalAmount,
+        Delivery    = order.Delivery is null ? null : new DeliveryDetailViewModel
+        {
+            Type          = order.Delivery.Type,
+            RecipientName = order.Delivery.RecipientName,
+            Phone         = order.Delivery.Phone,
+            Address       = order.Delivery.Address,
+            Comment       = order.Delivery.Comment,
+        },
+        Items = order.OrderItems.Select(oi => new OrderItemDetailViewModel
+        {
+            SkuId        = oi.SkuId,
+            ProductTitle = oi.Sku?.Product?.Title ?? string.Empty,
+            Quantity     = oi.Quantity,
+            Price        = oi.Price,
+            LineTotal    = oi.Price * oi.Quantity,
+        }).ToList(),
+    };
 }

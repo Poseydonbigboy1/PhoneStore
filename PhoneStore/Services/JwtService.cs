@@ -13,7 +13,8 @@ namespace PhoneStore.Services
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, username),
-                new Claim("role", role)
+                new Claim(ClaimTypes.Role, role),
+                new Claim("role", role)   // дублируем для совместимости с фронтом
             };
             if (userId != null)
                 claims.Add(new Claim(ClaimTypes.NameIdentifier, userId));

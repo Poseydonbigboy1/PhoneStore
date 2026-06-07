@@ -87,6 +87,34 @@ public class OrderController : ControllerBase
         catch (Exception ex) { return ResultObject<bool>.Error(ex); }
     }
 
+    // ─── MANAGER: все заказы с деталями ──────────────────────────────
+
+    [HttpGet("all")]
+    [Authorize(Roles = "MANAGER")]
+    public async Task<ActionResult<ResultObject<List<OrderSummaryViewModel>>>> GetAllOrders()
+    {
+        try
+        {
+            var orders = await _checkoutService.GetAllOrdersAsync();
+            return ResultObject<List<OrderSummaryViewModel>>.Success(orders);
+        }
+        catch (Exception ex) { return ResultObject<List<OrderSummaryViewModel>>.Error(ex); }
+    }
+
+    [HttpGet("{id}/details")]
+    [Authorize(Roles = "MANAGER")]
+    public async Task<ActionResult<ResultObject<OrderDetailViewModel>>> GetOrderDetails([FromRoute] Guid id)
+    {
+        try
+        {
+            var order = await _checkoutService.GetOrderDetailAsync(id);
+            return order is null
+                ? ResultObject<OrderDetailViewModel>.Error("Заказ не найден")
+                : ResultObject<OrderDetailViewModel>.Success(order);
+        }
+        catch (Exception ex) { return ResultObject<OrderDetailViewModel>.Error(ex); }
+    }
+
     // ─── MANAGER: смена статуса ───────────────────────────────────────
 
     [HttpPut("{id}/status")]
