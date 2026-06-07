@@ -32,6 +32,12 @@ public class SkuUpsertRequest
     public List<SkuComponentUpsert> Components { get; set; } = new();
 }
 
+public class SkuImageViewModel
+{
+    public Guid   ProductComponentId { get; set; }
+    public string Url                { get; set; } = string.Empty;
+}
+
 public class SkuComponentUpsert
 {
     public Guid?  ProductComponentId { get; set; }  // null → new

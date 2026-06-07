@@ -105,6 +105,75 @@ public class SkuManagementService
         await _db.SaveChangesAsync();
     }
 
+    // ─── Изображения ───────────────────────────────────────────────────────────
+
+    public async Task<List<SkuImageViewModel>> GetImagesAsync(Guid skuId)
+    {
+        var rows = await _db.ProductComponents
+            .Include(pc => pc.Component)
+            .Where(pc => pc.SkuId == skuId && pc.Component!.DataType == EDataType.IMAGE)
+            .OrderBy(pc => pc.Id)
+            .ToListAsync();
+
+        return rows.Select(pc => new SkuImageViewModel
+        {
+            ProductComponentId = pc.Id,
+            Url = pc.Value?.ToString() ?? string.Empty
+        }).ToList();
+    }
+
+    public async Task<SkuImageViewModel> AddImageAsync(Guid skuId, string url)
+    {
+        var imageComponent = await GetOrCreateImageComponentAsync();
+
+        var pc = new ProductComponent
+        {
+            SkuId       = skuId,
+            ComponentId = imageComponent.Id,
+            Filtering   = false,
+        };
+        pc.Value = url;   // setter сериализует в ValueJson
+
+        _db.ProductComponents.Add(pc);
+        await _db.SaveChangesAsync();
+
+        return new SkuImageViewModel { ProductComponentId = pc.Id, Url = url };
+    }
+
+    public async Task DeleteImageAsync(Guid productComponentId)
+    {
+        var pc = await _db.ProductComponents
+            .Include(pc => pc.Component)
+            .FirstOrDefaultAsync(pc => pc.Id == productComponentId
+                                    && pc.Component!.DataType == EDataType.IMAGE)
+            ?? throw new Exception("Изображение не найдено");
+
+        _db.ProductComponents.Remove(pc);
+        await _db.SaveChangesAsync();
+    }
+
+    /// <summary>Находит компонент с DataType=IMAGE или создаёт системный, если его нет.</summary>
+    private async Task<Component> GetOrCreateImageComponentAsync()
+    {
+        var comp = await _db.Components.FirstOrDefaultAsync(c => c.DataType == EDataType.IMAGE);
+        if (comp != null) return comp;
+
+        var category = await _db.ComponentCategories.FirstOrDefaultAsync()
+            ?? throw new Exception("Нет категорий компонентов — создайте хотя бы одну");
+
+        comp = new Component
+        {
+            Id                  = Guid.NewGuid(),
+            Title               = "Изображение",
+            Description         = "Изображение товара",
+            DataType            = EDataType.IMAGE,
+            ComponentCategoryId = category.Id,
+        };
+        _db.Components.Add(comp);
+        await _db.SaveChangesAsync();
+        return comp;
+    }
+
     private static SkuManagementViewModel MapToViewModel(Sku s) => new()
     {
         Id           = s.Id,
