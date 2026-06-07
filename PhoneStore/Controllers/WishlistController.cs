@@ -20,6 +20,9 @@ public class WishlistController : ControllerBase
     private Guid CurrentUserId() =>
         Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
 
+    private async Task<bool> UserExistsAsync(Guid userId) =>
+        await _db.Users.AnyAsync(u => u.Id == userId);
+
     [HttpGet]
     public async Task<ActionResult<ResultObject<List<PoductViewModel>>>> GetWishlist()
     {
@@ -80,6 +83,9 @@ public class WishlistController : ControllerBase
         try
         {
             var uid = CurrentUserId();
+            if (!await UserExistsAsync(uid))
+                return Unauthorized(ResultObject<bool>.Error("Сессия устарела. Выполните вход заново."));
+
             if (!await _db.Wishlists.AnyAsync(w => w.UserId == uid && w.SkuId == skuId))
             {
                 _db.Wishlists.Add(new Wishlist { UserId = uid, SkuId = skuId });

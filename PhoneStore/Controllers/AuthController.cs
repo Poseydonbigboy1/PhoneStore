@@ -156,11 +156,20 @@ namespace PhoneStore.Controllers
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             var user = userId is not null ? _db.Users.FirstOrDefault(u => u.Id.ToString() == userId) : null;
+
+            // Токен валиден по подписи, но пользователь удалён из БД (пересоздание БД, удаление аккаунта и т.д.)
+            // Возвращаем 401 → фронт очищает состояние и перенаправляет на логин
+            if (user is null)
+            {
+                Response.Cookies.Delete("access_token");
+                return Unauthorized(ResultObject<object>.Error("Сессия устарела. Выполните вход заново."));
+            }
+
             var model = new
             {
                 Id    = userId,
-                Login = User.Identity!.Name,
-                Name  = user?.Name,
+                Login = user.Login,
+                Name  = user.Name,
                 Role  = User.FindFirst(ClaimTypes.Role)?.Value,
             };
             return Ok(ResultObject<object>.Success(model));

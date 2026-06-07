@@ -19,11 +19,30 @@ namespace PhoneStore.Data
         public DbSet<Delivery> Deliveries { get; set; } = null!;
         public DbSet<UserAddress> UserAddresses { get; set; } = null!;
         public DbSet<Wishlist> Wishlists { get; set; } = null!;
+        public DbSet<Banner> Banners { get; set; } = null!;
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
         : base(options)
         {
             Database.EnsureCreated();
+            EnsureCustomTables();
+        }
+
+        /// <summary>
+        /// Создаёт таблицы, добавленные после первого EnsureCreated (когда БД уже существует).
+        /// EnsureCreated не обновляет схему существующей БД — эти DDL-команды восполняют пробел.
+        /// </summary>
+        private void EnsureCustomTables()
+        {
+            Database.ExecuteSqlRaw("""
+                CREATE TABLE IF NOT EXISTS "Banners" (
+                    "Id"        uuid         NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
+                    "ImageUrl"  text         NOT NULL DEFAULT '',
+                    "Link"      text         NOT NULL DEFAULT '',
+                    "SortOrder" integer      NOT NULL DEFAULT 0,
+                    "IsActive"  boolean      NOT NULL DEFAULT true
+                );
+                """);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
