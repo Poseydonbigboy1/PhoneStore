@@ -18,6 +18,6 @@ namespace PhoneStore.Data
         public double Discount { get; set; }
 
         public Product? Product { get; set; }
-        // public ProductComponent ProductComponent { get; set; }
+        public ICollection<ProductComponent> ProductComponents { get; set; } = new List<ProductComponent>();
     }
 }

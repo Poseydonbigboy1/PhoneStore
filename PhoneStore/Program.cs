@@ -47,6 +47,7 @@ builder.Services.AddScoped<ProductComponentService>();
 builder.Services.AddScoped<OrderService>();
 builder.Services.AddScoped<OrderItemService>();
 builder.Services.AddScoped<CartService>();
+builder.Services.AddScoped<SkuManagementService>();
 builder.Services.AddScoped<CheckoutService>();
 builder.Services.AddScoped<OrderManagerService>();
 

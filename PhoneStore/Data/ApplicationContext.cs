@@ -68,8 +68,13 @@ namespace PhoneStore.Data
 
             modelBuilder.Entity<OrderItem>()
                 .HasOne(oi => oi.Sku)
-                .WithMany() 
+                .WithMany()
                 .HasForeignKey(oi => oi.SkuId);
+
+            modelBuilder.Entity<ProductComponent>()
+                .HasOne(pc => pc.Sku)
+                .WithMany(s => s.ProductComponents)
+                .HasForeignKey(pc => pc.SkuId);
 
             // Cart
             modelBuilder.Entity<Cart>()
