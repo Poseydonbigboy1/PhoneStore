@@ -1,0 +1,645 @@
+[
+  {
+    "brand": "Apple", "title": "iPhone 15 Pro Max",
+    "description": "Флагман Apple на чипе A17 Pro с титановым корпусом и перископической камерой с 5-кратным зумом.",
+    "os": "iOS 17", "screenSize": 6.7, "screenType": "Super Retina XDR OLED", "resolution": "2796x1290", "refreshRate": 120,
+    "chipset": "Apple A17 Pro", "mainCamera": 48, "frontCamera": 12, "battery": 4441,
+    "nfc": true, "fiveG": true, "bluetooth": "5.3", "wirelessCharging": true, "ipRating": "IP68", "material": "Титан", "weight": 221,
+    "baseUsd": 1199, "discount": 0,
+    "storage": [ {"gb":256,"ramGb":8,"addUsd":0}, {"gb":512,"ramGb":8,"addUsd":200}, {"gb":1024,"ramGb":8,"addUsd":500} ],
+    "colors": ["Natural Titanium","Blue Titanium","White Titanium","Black Titanium"]
+  },
+  {
+    "brand": "Apple", "title": "iPhone 15 Pro",
+    "description": "Компактный флагман Apple на A17 Pro с титановым корпусом и кнопкой действия.",
+    "os": "iOS 17", "screenSize": 6.1, "screenType": "Super Retina XDR OLED", "resolution": "2556x1179", "refreshRate": 120,
+    "chipset": "Apple A17 Pro", "mainCamera": 48, "frontCamera": 12, "battery": 3274,
+    "nfc": true, "fiveG": true, "bluetooth": "5.3", "wirelessCharging": true, "ipRating": "IP68", "material": "Титан", "weight": 187,
+    "baseUsd": 999, "discount": 0,
+    "storage": [ {"gb":128,"ramGb":8,"addUsd":0}, {"gb":256,"ramGb":8,"addUsd":100}, {"gb":512,"ramGb":8,"addUsd":300} ],
+    "colors": ["Natural Titanium","Blue Titanium","White Titanium","Black Titanium"]
+  },
+  {
+    "brand": "Apple", "title": "iPhone 15 Plus",
+    "description": "Большой экран и увеличенная батарея, чип A16 Bionic и USB-C.",
+    "os": "iOS 17", "screenSize": 6.7, "screenType": "Super Retina XDR OLED", "resolution": "2796x1290", "refreshRate": 60,
+    "chipset": "Apple A16 Bionic", "mainCamera": 48, "frontCamera": 12, "battery": 4383,
+    "nfc": true, "fiveG": true, "bluetooth": "5.3", "wirelessCharging": true, "ipRating": "IP68", "material": "Алюминий", "weight": 201,
+    "baseUsd": 899, "discount": 5,
+    "storage": [ {"gb":128,"ramGb":6,"addUsd":0}, {"gb":256,"ramGb":6,"addUsd":100}, {"gb":512,"ramGb":6,"addUsd":300} ],
+    "colors": ["Black","Blue","Green","Yellow","Pink","White"]
+  },
+  {
+    "brand": "Apple", "title": "iPhone 15",
+    "description": "Базовый iPhone нового поколения с Dynamic Island, USB-C и камерой 48 Мп.",
+    "os": "iOS 17", "screenSize": 6.1, "screenType": "Super Retina XDR OLED", "resolution": "2556x1179", "refreshRate": 60,
+    "chipset": "Apple A16 Bionic", "mainCamera": 48, "frontCamera": 12, "battery": 3349,
+    "nfc": true, "fiveG": true, "bluetooth": "5.3", "wirelessCharging": true, "ipRating": "IP68", "material": "Алюминий", "weight": 171,
+    "baseUsd": 799, "discount": 5,
+    "storage": [ {"gb":128,"ramGb":6,"addUsd":0}, {"gb":256,"ramGb":6,"addUsd":100}, {"gb":512,"ramGb":6,"addUsd":300} ],
+    "colors": ["Black","Blue","Green","Yellow","Pink","White"]
+  },
+  {
+    "brand": "Apple", "title": "iPhone 14 Pro Max",
+    "description": "Флагман прошлого поколения с Dynamic Island, ProMotion и камерой 48 Мп.",
+    "os": "iOS 16", "screenSize": 6.7, "screenType": "Super Retina XDR OLED", "resolution": "2796x1290", "refreshRate": 120,
+    "chipset": "Apple A16 Bionic", "mainCamera": 48, "frontCamera": 12, "battery": 4323,
+    "nfc": true, "fiveG": true, "bluetooth": "5.3", "wirelessCharging": true, "ipRating": "IP68", "material": "Нержавеющая сталь", "weight": 240,
+    "baseUsd": 1099, "discount": 10,
+    "storage": [ {"gb":128,"ramGb":6,"addUsd":0}, {"gb":256,"ramGb":6,"addUsd":100}, {"gb":512,"ramGb":6,"addUsd":300}, {"gb":1024,"ramGb":6,"addUsd":500} ],
+    "colors": ["Space Black","Silver","Gold","Deep Purple"]
+  },
+  {
+    "brand": "Apple", "title": "iPhone 14",
+    "description": "Надёжный iPhone с чипом A15 Bionic и улучшенной основной камерой.",
+    "os": "iOS 16", "screenSize": 6.1, "screenType": "Super Retina XDR OLED", "resolution": "2532x1170", "refreshRate": 60,
+    "chipset": "Apple A15 Bionic", "mainCamera": 12, "frontCamera": 12, "battery": 3279,
+    "nfc": true, "fiveG": true, "bluetooth": "5.3", "wirelessCharging": true, "ipRating": "IP68", "material": "Алюминий", "weight": 172,
+    "baseUsd": 699, "discount": 12,
+    "storage": [ {"gb":128,"ramGb":6,"addUsd":0}, {"gb":256,"ramGb":6,"addUsd":100}, {"gb":512,"ramGb":6,"addUsd":300} ],
+    "colors": ["Midnight","Starlight","Blue","Purple","Red","Yellow"]
+  },
+  {
+    "brand": "Apple", "title": "iPhone 14 Plus",
+    "description": "Большой 6.7-дюймовый экран и рекордная автономность на чипе A15 Bionic.",
+    "os": "iOS 16", "screenSize": 6.7, "screenType": "Super Retina XDR OLED", "resolution": "2778x1284", "refreshRate": 60,
+    "chipset": "Apple A15 Bionic", "mainCamera": 12, "frontCamera": 12, "battery": 4325,
+    "nfc": true, "fiveG": true, "bluetooth": "5.3", "wirelessCharging": true, "ipRating": "IP68", "material": "Алюминий", "weight": 203,
+    "baseUsd": 799, "discount": 12,
+    "storage": [ {"gb":128,"ramGb":6,"addUsd":0}, {"gb":256,"ramGb":6,"addUsd":100}, {"gb":512,"ramGb":6,"addUsd":300} ],
+    "colors": ["Midnight","Starlight","Blue","Purple","Red"]
+  },
+  {
+    "brand": "Apple", "title": "iPhone 13",
+    "description": "Популярный iPhone с чипом A15 Bionic, OLED-экраном и двойной камерой.",
+    "os": "iOS 15", "screenSize": 6.1, "screenType": "Super Retina XDR OLED", "resolution": "2532x1170", "refreshRate": 60,
+    "chipset": "Apple A15 Bionic", "mainCamera": 12, "frontCamera": 12, "battery": 3240,
+    "nfc": true, "fiveG": true, "bluetooth": "5.0", "wirelessCharging": true, "ipRating": "IP68", "material": "Алюминий", "weight": 174,
+    "baseUsd": 599, "discount": 15,
+    "storage": [ {"gb":128,"ramGb":4,"addUsd":0}, {"gb":256,"ramGb":4,"addUsd":100}, {"gb":512,"ramGb":4,"addUsd":300} ],
+    "colors": ["Midnight","Starlight","Blue","Pink","Green","Red"]
+  },
+  {
+    "brand": "Apple", "title": "iPhone 13 Pro Max",
+    "description": "Прошлый Pro-флагман с ProMotion 120 Гц и тройной камерой с телеобъективом.",
+    "os": "iOS 15", "screenSize": 6.7, "screenType": "Super Retina XDR OLED", "resolution": "2778x1284", "refreshRate": 120,
+    "chipset": "Apple A15 Bionic", "mainCamera": 12, "frontCamera": 12, "battery": 4352,
+    "nfc": true, "fiveG": true, "bluetooth": "5.0", "wirelessCharging": true, "ipRating": "IP68", "material": "Нержавеющая сталь", "weight": 240,
+    "baseUsd": 899, "discount": 15,
+    "storage": [ {"gb":128,"ramGb":6,"addUsd":0}, {"gb":256,"ramGb":6,"addUsd":100}, {"gb":512,"ramGb":6,"addUsd":300}, {"gb":1024,"ramGb":6,"addUsd":500} ],
+    "colors": ["Graphite","Gold","Silver","Sierra Blue","Alpine Green"]
+  },
+  {
+    "brand": "Apple", "title": "iPhone 12",
+    "description": "iPhone с дизайном плоских граней, OLED-экраном и поддержкой 5G.",
+    "os": "iOS 14", "screenSize": 6.1, "screenType": "Super Retina XDR OLED", "resolution": "2532x1170", "refreshRate": 60,
+    "chipset": "Apple A14 Bionic", "mainCamera": 12, "frontCamera": 12, "battery": 2815,
+    "nfc": true, "fiveG": true, "bluetooth": "5.0", "wirelessCharging": true, "ipRating": "IP68", "material": "Алюминий", "weight": 164,
+    "baseUsd": 499, "discount": 18,
+    "storage": [ {"gb":64,"ramGb":4,"addUsd":0}, {"gb":128,"ramGb":4,"addUsd":50}, {"gb":256,"ramGb":4,"addUsd":150} ],
+    "colors": ["Black","White","Blue","Green","Purple","Red"]
+  },
+  {
+    "brand": "Apple", "title": "iPhone SE 2022",
+    "description": "Компактный iPhone с чипом A15 Bionic, Touch ID и поддержкой 5G.",
+    "os": "iOS 15", "screenSize": 4.7, "screenType": "Retina IPS LCD", "resolution": "1334x750", "refreshRate": 60,
+    "chipset": "Apple A15 Bionic", "mainCamera": 12, "frontCamera": 7, "battery": 2018,
+    "nfc": true, "fiveG": true, "bluetooth": "5.0", "wirelessCharging": true, "ipRating": "IP67", "material": "Алюминий", "weight": 144,
+    "baseUsd": 429, "discount": 10,
+    "storage": [ {"gb":64,"ramGb":4,"addUsd":0}, {"gb":128,"ramGb":4,"addUsd":50}, {"gb":256,"ramGb":4,"addUsd":150} ],
+    "colors": ["Midnight","Starlight","Red"]
+  },
+
+  {
+    "brand": "Samsung", "title": "Galaxy S24 Ultra",
+    "description": "Флагман Samsung с титановым корпусом, пером S Pen и камерой 200 Мп.",
+    "os": "Android 14", "screenSize": 6.8, "screenType": "Dynamic AMOLED 2X", "resolution": "3120x1440", "refreshRate": 120,
+    "chipset": "Snapdragon 8 Gen 3 for Galaxy", "mainCamera": 200, "frontCamera": 12, "battery": 5000,
+    "nfc": true, "fiveG": true, "bluetooth": "5.3", "wirelessCharging": true, "ipRating": "IP68", "material": "Титан", "weight": 232,
+    "baseUsd": 1299, "discount": 0,
+    "storage": [ {"gb":256,"ramGb":12,"addUsd":0}, {"gb":512,"ramGb":12,"addUsd":120}, {"gb":1024,"ramGb":12,"addUsd":360} ],
+    "colors": ["Titanium Black","Titanium Gray","Titanium Violet","Titanium Yellow"]
+  },
+  {
+    "brand": "Samsung", "title": "Galaxy S24+",
+    "description": "Сбалансированный флагман с экраном QHD+ 120 Гц и батареей 4900 мА·ч.",
+    "os": "Android 14", "screenSize": 6.7, "screenType": "Dynamic AMOLED 2X", "resolution": "3120x1440", "refreshRate": 120,
+    "chipset": "Exynos 2400", "mainCamera": 50, "frontCamera": 12, "battery": 4900,
+    "nfc": true, "fiveG": true, "bluetooth": "5.3", "wirelessCharging": true, "ipRating": "IP68", "material": "Алюминий", "weight": 196,
+    "baseUsd": 999, "discount": 5,
+    "storage": [ {"gb":256,"ramGb":12,"addUsd":0}, {"gb":512,"ramGb":12,"addUsd":120} ],
+    "colors": ["Onyx Black","Marble Gray","Cobalt Violet","Amber Yellow"]
+  },
+  {
+    "brand": "Samsung", "title": "Galaxy S24",
+    "description": "Компактный флагман с ярким AMOLED-экраном и функциями Galaxy AI.",
+    "os": "Android 14", "screenSize": 6.2, "screenType": "Dynamic AMOLED 2X", "resolution": "2340x1080", "refreshRate": 120,
+    "chipset": "Exynos 2400", "mainCamera": 50, "frontCamera": 12, "battery": 4000,
+    "nfc": true, "fiveG": true, "bluetooth": "5.3", "wirelessCharging": true, "ipRating": "IP68", "material": "Алюминий", "weight": 167,
+    "baseUsd": 799, "discount": 5,
+    "storage": [ {"gb":128,"ramGb":8,"addUsd":0}, {"gb":256,"ramGb":8,"addUsd":60} ],
+    "colors": ["Onyx Black","Marble Gray","Cobalt Violet","Amber Yellow"]
+  },
+  {
+    "brand": "Samsung", "title": "Galaxy S23 Ultra",
+    "description": "Прошлый ультра-флагман с пером S Pen и камерой 200 Мп на Snapdragon 8 Gen 2.",
+    "os": "Android 13", "screenSize": 6.8, "screenType": "Dynamic AMOLED 2X", "resolution": "3088x1440", "refreshRate": 120,
+    "chipset": "Snapdragon 8 Gen 2 for Galaxy", "mainCamera": 200, "frontCamera": 12, "battery": 5000,
+    "nfc": true, "fiveG": true, "bluetooth": "5.3", "wirelessCharging": true, "ipRating": "IP68", "material": "Алюминий", "weight": 234,
+    "baseUsd": 1199, "discount": 12,
+    "storage": [ {"gb":256,"ramGb":12,"addUsd":0}, {"gb":512,"ramGb":12,"addUsd":120}, {"gb":1024,"ramGb":12,"addUsd":360} ],
+    "colors": ["Phantom Black","Cream","Green","Lavender"]
+  },
+  {
+    "brand": "Samsung", "title": "Galaxy S23",
+    "description": "Компактный флагман предыдущего поколения с Snapdragon 8 Gen 2.",
+    "os": "Android 13", "screenSize": 6.1, "screenType": "Dynamic AMOLED 2X", "resolution": "2340x1080", "refreshRate": 120,
+    "chipset": "Snapdragon 8 Gen 2 for Galaxy", "mainCamera": 50, "frontCamera": 12, "battery": 3900,
+    "nfc": true, "fiveG": true, "bluetooth": "5.3", "wirelessCharging": true, "ipRating": "IP68", "material": "Алюминий", "weight": 168,
+    "baseUsd": 799, "discount": 12,
+    "storage": [ {"gb":128,"ramGb":8,"addUsd":0}, {"gb":256,"ramGb":8,"addUsd":60} ],
+    "colors": ["Phantom Black","Cream","Green","Lavender"]
+  },
+  {
+    "brand": "Samsung", "title": "Galaxy S23 FE",
+    "description": "Доступный флагман Fan Edition с экраном AMOLED 120 Гц и камерой 50 Мп.",
+    "os": "Android 13", "screenSize": 6.4, "screenType": "Dynamic AMOLED 2X", "resolution": "2340x1080", "refreshRate": 120,
+    "chipset": "Exynos 2200", "mainCamera": 50, "frontCamera": 10, "battery": 4500,
+    "nfc": true, "fiveG": true, "bluetooth": "5.3", "wirelessCharging": true, "ipRating": "IP68", "material": "Алюминий", "weight": 209,
+    "baseUsd": 599, "discount": 10,
+    "storage": [ {"gb":128,"ramGb":8,"addUsd":0}, {"gb":256,"ramGb":8,"addUsd":60} ],
+    "colors": ["Graphite","Mint","Cream","Purple"]
+  },
+  {
+    "brand": "Samsung", "title": "Galaxy A55",
+    "description": "Средний класс с металлическим корпусом, экраном Super AMOLED 120 Гц и защитой IP67.",
+    "os": "Android 14", "screenSize": 6.6, "screenType": "Super AMOLED", "resolution": "2340x1080", "refreshRate": 120,
+    "chipset": "Exynos 1480", "mainCamera": 50, "frontCamera": 32, "battery": 5000,
+    "nfc": true, "fiveG": true, "bluetooth": "5.3", "wirelessCharging": false, "ipRating": "IP67", "material": "Алюминий", "weight": 213,
+    "baseUsd": 449, "discount": 5,
+    "storage": [ {"gb":128,"ramGb":8,"addUsd":0}, {"gb":256,"ramGb":8,"addUsd":50} ],
+    "colors": ["Awesome Navy","Awesome Iceblue","Awesome Lilac","Awesome Lemon"]
+  },
+  {
+    "brand": "Samsung", "title": "Galaxy A35",
+    "description": "Доступный смартфон с защитой IP67 и экраном Super AMOLED 120 Гц.",
+    "os": "Android 14", "screenSize": 6.6, "screenType": "Super AMOLED", "resolution": "2340x1080", "refreshRate": 120,
+    "chipset": "Exynos 1380", "mainCamera": 50, "frontCamera": 13, "battery": 5000,
+    "nfc": true, "fiveG": true, "bluetooth": "5.3", "wirelessCharging": false, "ipRating": "IP67", "material": "Пластик", "weight": 209,
+    "baseUsd": 399, "discount": 5,
+    "storage": [ {"gb":128,"ramGb":6,"addUsd":0}, {"gb":256,"ramGb":8,"addUsd":50} ],
+    "colors": ["Awesome Navy","Awesome Iceblue","Awesome Lilac"]
+  },
+  {
+    "brand": "Samsung", "title": "Galaxy A25",
+    "description": "Бюджетный смартфон с экраном Super AMOLED и крупной батареей 5000 мА·ч.",
+    "os": "Android 14", "screenSize": 6.5, "screenType": "Super AMOLED", "resolution": "2340x1080", "refreshRate": 120,
+    "chipset": "Exynos 1280", "mainCamera": 50, "frontCamera": 13, "battery": 5000,
+    "nfc": true, "fiveG": true, "bluetooth": "5.3", "wirelessCharging": false, "ipRating": "—", "material": "Пластик", "weight": 197,
+    "baseUsd": 299, "discount": 8,
+    "storage": [ {"gb":128,"ramGb":6,"addUsd":0}, {"gb":256,"ramGb":8,"addUsd":40} ],
+    "colors": ["Blue Black","Blue","Yellow"]
+  },
+  {
+    "brand": "Samsung", "title": "Galaxy A15",
+    "description": "Стартовый смартфон с AMOLED-экраном и ёмкой батареей.",
+    "os": "Android 14", "screenSize": 6.5, "screenType": "Super AMOLED", "resolution": "2340x1080", "refreshRate": 90,
+    "chipset": "MediaTek Helio G99", "mainCamera": 50, "frontCamera": 13, "battery": 5000,
+    "nfc": true, "fiveG": false, "bluetooth": "5.3", "wirelessCharging": false, "ipRating": "—", "material": "Пластик", "weight": 200,
+    "baseUsd": 199, "discount": 8,
+    "storage": [ {"gb":128,"ramGb":4,"addUsd":0}, {"gb":256,"ramGb":8,"addUsd":40} ],
+    "colors": ["Blue Black","Blue","Yellow","Light Blue"]
+  },
+  {
+    "brand": "Samsung", "title": "Galaxy S22 Ultra",
+    "description": "Флагман со встроенным пером S Pen, экраном QHD+ и камерой 108 Мп.",
+    "os": "Android 12", "screenSize": 6.8, "screenType": "Dynamic AMOLED 2X", "resolution": "3088x1440", "refreshRate": 120,
+    "chipset": "Snapdragon 8 Gen 1", "mainCamera": 108, "frontCamera": 40, "battery": 5000,
+    "nfc": true, "fiveG": true, "bluetooth": "5.2", "wirelessCharging": true, "ipRating": "IP68", "material": "Алюминий", "weight": 229,
+    "baseUsd": 999, "discount": 18,
+    "storage": [ {"gb":128,"ramGb":8,"addUsd":0}, {"gb":256,"ramGb":12,"addUsd":100}, {"gb":512,"ramGb":12,"addUsd":300} ],
+    "colors": ["Phantom Black","Phantom White","Green","Burgundy"]
+  },
+  {
+    "brand": "Samsung", "title": "Galaxy Z Fold5",
+    "description": "Складной флагман с гибким 7.6-дюймовым экраном и пером S Pen.",
+    "os": "Android 13", "screenSize": 7.6, "screenType": "Dynamic AMOLED 2X", "resolution": "2176x1812", "refreshRate": 120,
+    "chipset": "Snapdragon 8 Gen 2 for Galaxy", "mainCamera": 50, "frontCamera": 10, "battery": 4400,
+    "nfc": true, "fiveG": true, "bluetooth": "5.3", "wirelessCharging": true, "ipRating": "IPX8", "material": "Алюминий", "weight": 253,
+    "baseUsd": 1799, "discount": 10,
+    "storage": [ {"gb":256,"ramGb":12,"addUsd":0}, {"gb":512,"ramGb":12,"addUsd":120}, {"gb":1024,"ramGb":12,"addUsd":360} ],
+    "colors": ["Icy Blue","Phantom Black","Cream"]
+  },
+  {
+    "brand": "Samsung", "title": "Galaxy Z Flip5",
+    "description": "Складной смартфон-раскладушка с большим внешним экраном Flex Window.",
+    "os": "Android 13", "screenSize": 6.7, "screenType": "Dynamic AMOLED 2X", "resolution": "2640x1080", "refreshRate": 120,
+    "chipset": "Snapdragon 8 Gen 2 for Galaxy", "mainCamera": 12, "frontCamera": 10, "battery": 3700,
+    "nfc": true, "fiveG": true, "bluetooth": "5.3", "wirelessCharging": true, "ipRating": "IPX8", "material": "Алюминий", "weight": 187,
+    "baseUsd": 999, "discount": 10,
+    "storage": [ {"gb":256,"ramGb":8,"addUsd":0}, {"gb":512,"ramGb":8,"addUsd":120} ],
+    "colors": ["Mint","Graphite","Cream","Lavender"]
+  },
+
+  {
+    "brand": "Xiaomi", "title": "Xiaomi 14 Ultra",
+    "description": "Камерофон с оптикой Leica, четырьмя камерами и ярким экраном LTPO AMOLED.",
+    "os": "Android 14", "screenSize": 6.73, "screenType": "LTPO AMOLED", "resolution": "3200x1440", "refreshRate": 120,
+    "chipset": "Snapdragon 8 Gen 3", "mainCamera": 50, "frontCamera": 32, "battery": 5300,
+    "nfc": true, "fiveG": true, "bluetooth": "5.4", "wirelessCharging": true, "ipRating": "IP68", "material": "Керамика", "weight": 224,
+    "baseUsd": 1299, "discount": 5,
+    "storage": [ {"gb":256,"ramGb":12,"addUsd":0}, {"gb":512,"ramGb":16,"addUsd":150}, {"gb":1024,"ramGb":16,"addUsd":350} ],
+    "colors": ["Black","White"]
+  },
+  {
+    "brand": "Xiaomi", "title": "Xiaomi 14",
+    "description": "Компактный флагман с камерой Leica и Snapdragon 8 Gen 3.",
+    "os": "Android 14", "screenSize": 6.36, "screenType": "LTPO OLED", "resolution": "2670x1200", "refreshRate": 120,
+    "chipset": "Snapdragon 8 Gen 3", "mainCamera": 50, "frontCamera": 32, "battery": 4610,
+    "nfc": true, "fiveG": true, "bluetooth": "5.4", "wirelessCharging": true, "ipRating": "IP68", "material": "Алюминий", "weight": 193,
+    "baseUsd": 899, "discount": 5,
+    "storage": [ {"gb":256,"ramGb":12,"addUsd":0}, {"gb":512,"ramGb":12,"addUsd":120} ],
+    "colors": ["Black","White","Jade Green"]
+  },
+  {
+    "brand": "Xiaomi", "title": "Xiaomi 13T Pro",
+    "description": "Производительный смартфон с камерой Leica и сверхбыстрой зарядкой 120 Вт.",
+    "os": "Android 13", "screenSize": 6.67, "screenType": "AMOLED", "resolution": "2712x1220", "refreshRate": 144,
+    "chipset": "MediaTek Dimensity 9200+", "mainCamera": 50, "frontCamera": 20, "battery": 5000,
+    "nfc": true, "fiveG": true, "bluetooth": "5.4", "wirelessCharging": false, "ipRating": "IP68", "material": "Алюминий", "weight": 206,
+    "baseUsd": 799, "discount": 8,
+    "storage": [ {"gb":256,"ramGb":12,"addUsd":0}, {"gb":512,"ramGb":12,"addUsd":100}, {"gb":1024,"ramGb":16,"addUsd":250} ],
+    "colors": ["Black","Meadow Green","Alpine Blue"]
+  },
+  {
+    "brand": "Xiaomi", "title": "Redmi Note 13 Pro+",
+    "description": "Народный камерофон с экраном 120 Гц, камерой 200 Мп и зарядкой 120 Вт.",
+    "os": "Android 13", "screenSize": 6.67, "screenType": "AMOLED", "resolution": "2712x1220", "refreshRate": 120,
+    "chipset": "MediaTek Dimensity 7200 Ultra", "mainCamera": 200, "frontCamera": 16, "battery": 5000,
+    "nfc": true, "fiveG": true, "bluetooth": "5.2", "wirelessCharging": false, "ipRating": "IP68", "material": "Пластик", "weight": 199,
+    "baseUsd": 449, "discount": 8,
+    "storage": [ {"gb":256,"ramGb":8,"addUsd":0}, {"gb":512,"ramGb":12,"addUsd":80} ],
+    "colors": ["Midnight Black","Moonlight White","Aurora Purple"]
+  },
+  {
+    "brand": "Xiaomi", "title": "Redmi Note 13",
+    "description": "Доступный смартфон с AMOLED-экраном 120 Гц и камерой 108 Мп.",
+    "os": "Android 13", "screenSize": 6.67, "screenType": "AMOLED", "resolution": "2400x1080", "refreshRate": 120,
+    "chipset": "Snapdragon 685", "mainCamera": 108, "frontCamera": 16, "battery": 5000,
+    "nfc": true, "fiveG": false, "bluetooth": "5.1", "wirelessCharging": false, "ipRating": "IP54", "material": "Пластик", "weight": 188,
+    "baseUsd": 229, "discount": 10,
+    "storage": [ {"gb":128,"ramGb":6,"addUsd":0}, {"gb":256,"ramGb":8,"addUsd":40} ],
+    "colors": ["Midnight Black","Ice Blue","Mint Green","Ocean Sunset"]
+  },
+  {
+    "brand": "Xiaomi", "title": "Poco X6 Pro",
+    "description": "Геймерский смартфон с Dimensity 8300-Ultra и экраном AMOLED 120 Гц.",
+    "os": "Android 14", "screenSize": 6.67, "screenType": "AMOLED", "resolution": "2712x1220", "refreshRate": 120,
+    "chipset": "MediaTek Dimensity 8300 Ultra", "mainCamera": 64, "frontCamera": 16, "battery": 5000,
+    "nfc": true, "fiveG": true, "bluetooth": "5.4", "wirelessCharging": false, "ipRating": "IP54", "material": "Пластик", "weight": 186,
+    "baseUsd": 349, "discount": 8,
+    "storage": [ {"gb":256,"ramGb":8,"addUsd":0}, {"gb":512,"ramGb":12,"addUsd":60} ],
+    "colors": ["Black","Grey","Yellow"]
+  },
+  {
+    "brand": "Xiaomi", "title": "Poco F6",
+    "description": "Флагман-киллер с Snapdragon 8s Gen 3 и быстрой зарядкой 90 Вт.",
+    "os": "Android 14", "screenSize": 6.67, "screenType": "AMOLED", "resolution": "2712x1220", "refreshRate": 120,
+    "chipset": "Snapdragon 8s Gen 3", "mainCamera": 50, "frontCamera": 20, "battery": 5000,
+    "nfc": true, "fiveG": true, "bluetooth": "5.4", "wirelessCharging": false, "ipRating": "IP64", "material": "Пластик", "weight": 179,
+    "baseUsd": 449, "discount": 5,
+    "storage": [ {"gb":256,"ramGb":8,"addUsd":0}, {"gb":512,"ramGb":12,"addUsd":60} ],
+    "colors": ["Black","Green","Titanium"]
+  },
+  {
+    "brand": "Xiaomi", "title": "Xiaomi 13",
+    "description": "Компактный флагман прошлого года с камерой Leica и Snapdragon 8 Gen 2.",
+    "os": "Android 13", "screenSize": 6.36, "screenType": "AMOLED", "resolution": "2400x1080", "refreshRate": 120,
+    "chipset": "Snapdragon 8 Gen 2", "mainCamera": 50, "frontCamera": 32, "battery": 4500,
+    "nfc": true, "fiveG": true, "bluetooth": "5.3", "wirelessCharging": true, "ipRating": "IP68", "material": "Алюминий", "weight": 189,
+    "baseUsd": 699, "discount": 15,
+    "storage": [ {"gb":128,"ramGb":8,"addUsd":0}, {"gb":256,"ramGb":8,"addUsd":60} ],
+    "colors": ["Black","White","Flora Green"]
+  },
+  {
+    "brand": "Xiaomi", "title": "Redmi 13C",
+    "description": "Стартовый смартфон с большим экраном и батареей 5000 мА·ч.",
+    "os": "Android 13", "screenSize": 6.74, "screenType": "IPS LCD", "resolution": "1600x720", "refreshRate": 90,
+    "chipset": "MediaTek Helio G85", "mainCamera": 50, "frontCamera": 8, "battery": 5000,
+    "nfc": true, "fiveG": false, "bluetooth": "5.3", "wirelessCharging": false, "ipRating": "—", "material": "Пластик", "weight": 192,
+    "baseUsd": 129, "discount": 10,
+    "storage": [ {"gb":128,"ramGb":4,"addUsd":0}, {"gb":256,"ramGb":8,"addUsd":40} ],
+    "colors": ["Midnight Black","Navy Blue","Clover Green"]
+  },
+
+  {
+    "brand": "Google", "title": "Pixel 8 Pro",
+    "description": "Флагман Google на чипе Tensor G3 с продвинутой ИИ-обработкой фото.",
+    "os": "Android 14", "screenSize": 6.7, "screenType": "LTPO OLED", "resolution": "2992x1344", "refreshRate": 120,
+    "chipset": "Google Tensor G3", "mainCamera": 50, "frontCamera": 10, "battery": 5050,
+    "nfc": true, "fiveG": true, "bluetooth": "5.3", "wirelessCharging": true, "ipRating": "IP68", "material": "Алюминий", "weight": 213,
+    "baseUsd": 999, "discount": 5,
+    "storage": [ {"gb":128,"ramGb":12,"addUsd":0}, {"gb":256,"ramGb":12,"addUsd":60}, {"gb":512,"ramGb":12,"addUsd":180} ],
+    "colors": ["Obsidian","Porcelain","Bay"]
+  },
+  {
+    "brand": "Google", "title": "Pixel 8",
+    "description": "Компактный флагман Google с чипом Tensor G3 и чистым Android.",
+    "os": "Android 14", "screenSize": 6.2, "screenType": "OLED", "resolution": "2400x1080", "refreshRate": 120,
+    "chipset": "Google Tensor G3", "mainCamera": 50, "frontCamera": 10, "battery": 4575,
+    "nfc": true, "fiveG": true, "bluetooth": "5.3", "wirelessCharging": true, "ipRating": "IP68", "material": "Алюминий", "weight": 187,
+    "baseUsd": 699, "discount": 8,
+    "storage": [ {"gb":128,"ramGb":8,"addUsd":0}, {"gb":256,"ramGb":8,"addUsd":60} ],
+    "colors": ["Obsidian","Hazel","Rose"]
+  },
+  {
+    "brand": "Google", "title": "Pixel 8a",
+    "description": "Доступный Pixel с чипом Tensor G3 и фирменными ИИ-функциями камеры.",
+    "os": "Android 14", "screenSize": 6.1, "screenType": "OLED", "resolution": "2400x1080", "refreshRate": 120,
+    "chipset": "Google Tensor G3", "mainCamera": 64, "frontCamera": 13, "battery": 4492,
+    "nfc": true, "fiveG": true, "bluetooth": "5.3", "wirelessCharging": true, "ipRating": "IP67", "material": "Пластик", "weight": 188,
+    "baseUsd": 499, "discount": 5,
+    "storage": [ {"gb":128,"ramGb":8,"addUsd":0}, {"gb":256,"ramGb":8,"addUsd":60} ],
+    "colors": ["Obsidian","Porcelain","Bay","Aloe"]
+  },
+  {
+    "brand": "Google", "title": "Pixel 7a",
+    "description": "Средний Pixel с чипом Tensor G2 и отличной камерой за свою цену.",
+    "os": "Android 13", "screenSize": 6.1, "screenType": "OLED", "resolution": "2400x1080", "refreshRate": 90,
+    "chipset": "Google Tensor G2", "mainCamera": 64, "frontCamera": 13, "battery": 4385,
+    "nfc": true, "fiveG": true, "bluetooth": "5.3", "wirelessCharging": true, "ipRating": "IP67", "material": "Пластик", "weight": 193,
+    "baseUsd": 399, "discount": 12,
+    "storage": [ {"gb":128,"ramGb":8,"addUsd":0} ],
+    "colors": ["Charcoal","Snow","Sea","Coral"]
+  },
+
+  {
+    "brand": "OnePlus", "title": "OnePlus 12",
+    "description": "Флагман с экраном 2K 120 Гц, камерой Hasselblad и зарядкой 100 Вт.",
+    "os": "Android 14", "screenSize": 6.82, "screenType": "LTPO AMOLED", "resolution": "3168x1440", "refreshRate": 120,
+    "chipset": "Snapdragon 8 Gen 3", "mainCamera": 50, "frontCamera": 32, "battery": 5400,
+    "nfc": true, "fiveG": true, "bluetooth": "5.4", "wirelessCharging": true, "ipRating": "IP65", "material": "Алюминий", "weight": 220,
+    "baseUsd": 799, "discount": 5,
+    "storage": [ {"gb":256,"ramGb":12,"addUsd":0}, {"gb":512,"ramGb":16,"addUsd":100} ],
+    "colors": ["Silky Black","Flowy Emerald","White"]
+  },
+  {
+    "brand": "OnePlus", "title": "OnePlus 12R",
+    "description": "Доступный флагман с экраном 120 Гц и крупной батареей 5500 мА·ч.",
+    "os": "Android 14", "screenSize": 6.78, "screenType": "LTPO AMOLED", "resolution": "2780x1264", "refreshRate": 120,
+    "chipset": "Snapdragon 8 Gen 2", "mainCamera": 50, "frontCamera": 16, "battery": 5500,
+    "nfc": true, "fiveG": true, "bluetooth": "5.3", "wirelessCharging": false, "ipRating": "IP64", "material": "Алюминий", "weight": 207,
+    "baseUsd": 499, "discount": 5,
+    "storage": [ {"gb":128,"ramGb":8,"addUsd":0}, {"gb":256,"ramGb":16,"addUsd":100} ],
+    "colors": ["Cool Blue","Iron Gray"]
+  },
+  {
+    "brand": "OnePlus", "title": "OnePlus 11",
+    "description": "Флагман прошлого года с камерой Hasselblad и зарядкой 100 Вт.",
+    "os": "Android 13", "screenSize": 6.7, "screenType": "LTPO AMOLED", "resolution": "3216x1440", "refreshRate": 120,
+    "chipset": "Snapdragon 8 Gen 2", "mainCamera": 50, "frontCamera": 16, "battery": 5000,
+    "nfc": true, "fiveG": true, "bluetooth": "5.3", "wirelessCharging": false, "ipRating": "—", "material": "Алюминий", "weight": 205,
+    "baseUsd": 699, "discount": 12,
+    "storage": [ {"gb":128,"ramGb":8,"addUsd":0}, {"gb":256,"ramGb":16,"addUsd":100} ],
+    "colors": ["Titan Black","Eternal Green"]
+  },
+  {
+    "brand": "OnePlus", "title": "OnePlus Nord 3",
+    "description": "Смартфон среднего класса с Dimensity 9000 и экраном AMOLED 120 Гц.",
+    "os": "Android 13", "screenSize": 6.74, "screenType": "AMOLED", "resolution": "2772x1240", "refreshRate": 120,
+    "chipset": "MediaTek Dimensity 9000", "mainCamera": 50, "frontCamera": 16, "battery": 5000,
+    "nfc": true, "fiveG": true, "bluetooth": "5.3", "wirelessCharging": false, "ipRating": "IP54", "material": "Алюминий", "weight": 193,
+    "baseUsd": 449, "discount": 8,
+    "storage": [ {"gb":128,"ramGb":8,"addUsd":0}, {"gb":256,"ramGb":16,"addUsd":80} ],
+    "colors": ["Misty Green","Tempest Gray"]
+  },
+
+  {
+    "brand": "Honor", "title": "Magic6 Pro",
+    "description": "Флагман с ярким экраном LTPO, камерой 180 Мп телефото и Snapdragon 8 Gen 3.",
+    "os": "Android 14", "screenSize": 6.8, "screenType": "LTPO OLED", "resolution": "2800x1280", "refreshRate": 120,
+    "chipset": "Snapdragon 8 Gen 3", "mainCamera": 50, "frontCamera": 50, "battery": 5600,
+    "nfc": true, "fiveG": true, "bluetooth": "5.3", "wirelessCharging": true, "ipRating": "IP68", "material": "Алюминий", "weight": 229,
+    "baseUsd": 1099, "discount": 5,
+    "storage": [ {"gb":256,"ramGb":12,"addUsd":0}, {"gb":512,"ramGb":12,"addUsd":120}, {"gb":1024,"ramGb":16,"addUsd":300} ],
+    "colors": ["Black","Green","Epi Orange"]
+  },
+  {
+    "brand": "Honor", "title": "Honor 90",
+    "description": "Стильный смартфон с экраном 1.5K 120 Гц и камерой 200 Мп.",
+    "os": "Android 13", "screenSize": 6.7, "screenType": "AMOLED", "resolution": "2664x1200", "refreshRate": 120,
+    "chipset": "Snapdragon 7 Gen 1 Accelerated", "mainCamera": 200, "frontCamera": 50, "battery": 5000,
+    "nfc": true, "fiveG": true, "bluetooth": "5.2", "wirelessCharging": false, "ipRating": "—", "material": "Пластик", "weight": 183,
+    "baseUsd": 499, "discount": 10,
+    "storage": [ {"gb":256,"ramGb":8,"addUsd":0}, {"gb":512,"ramGb":12,"addUsd":80} ],
+    "colors": ["Emerald Green","Midnight Black","Diamond Silver","Peacock Blue"]
+  },
+  {
+    "brand": "Honor", "title": "Honor X9b",
+    "description": "Прочный смартфон с ударостойким экраном и батареей 5800 мА·ч.",
+    "os": "Android 13", "screenSize": 6.78, "screenType": "AMOLED", "resolution": "2652x1200", "refreshRate": 120,
+    "chipset": "Snapdragon 6 Gen 1", "mainCamera": 108, "frontCamera": 16, "battery": 5800,
+    "nfc": true, "fiveG": true, "bluetooth": "5.1", "wirelessCharging": false, "ipRating": "—", "material": "Пластик", "weight": 185,
+    "baseUsd": 329, "discount": 8,
+    "storage": [ {"gb":256,"ramGb":8,"addUsd":0} ],
+    "colors": ["Midnight Black","Emerald Green","Sunrise Orange"]
+  },
+
+  {
+    "brand": "Realme", "title": "Realme GT 5 Pro",
+    "description": "Производительный флагман с Snapdragon 8 Gen 3 и зарядкой 100 Вт.",
+    "os": "Android 14", "screenSize": 6.78, "screenType": "LTPO AMOLED", "resolution": "2780x1264", "refreshRate": 144,
+    "chipset": "Snapdragon 8 Gen 3", "mainCamera": 50, "frontCamera": 32, "battery": 5400,
+    "nfc": true, "fiveG": true, "bluetooth": "5.4", "wirelessCharging": true, "ipRating": "IP65", "material": "Стекло", "weight": 218,
+    "baseUsd": 649, "discount": 8,
+    "storage": [ {"gb":256,"ramGb":12,"addUsd":0}, {"gb":512,"ramGb":16,"addUsd":100} ],
+    "colors": ["Red Rock","Bright Moon"]
+  },
+  {
+    "brand": "Realme", "title": "Realme 12 Pro+",
+    "description": "Камерофон среднего класса с перископической камерой и зарядкой 67 Вт.",
+    "os": "Android 14", "screenSize": 6.7, "screenType": "AMOLED", "resolution": "2412x1080", "refreshRate": 120,
+    "chipset": "Snapdragon 7s Gen 2", "mainCamera": 50, "frontCamera": 32, "battery": 5000,
+    "nfc": true, "fiveG": true, "bluetooth": "5.2", "wirelessCharging": false, "ipRating": "IP65", "material": "Эко-кожа", "weight": 196,
+    "baseUsd": 399, "discount": 8,
+    "storage": [ {"gb":256,"ramGb":8,"addUsd":0}, {"gb":512,"ramGb":12,"addUsd":60} ],
+    "colors": ["Submarine Blue","Navigator Beige"]
+  },
+
+  {
+    "brand": "Oppo", "title": "Find X7 Ultra",
+    "description": "Камерофон с двойной перископической камерой и оптикой Hasselblad.",
+    "os": "Android 14", "screenSize": 6.82, "screenType": "LTPO AMOLED", "resolution": "3168x1440", "refreshRate": 120,
+    "chipset": "Snapdragon 8 Gen 3", "mainCamera": 50, "frontCamera": 32, "battery": 5000,
+    "nfc": true, "fiveG": true, "bluetooth": "5.4", "wirelessCharging": true, "ipRating": "IP68", "material": "Стекло", "weight": 221,
+    "baseUsd": 899, "discount": 5,
+    "storage": [ {"gb":256,"ramGb":12,"addUsd":0}, {"gb":512,"ramGb":16,"addUsd":120} ],
+    "colors": ["Ocean Blue","Sepia Brown","Tailored Black"]
+  },
+  {
+    "brand": "Oppo", "title": "Oppo Reno11",
+    "description": "Стильный смартфон с портретной камерой и зарядкой SUPERVOOC 67 Вт.",
+    "os": "Android 14", "screenSize": 6.7, "screenType": "AMOLED", "resolution": "2412x1080", "refreshRate": 120,
+    "chipset": "MediaTek Dimensity 7050", "mainCamera": 50, "frontCamera": 32, "battery": 4800,
+    "nfc": true, "fiveG": true, "bluetooth": "5.3", "wirelessCharging": false, "ipRating": "IP65", "material": "Стекло", "weight": 182,
+    "baseUsd": 399, "discount": 8,
+    "storage": [ {"gb":256,"ramGb":8,"addUsd":0} ],
+    "colors": ["Wave Green","Rock Grey"]
+  },
+
+  {
+    "brand": "Vivo", "title": "Vivo X100 Pro",
+    "description": "Камерофон с оптикой ZEISS, перископической камерой и Dimensity 9300.",
+    "os": "Android 14", "screenSize": 6.78, "screenType": "LTPO AMOLED", "resolution": "2800x1260", "refreshRate": 120,
+    "chipset": "MediaTek Dimensity 9300", "mainCamera": 50, "frontCamera": 32, "battery": 5400,
+    "nfc": true, "fiveG": true, "bluetooth": "5.4", "wirelessCharging": true, "ipRating": "IP68", "material": "Стекло", "weight": 221,
+    "baseUsd": 999, "discount": 5,
+    "storage": [ {"gb":256,"ramGb":12,"addUsd":0}, {"gb":512,"ramGb":16,"addUsd":120} ],
+    "colors": ["Asteroid Black","Startrail Blue"]
+  },
+  {
+    "brand": "Vivo", "title": "Vivo V30",
+    "description": "Тонкий смартфон с экраном AMOLED 120 Гц и студийным портретным светом.",
+    "os": "Android 14", "screenSize": 6.78, "screenType": "AMOLED", "resolution": "2800x1260", "refreshRate": 120,
+    "chipset": "Snapdragon 7 Gen 3", "mainCamera": 50, "frontCamera": 50, "battery": 5000,
+    "nfc": true, "fiveG": true, "bluetooth": "5.3", "wirelessCharging": false, "ipRating": "IP54", "material": "Стекло", "weight": 186,
+    "baseUsd": 449, "discount": 8,
+    "storage": [ {"gb":256,"ramGb":8,"addUsd":0}, {"gb":512,"ramGb":12,"addUsd":60} ],
+    "colors": ["Peacock Green","Andaman Blue","Classic Black"]
+  },
+
+  {
+    "brand": "Nothing", "title": "Nothing Phone (2)",
+    "description": "Смартфон с прозрачным корпусом и светодиодным интерфейсом Glyph.",
+    "os": "Android 13", "screenSize": 6.7, "screenType": "LTPO OLED", "resolution": "2412x1080", "refreshRate": 120,
+    "chipset": "Snapdragon 8+ Gen 1", "mainCamera": 50, "frontCamera": 32, "battery": 4700,
+    "nfc": true, "fiveG": true, "bluetooth": "5.3", "wirelessCharging": true, "ipRating": "IP54", "material": "Стекло", "weight": 201,
+    "baseUsd": 599, "discount": 8,
+    "storage": [ {"gb":256,"ramGb":8,"addUsd":0}, {"gb":512,"ramGb":12,"addUsd":100} ],
+    "colors": ["White","Dark Grey"]
+  },
+  {
+    "brand": "Nothing", "title": "Nothing Phone (2a)",
+    "description": "Доступный смартфон с интерфейсом Glyph и Dimensity 7200 Pro.",
+    "os": "Android 14", "screenSize": 6.7, "screenType": "AMOLED", "resolution": "2412x1080", "refreshRate": 120,
+    "chipset": "MediaTek Dimensity 7200 Pro", "mainCamera": 50, "frontCamera": 32, "battery": 5000,
+    "nfc": true, "fiveG": true, "bluetooth": "5.3", "wirelessCharging": false, "ipRating": "IP54", "material": "Пластик", "weight": 190,
+    "baseUsd": 349, "discount": 5,
+    "storage": [ {"gb":128,"ramGb":8,"addUsd":0}, {"gb":256,"ramGb":12,"addUsd":50} ],
+    "colors": ["Black","White","Blue"]
+  },
+
+  {
+    "brand": "Motorola", "title": "Motorola Edge 50 Pro",
+    "description": "Смартфон с изогнутым экраном pOLED 144 Гц и зарядкой 125 Вт.",
+    "os": "Android 14", "screenSize": 6.7, "screenType": "pOLED", "resolution": "2712x1220", "refreshRate": 144,
+    "chipset": "Snapdragon 7 Gen 3", "mainCamera": 50, "frontCamera": 50, "battery": 4500,
+    "nfc": true, "fiveG": true, "bluetooth": "5.4", "wirelessCharging": true, "ipRating": "IP68", "material": "Эко-кожа", "weight": 186,
+    "baseUsd": 599, "discount": 8,
+    "storage": [ {"gb":256,"ramGb":8,"addUsd":0}, {"gb":512,"ramGb":12,"addUsd":60} ],
+    "colors": ["Black Beauty","Luxe Lavender","Moonlight Pearl"]
+  },
+  {
+    "brand": "Motorola", "title": "Motorola Razr 40 Ultra",
+    "description": "Складная раскладушка с большим внешним экраном 3.6 дюйма.",
+    "os": "Android 13", "screenSize": 6.9, "screenType": "LTPO AMOLED", "resolution": "2640x1080", "refreshRate": 165,
+    "chipset": "Snapdragon 8+ Gen 1", "mainCamera": 12, "frontCamera": 32, "battery": 3800,
+    "nfc": true, "fiveG": true, "bluetooth": "5.3", "wirelessCharging": true, "ipRating": "IP52", "material": "Стекло", "weight": 184,
+    "baseUsd": 799, "discount": 12,
+    "storage": [ {"gb":256,"ramGb":8,"addUsd":0} ],
+    "colors": ["Infinite Black","Viva Magenta","Glacier Blue"]
+  },
+
+  {
+    "brand": "Sony", "title": "Sony Xperia 1 V",
+    "description": "Флагман для профессионалов с экраном 4K OLED и продвинутой камерой.",
+    "os": "Android 13", "screenSize": 6.5, "screenType": "OLED", "resolution": "3840x1644", "refreshRate": 120,
+    "chipset": "Snapdragon 8 Gen 2", "mainCamera": 48, "frontCamera": 12, "battery": 5000,
+    "nfc": true, "fiveG": true, "bluetooth": "5.3", "wirelessCharging": true, "ipRating": "IP68", "material": "Стекло", "weight": 187,
+    "baseUsd": 1399, "discount": 10,
+    "storage": [ {"gb":256,"ramGb":12,"addUsd":0}, {"gb":512,"ramGb":12,"addUsd":150} ],
+    "colors": ["Black","Platinum Silver","Khaki Green"]
+  },
+
+  {
+    "brand": "Asus", "title": "Asus ROG Phone 8 Pro",
+    "description": "Игровой флагман с экраном AMOLED 165 Гц, активным охлаждением и Snapdragon 8 Gen 3.",
+    "os": "Android 14", "screenSize": 6.78, "screenType": "LTPO AMOLED", "resolution": "2400x1080", "refreshRate": 165,
+    "chipset": "Snapdragon 8 Gen 3", "mainCamera": 50, "frontCamera": 32, "battery": 5500,
+    "nfc": true, "fiveG": true, "bluetooth": "5.4", "wirelessCharging": true, "ipRating": "IP68", "material": "Алюминий", "weight": 225,
+    "baseUsd": 1099, "discount": 5,
+    "storage": [ {"gb":512,"ramGb":16,"addUsd":0}, {"gb":1024,"ramGb":24,"addUsd":200} ],
+    "colors": ["Phantom Black","Storm White"]
+  },
+  {
+    "brand": "Asus", "title": "Asus Zenfone 10",
+    "description": "Компактный флагман с Snapdragon 8 Gen 2 и гимбал-стабилизацией камеры.",
+    "os": "Android 13", "screenSize": 5.9, "screenType": "AMOLED", "resolution": "2400x1080", "refreshRate": 144,
+    "chipset": "Snapdragon 8 Gen 2", "mainCamera": 50, "frontCamera": 32, "battery": 4300,
+    "nfc": true, "fiveG": true, "bluetooth": "5.3", "wirelessCharging": true, "ipRating": "IP68", "material": "Пластик", "weight": 172,
+    "baseUsd": 699, "discount": 8,
+    "storage": [ {"gb":128,"ramGb":8,"addUsd":0}, {"gb":256,"ramGb":8,"addUsd":60}, {"gb":512,"ramGb":16,"addUsd":160} ],
+    "colors": ["Midnight Black","Comet White","Aurora Green","Eclipse Red"]
+  },
+
+  {
+    "brand": "Tecno", "title": "Tecno Camon 30",
+    "description": "Доступный камерофон с экраном AMOLED 120 Гц и камерой 50 Мп.",
+    "os": "Android 14", "screenSize": 6.78, "screenType": "AMOLED", "resolution": "2436x1080", "refreshRate": 120,
+    "chipset": "MediaTek Helio G99 Ultimate", "mainCamera": 50, "frontCamera": 50, "battery": 5000,
+    "nfc": true, "fiveG": false, "bluetooth": "5.3", "wirelessCharging": false, "ipRating": "IP54", "material": "Эко-кожа", "weight": 187,
+    "baseUsd": 249, "discount": 8,
+    "storage": [ {"gb":128,"ramGb":8,"addUsd":0}, {"gb":256,"ramGb":8,"addUsd":40} ],
+    "colors": ["Black","Iceland Basaltic Dark","Uyuni Salt White"]
+  },
+  {
+    "brand": "Infinix", "title": "Infinix Note 40",
+    "description": "Бюджетный смартфон с беспроводной зарядкой и экраном AMOLED 120 Гц.",
+    "os": "Android 14", "screenSize": 6.78, "screenType": "AMOLED", "resolution": "2436x1080", "refreshRate": 120,
+    "chipset": "MediaTek Helio G99 Ultimate", "mainCamera": 108, "frontCamera": 32, "battery": 5000,
+    "nfc": true, "fiveG": false, "bluetooth": "5.3", "wirelessCharging": true, "ipRating": "IP54", "material": "Эко-кожа", "weight": 187,
+    "baseUsd": 229, "discount": 8,
+    "storage": [ {"gb":256,"ramGb":8,"addUsd":0} ],
+    "colors": ["Titan Gold","Obsidian Black","Vintage Green"]
+  },
+  {
+    "brand": "Apple", "title": "iPhone 13 Pro",
+    "description": "Компактный Pro-флагман прошлых лет с ProMotion 120 Гц и тройной камерой.",
+    "os": "iOS 15", "screenSize": 6.1, "screenType": "Super Retina XDR OLED", "resolution": "2532x1170", "refreshRate": 120,
+    "chipset": "Apple A15 Bionic", "mainCamera": 12, "frontCamera": 12, "battery": 3095,
+    "nfc": true, "fiveG": true, "bluetooth": "5.0", "wirelessCharging": true, "ipRating": "IP68", "material": "Нержавеющая сталь", "weight": 204,
+    "baseUsd": 799, "discount": 15,
+    "storage": [ {"gb":128,"ramGb":6,"addUsd":0}, {"gb":256,"ramGb":6,"addUsd":100}, {"gb":512,"ramGb":6,"addUsd":300}, {"gb":1024,"ramGb":6,"addUsd":500} ],
+    "colors": ["Graphite","Gold","Silver","Sierra Blue","Alpine Green"]
+  },
+  {
+    "brand": "Nubia", "title": "Nubia Z60 Ultra",
+    "description": "Флагман с подэкранной фронтальной камерой и Snapdragon 8 Gen 3.",
+    "os": "Android 14", "screenSize": 6.8, "screenType": "AMOLED", "resolution": "2480x1116", "refreshRate": 120,
+    "chipset": "Snapdragon 8 Gen 3", "mainCamera": 50, "frontCamera": 12, "battery": 6000,
+    "nfc": true, "fiveG": true, "bluetooth": "5.4", "wirelessCharging": false, "ipRating": "IP68", "material": "Стекло", "weight": 246,
+    "baseUsd": 749, "discount": 5,
+    "storage": [ {"gb":256,"ramGb":12,"addUsd":0}, {"gb":512,"ramGb":16,"addUsd":100}, {"gb":1024,"ramGb":24,"addUsd":300} ],
+    "colors": ["Starry Night","Boundless"]
+  },
+  {
+    "brand": "Realme", "title": "Realme 12+",
+    "description": "Смартфон среднего класса с камерой Sony и зарядкой SUPERVOOC 67 Вт.",
+    "os": "Android 14", "screenSize": 6.67, "screenType": "AMOLED", "resolution": "2400x1080", "refreshRate": 120,
+    "chipset": "MediaTek Dimensity 7050", "mainCamera": 50, "frontCamera": 16, "battery": 5000,
+    "nfc": true, "fiveG": true, "bluetooth": "5.2", "wirelessCharging": false, "ipRating": "IP54", "material": "Эко-кожа", "weight": 190,
+    "baseUsd": 299, "discount": 8,
+    "storage": [ {"gb":128,"ramGb":8,"addUsd":0}, {"gb":256,"ramGb":8,"addUsd":40} ],
+    "colors": ["Pioneer Green","Navigator Beige"]
+  },
+  {
+    "brand": "Infinix", "title": "Infinix Zero 30",
+    "description": "Доступный смартфон с экраном AMOLED 144 Гц и фронтальной камерой 4K.",
+    "os": "Android 13", "screenSize": 6.78, "screenType": "AMOLED", "resolution": "2400x1080", "refreshRate": 144,
+    "chipset": "MediaTek Dimensity 8020", "mainCamera": 108, "frontCamera": 50, "battery": 5000,
+    "nfc": true, "fiveG": true, "bluetooth": "5.3", "wirelessCharging": false, "ipRating": "—", "material": "Эко-кожа", "weight": 185,
+    "baseUsd": 299, "discount": 8,
+    "storage": [ {"gb":256,"ramGb":12,"addUsd":0} ],
+    "colors": ["Golden Hour","Rome Green","Fantasy Purple"]
+  }
+]

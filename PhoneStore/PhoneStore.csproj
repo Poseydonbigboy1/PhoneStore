@@ -21,4 +21,10 @@
     <Folder Include="Data\Queryes\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Data\Import\phones-dataset.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

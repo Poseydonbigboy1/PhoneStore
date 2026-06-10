@@ -52,6 +52,7 @@ builder.Services.AddScoped<CheckoutService>();
 builder.Services.AddScoped<OrderManagerService>();
 builder.Services.AddScoped<DashboardService>();
 builder.Services.AddScoped<AnalyticsService>();
+builder.Services.AddScoped<PhoneImportService>();
 
 builder.Services.AddAuthentication(options =>
 {
