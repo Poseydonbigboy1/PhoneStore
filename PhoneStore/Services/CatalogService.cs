@@ -366,11 +366,13 @@ namespace PhoneStore.Services
                 .Distinct()
                 .ToList();
 
-            // Определяем общие компоненты (присутствуют во всех SKU), исключая IMAGE
+            // Общие компоненты: присутствуют во всех SKU И значение одинаково, исключая IMAGE
             var commonComponentIds = allProductComponents
                 .Where(pc => pc.Component!.DataType != EDataType.IMAGE)
                 .GroupBy(pc => pc.ComponentId)
-                .Where(g => g.Select(pc => pc.SkuId).Distinct().Count() == product.Skus.Count)
+                .Where(g =>
+                    g.Select(pc => pc.SkuId).Distinct().Count() == product.Skus.Count
+                    && g.Select(pc => GetComponentValueAsString(pc)).Distinct().Count() == 1)
                 .Select(g => g.Key)
                 .ToHashSet();
 
