@@ -19,14 +19,14 @@ namespace PhoneStore.Services
         {
             if (!string.IsNullOrWhiteSpace(filter.Id?.Value))
             {
-                var idValue = filter.Id.Value.Trim();
+                var idValue = filter.Id.Value.Trim().ToLower();
                 if (string.Equals(filter.Id.MatchMode, "contains", StringComparison.OrdinalIgnoreCase))
                 {
-                    query = query.Where(o => o.Id.ToString().Contains(idValue, StringComparison.OrdinalIgnoreCase));
+                    query = query.Where(o => o.Id.ToString().ToLower().Contains(idValue));
                 }
                 else
                 {
-                    query = query.Where(o => o.Id.ToString().Equals(idValue, StringComparison.OrdinalIgnoreCase));
+                    query = query.Where(o => o.Id.ToString().ToLower() == idValue);
                 }
             }
 
@@ -42,20 +42,20 @@ namespace PhoneStore.Services
 
             if (!string.IsNullOrWhiteSpace(filter.ShippingAddress?.Value))
             {
-                var addressValue = filter.ShippingAddress.Value.Trim();
+                var addressValue = filter.ShippingAddress.Value.Trim().ToLower();
                 switch (filter.ShippingAddress.MatchMode?.ToLowerInvariant())
                 {
                     case "contains":
-                        query = query.Where(o => o.ShippingAddress.Contains(addressValue, StringComparison.OrdinalIgnoreCase));
+                        query = query.Where(o => o.ShippingAddress.ToLower().Contains(addressValue));
                         break;
                     case "startswith":
-                        query = query.Where(o => o.ShippingAddress.StartsWith(addressValue, StringComparison.OrdinalIgnoreCase));
+                        query = query.Where(o => o.ShippingAddress.ToLower().StartsWith(addressValue));
                         break;
                     case "endswith":
-                        query = query.Where(o => o.ShippingAddress.EndsWith(addressValue, StringComparison.OrdinalIgnoreCase));
+                        query = query.Where(o => o.ShippingAddress.ToLower().EndsWith(addressValue));
                         break;
                     default:
-                        query = query.Where(o => o.ShippingAddress.Equals(addressValue, StringComparison.OrdinalIgnoreCase));
+                        query = query.Where(o => o.ShippingAddress.ToLower() == addressValue);
                         break;
                 }
             }

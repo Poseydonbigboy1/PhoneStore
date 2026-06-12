@@ -19,49 +19,49 @@ namespace PhoneStore.Services
         {
             if (!string.IsNullOrWhiteSpace(filter.Id?.Value))
             {
-                var idValue = filter.Id.Value.Trim();
+                var idValue = filter.Id.Value.Trim().ToLower();
                 if (string.Equals(filter.Id.MatchMode, "contains", StringComparison.OrdinalIgnoreCase))
-                    query = query.Where(u => u.Id.ToString().Contains(idValue, StringComparison.OrdinalIgnoreCase));
+                    query = query.Where(u => u.Id.ToString().ToLower().Contains(idValue));
                 else
-                    query = query.Where(u => u.Id.ToString().Equals(idValue, StringComparison.OrdinalIgnoreCase));
+                    query = query.Where(u => u.Id.ToString().ToLower() == idValue);
             }
 
             if (!string.IsNullOrWhiteSpace(filter.Login?.Value))
             {
-                var loginValue = filter.Login.Value.Trim();
+                var loginValue = filter.Login.Value.Trim().ToLower();
                 switch (filter.Login.MatchMode?.ToLowerInvariant())
                 {
                     case "contains":
-                        query = query.Where(u => u.Login.Contains(loginValue, StringComparison.OrdinalIgnoreCase));
+                        query = query.Where(u => u.Login.ToLower().Contains(loginValue));
                         break;
                     case "startswith":
-                        query = query.Where(u => u.Login.StartsWith(loginValue, StringComparison.OrdinalIgnoreCase));
+                        query = query.Where(u => u.Login.ToLower().StartsWith(loginValue));
                         break;
                     case "endswith":
-                        query = query.Where(u => u.Login.EndsWith(loginValue, StringComparison.OrdinalIgnoreCase));
+                        query = query.Where(u => u.Login.ToLower().EndsWith(loginValue));
                         break;
                     default:
-                        query = query.Where(u => u.Login.Equals(loginValue, StringComparison.OrdinalIgnoreCase));
+                        query = query.Where(u => u.Login.ToLower() == loginValue);
                         break;
                 }
             }
 
             if (!string.IsNullOrWhiteSpace(filter.Name?.Value))
             {
-                var nameValue = filter.Name.Value.Trim();
+                var nameValue = filter.Name.Value.Trim().ToLower();
                 switch (filter.Name.MatchMode?.ToLowerInvariant())
                 {
                     case "contains":
-                        query = query.Where(u => u.Name != null && u.Name.Contains(nameValue, StringComparison.OrdinalIgnoreCase));
+                        query = query.Where(u => u.Name != null && u.Name.ToLower().Contains(nameValue));
                         break;
                     case "startswith":
-                        query = query.Where(u => u.Name != null && u.Name.StartsWith(nameValue, StringComparison.OrdinalIgnoreCase));
+                        query = query.Where(u => u.Name != null && u.Name.ToLower().StartsWith(nameValue));
                         break;
                     case "endswith":
-                        query = query.Where(u => u.Name != null && u.Name.EndsWith(nameValue, StringComparison.OrdinalIgnoreCase));
+                        query = query.Where(u => u.Name != null && u.Name.ToLower().EndsWith(nameValue));
                         break;
                     default:
-                        query = query.Where(u => u.Name != null && u.Name.Equals(nameValue, StringComparison.OrdinalIgnoreCase));
+                        query = query.Where(u => u.Name != null && u.Name.ToLower() == nameValue);
                         break;
                 }
             }

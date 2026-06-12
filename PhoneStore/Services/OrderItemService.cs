@@ -19,14 +19,14 @@ namespace PhoneStore.Services
         {
             if (!string.IsNullOrWhiteSpace(filter.Id?.Value))
             {
-                var idValue = filter.Id.Value.Trim();
+                var idValue = filter.Id.Value.Trim().ToLower();
                 if (string.Equals(filter.Id.MatchMode, "contains", StringComparison.OrdinalIgnoreCase))
                 {
-                    query = query.Where(oi => oi.Id.ToString().Contains(idValue, StringComparison.OrdinalIgnoreCase));
+                    query = query.Where(oi => oi.Id.ToString().ToLower().Contains(idValue));
                 }
                 else
                 {
-                    query = query.Where(oi => oi.Id.ToString().Equals(idValue, StringComparison.OrdinalIgnoreCase));
+                    query = query.Where(oi => oi.Id.ToString().ToLower() == idValue);
                 }
             }
 

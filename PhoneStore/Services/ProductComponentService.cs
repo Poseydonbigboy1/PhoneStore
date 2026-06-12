@@ -19,14 +19,14 @@ namespace PhoneStore.Services
         {
             if (!string.IsNullOrWhiteSpace(filter.Id?.Value))
             {
-                var idValue = filter.Id.Value.Trim();
+                var idValue = filter.Id.Value.Trim().ToLower();
                 if (string.Equals(filter.Id.MatchMode, "contains", StringComparison.OrdinalIgnoreCase))
                 {
-                    query = query.Where(pc => pc.Id.ToString().Contains(idValue, StringComparison.OrdinalIgnoreCase));
+                    query = query.Where(pc => pc.Id.ToString().ToLower().Contains(idValue));
                 }
                 else
                 {
-                    query = query.Where(pc => pc.Id.ToString().Equals(idValue, StringComparison.OrdinalIgnoreCase));
+                    query = query.Where(pc => pc.Id.ToString().ToLower() == idValue);
                 }
             }
 
@@ -42,20 +42,20 @@ namespace PhoneStore.Services
 
             if (!string.IsNullOrWhiteSpace(filter.ValueJson?.Value))
             {
-                var valueJson = filter.ValueJson.Value.Trim();
+                var valueJson = filter.ValueJson.Value.Trim().ToLower();
                 switch (filter.ValueJson.MatchMode?.ToLowerInvariant())
                 {
                     case "contains":
-                        query = query.Where(pc => pc.ValueJson.Contains(valueJson, StringComparison.OrdinalIgnoreCase));
+                        query = query.Where(pc => pc.ValueJson.ToLower().Contains(valueJson));
                         break;
                     case "startswith":
-                        query = query.Where(pc => pc.ValueJson.StartsWith(valueJson, StringComparison.OrdinalIgnoreCase));
+                        query = query.Where(pc => pc.ValueJson.ToLower().StartsWith(valueJson));
                         break;
                     case "endswith":
-                        query = query.Where(pc => pc.ValueJson.EndsWith(valueJson, StringComparison.OrdinalIgnoreCase));
+                        query = query.Where(pc => pc.ValueJson.ToLower().EndsWith(valueJson));
                         break;
                     default:
-                        query = query.Where(pc => pc.ValueJson.Equals(valueJson, StringComparison.OrdinalIgnoreCase));
+                        query = query.Where(pc => pc.ValueJson.ToLower() == valueJson);
                         break;
                 }
             }

@@ -19,29 +19,29 @@ namespace PhoneStore.Services
         {
             if (!string.IsNullOrWhiteSpace(filter.Id?.Value))
             {
-                var idValue = filter.Id.Value.Trim();
+                var idValue = filter.Id.Value.Trim().ToLower();
                 if (string.Equals(filter.Id.MatchMode, "contains", StringComparison.OrdinalIgnoreCase))
-                    query = query.Where(p => p.Id.ToString().Contains(idValue, StringComparison.OrdinalIgnoreCase));
+                    query = query.Where(p => p.Id.ToString().ToLower().Contains(idValue));
                 else
-                    query = query.Where(p => p.Id.ToString().Equals(idValue, StringComparison.OrdinalIgnoreCase));
+                    query = query.Where(p => p.Id.ToString().ToLower() == idValue);
             }
 
             if (!string.IsNullOrWhiteSpace(filter.Title?.Value))
             {
-                var titleValue = filter.Title.Value.Trim();
+                var titleValue = filter.Title.Value.Trim().ToLower();
                 switch (filter.Title.MatchMode?.ToLowerInvariant())
                 {
                     case "contains":
-                        query = query.Where(p => p.Title.Contains(titleValue, StringComparison.OrdinalIgnoreCase));
+                        query = query.Where(p => p.Title.ToLower().Contains(titleValue));
                         break;
                     case "startswith":
-                        query = query.Where(p => p.Title.StartsWith(titleValue, StringComparison.OrdinalIgnoreCase));
+                        query = query.Where(p => p.Title.ToLower().StartsWith(titleValue));
                         break;
                     case "endswith":
-                        query = query.Where(p => p.Title.EndsWith(titleValue, StringComparison.OrdinalIgnoreCase));
+                        query = query.Where(p => p.Title.ToLower().EndsWith(titleValue));
                         break;
                     default:
-                        query = query.Where(p => p.Title.Equals(titleValue, StringComparison.OrdinalIgnoreCase));
+                        query = query.Where(p => p.Title.ToLower() == titleValue);
                         break;
                 }
             }
