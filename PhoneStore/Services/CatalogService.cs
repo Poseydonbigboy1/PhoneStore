@@ -241,6 +241,7 @@ namespace PhoneStore.Services
                         ProductId = g.First().Sku!.Product!.Id,
                         SkuId = g.Key,
                         Title = g.First().Sku!.Product!.Title,
+                        VariantTitle = BuildVariantTitle(g),
                         Price = g.First().Sku!.Price,
                         Discount = g.First().Sku!.Discount,
                         Images = g.Where(pc => pc.Component!.DataType == EDataType.IMAGE)
@@ -302,6 +303,41 @@ namespace PhoneStore.Services
                 "endsWith" => actual.EndsWith(value, StringComparison.OrdinalIgnoreCase),
                 _ => string.Equals(actual, value, StringComparison.OrdinalIgnoreCase),
             };
+        }
+
+        /// <summary>
+        /// Составное «вариативное» название SKU: ОЗУ/встроенная память + цвет.
+        /// Помогает отличать варианты одной модели в каталоге, например «8/256 ГБ, Чёрный».
+        /// Формат соответствует практике телефонных ритейлеров (DNS, Citilink, М.Видео).
+        /// </summary>
+        private static string BuildVariantTitle(IEnumerable<ProductComponent> components)
+        {
+            string Value(string title) => components
+                .Where(pc => pc.Component != null &&
+                             string.Equals(pc.Component.Title, title, StringComparison.OrdinalIgnoreCase))
+                .Select(GetComponentValueAsString)
+                .FirstOrDefault(v => !string.IsNullOrWhiteSpace(v)) ?? string.Empty;
+
+            var ram = CleanNumber(Value("ОЗУ"));
+            var rom = CleanNumber(Value("Встроенная память"));
+            var color = Value("Цвет").Trim();
+
+            var parts = new List<string>();
+            if (ram.Length > 0 && rom.Length > 0) parts.Add($"{ram}/{rom} ГБ");
+            else if (rom.Length > 0)              parts.Add($"{rom} ГБ");
+            else if (ram.Length > 0)              parts.Add($"{ram} ГБ ОЗУ");
+            if (color.Length > 0)                 parts.Add(color);
+
+            return string.Join(", ", parts);
+        }
+
+        /// <summary>Приводит числовое значение к виду без хвостовых нулей: «256.0» → «256».</summary>
+        private static string CleanNumber(string raw)
+        {
+            raw = (raw ?? string.Empty).Trim();
+            return double.TryParse(raw, NumberStyles.Any, CultureInfo.InvariantCulture, out var d)
+                ? d.ToString("0.##", CultureInfo.InvariantCulture)
+                : raw;
         }
 
         private static string GetComponentValueAsString(ProductComponent pc)
@@ -513,6 +549,7 @@ namespace PhoneStore.Services
                 SkuId      = s.Id,
                 ProductId  = s.Product!.Id,
                 Title      = s.Product.Title,
+                VariantTitle = BuildVariantTitle(s.ProductComponents),
                 BrandTitle = s.Product.Brand?.Title ?? string.Empty,
                 Price      = s.Price,
                 Discount   = s.Discount,
