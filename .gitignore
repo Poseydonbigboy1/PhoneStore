@@ -85,3 +85,5 @@ packages/
 # MacOS / Linux
 .DS_Store
 *.DS_Store
+
+*/**/uploads
